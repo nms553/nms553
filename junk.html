@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <style>
+      table,
+      td {
+        border: solid black 1px;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <div class="buttons">
+      <button onclick="onChange()">Save</button>
+      <button onclick="insertUnordered();">Unordered List</button>
+      <button onclick="insertOrdered();">Ordered List</button>
+    </div>
+    <table width="100%">
+      <tr>
+        <td id="editable" contenteditable="true">test</td>
+        <td id="editable2" contenteditable="true">test</td>
+        </tr>
+        <tr>
+        <td colspan="2" id="editable3" contenteditable="true">test</td>
+      </tr>
+    </table>
+
+    <script>
+      function insertUnordered() {
+        document.execCommand("insertUnorderedList");
+      }
+
+      function insertOrdered() {
+        document.execCommand("insertOrderedList");
+      }
+
+
+
+      function onChange() {
+        //alert(document.getElementById("result").innerHTML);
+        localStorage.setItem("text", document.getElementById("editable").innerHTML);
+        localStorage.setItem("text2", document.getElementById("editable2").innerHTML);
+        localStorage.setItem("text3", document.getElementById("editable3").innerHTML);
+
+      }
+
+      $(document).ready(function() {
+        $("#editable").blur(function() {
+          onChange()
+        });
+      });
+
+      document.getElementById("editable").innerHTML = localStorage.getItem("text");
+      document.getElementById("editable2").innerHTML = localStorage.getItem("text2");
+      document.getElementById("editable3").innerHTML = localStorage.getItem("text3");
+
+      function insertUnordered() {
+        document.execCommand("insertUnorderedList");
+      }
+
+      function insertOrdered() {
+        document.execCommand("insertOrderedList");
+      }
+
+    </script>
+
+  </body>
+
+</html>

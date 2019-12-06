@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 
@@ -17,6 +18,7 @@
       <button onclick="onChange()">Save</button>
       <button onclick="insertUnordered();">Unordered List</button>
       <button onclick="insertOrdered();">Ordered List</button>
+      <button onclick="insertStrkThru()">Strikethrough</button>
     </div>
     <table width="100%">
       <tr>
@@ -63,6 +65,10 @@
 
       function insertOrdered() {
         document.execCommand("insertOrderedList");
+      }
+      
+      function insertStrkThru() {
+        document.execCommand('strikeThrough');
       }
 
     </script>

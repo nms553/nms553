@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 
@@ -13,34 +12,30 @@
     </style>
   </head>
 
-  <body>
+  <body onkeydown="myFunction(event)">
     <div class="buttons">
       <button onclick="onChange()">Save</button>
-      <button onclick="insertUnordered();">Unordered List</button>
-      <button onclick="insertOrdered();">Ordered List</button>
-      <button onclick="insertStrkThru()">Strikethrough</button>
-      <button onclick="(function(){document.execCommand('indent')})();">Indent</button>
-      <button onclick="(function(){document.execCommand('outdent')})();">Outdent</button>
     </div>
     <table width="100%">
       <tr>
         <td id="editable" contenteditable="true">test</td>
         <td id="editable2" contenteditable="true">test</td>
-        </tr>
-        <tr>
+      </tr>
+      <tr>
         <td colspan="2" id="editable3" contenteditable="true">test</td>
       </tr>
     </table>
 
     <script>
-      function insertUnordered() {
-        document.execCommand("insertUnorderedList");
+      function myFunction() {
+        if (event.altKey && event.keyCode == 84) {
+        	document.execCommand('strikeThrough');
+        }
+        else if (event.altKey && event.keyCode == 73) {document.execCommand('indent');}
+        else if (event.altKey && event.keyCode == 79) {document.execCommand('outdent');}
+        else if (event.altKey && event.keyCode == 76) {document.execCommand('insertUnorderedList');}
+        else if (event.altKey && event.keyCode == 78) {document.execCommand('insertOrderedList');}
       }
-
-      function insertOrdered() {
-        document.execCommand("insertOrderedList");
-      }
-
 
 
       function onChange() {
@@ -61,17 +56,6 @@
       document.getElementById("editable2").innerHTML = localStorage.getItem("text2");
       document.getElementById("editable3").innerHTML = localStorage.getItem("text3");
 
-      function insertUnordered() {
-        document.execCommand("insertUnorderedList");
-      }
-
-      function insertOrdered() {
-        document.execCommand("insertOrderedList");
-      }
-      
-      function insertStrkThru() {
-        document.execCommand('strikeThrough');
-      }
 
     </script>
     <a href="https://github.com/nms553/nms553.github.io/edit/master/junk.html">admin</a>

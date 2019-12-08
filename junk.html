@@ -29,12 +29,16 @@
     <script>
       function myFunction() {
         if (event.altKey && event.keyCode == 84) {
-        	document.execCommand('strikeThrough');
+          document.execCommand('strikeThrough');
+        } else if (event.altKey && event.keyCode == 73) {
+          document.execCommand('indent');
+        } else if (event.altKey && event.keyCode == 79) {
+          document.execCommand('outdent');
+        } else if (event.altKey && event.keyCode == 76) {
+          document.execCommand('insertUnorderedList');
+        } else if (event.altKey && event.keyCode == 78) {
+          document.execCommand('insertOrderedList');
         }
-        else if (event.altKey && event.keyCode == 73) {document.execCommand('indent');}
-        else if (event.altKey && event.keyCode == 79) {document.execCommand('outdent');}
-        else if (event.altKey && event.keyCode == 76) {document.execCommand('insertUnorderedList');}
-        else if (event.altKey && event.keyCode == 78) {document.execCommand('insertOrderedList');}
       }
 
 
@@ -56,8 +60,9 @@
       document.getElementById("editable2").innerHTML = localStorage.getItem("text2");
       document.getElementById("editable3").innerHTML = localStorage.getItem("text3");
 
+    </script><br>
+    <button onclick="onChange()">Save</button>
 
-    </script>
     <a href="https://github.com/nms553/nms553.github.io/edit/master/junk.html">admin</a>
   </body>
 

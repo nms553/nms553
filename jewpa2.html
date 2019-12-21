@@ -1,0 +1,166 @@
+<html>
+
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <style>
+      table,
+      td {
+        border: 1px solid;
+        border-collapse: collapse;
+      }
+
+      table {
+        margin-top: 30px;
+      }
+
+      td {
+        width: 300px;
+      }
+
+      th {
+        text-align: left;
+      }
+
+    </style>
+  </head>
+
+  <body>
+
+    <form id="form" name="myForm" action="https://script.google.com/macros/s/AKfycbxbi6z8vMIHtWUYGeaRUm46-85MdpLSLpiRV_CRXzYOwfhWOObB/exec" method="get" target="dummyframe">
+      <input type="hidden" name="idx" value="0">
+      <input type="hidden" name="ordr" value="">
+      <input type="text" name="item" placeholder="Item" />
+      <input type="hidden" name="archive" value="">
+      <br>
+      <br>
+      <input list="stores" name="category" type="text" placeholder="Store" />
+    </form>
+    <br>
+    <br>
+    <button onclick="saveNew()">
+      Save It
+    </button>
+
+
+    <datalist id="stores">
+
+    </datalist>
+
+    <br><br>
+
+    <table id="(none)">
+      <tr>
+        <th>None</th>
+      </tr>
+    </table>
+
+
+
+
+
+    <div id="body">
+
+    </div>
+    <script>
+      var originalarray = [];
+      var archivedarray = [];
+      var sheetUrl = 'https://spreadsheets.google.com/feeds/list/1gPV1KpSUCEE-0OebVmyy2Fpn-xRd8CvS0gC3E8BwzHc/4/public/full?alt=json';
+
+      $(function() {
+        $.getJSON(sheetUrl, startDOM)
+
+        function startDOM(data) {
+          originalarray = data.feed.entry;
+          //console.log(gsarray);
+          archivedarray = originalarray.filter(removeArchived);
+          sort();
+        }
+      });
+
+      function sort() {
+        archivedarray.sort(function(a, b) {
+          return b.gsx$order.$t - a.gsx$order.$t
+        });
+        console.log(archivedarray);
+        document.getElementById("body").innerHTML = "";
+        document.getElementById("(none)").innerHTML = "";
+        archivedarray.forEach(function(item, index) {
+          var a = document.createElement("A");
+          a.href = "javascript:";
+          a.setAttribute("onclick", "pin(this.id, this.className)");
+          a.innerHTML = item.gsx$item.$t
+          a.id = index;
+          a.className = item.gsx$category.$t
+
+          try {
+            var getcategorytable = document.getElementById(item.gsx$category.$t);
+            getcategorytable.insertRow().insertCell(0).appendChild(a);
+          } catch {
+            var getcategorytable = document.createElement("TABLE");
+            getcategorytable.id = item.gsx$category.$t;
+            getcategorytable.className = "clearTables"
+            getcategorytable.insertRow().insertCell(0).innerHTML = '<b>' + item.gsx$category.$t + '</b>';
+            var newrow = getcategorytable.insertRow().insertCell(0).appendChild(a)
+            body.appendChild(getcategorytable);
+          } finally {
+
+          }
+
+
+        })
+
+      }
+
+
+
+      function pin(id, cname) {
+        var tablerank = document.getElementsByClassName(cname)[0].innerHTML;
+        console.log(tablerank + 'classnametext')
+        if (tablerank == archivedarray[id].gsx$item.$t) {
+          document.getElementsByName("archive")[0].value = "1";
+        }
+        archivedarray[id].gsx$order.$t = Date.now();
+        var location = archivedarray[id].title.$t;
+        //console.log(archivedarray[id]);
+
+        //console.log(archivedarray);
+        var order = document.getElementsByName("ordr")[0];
+        var index = document.getElementsByName("idx")[0];
+        order.value = Date.now();
+        index.value = location.split(": ")[1];
+        //console.log(index.value)
+        $("form").submit();
+        sort();
+      }
+
+      function removeArchived(item) {
+        return !item.gsx$archive.$t
+      }
+
+      function saveNew() {
+        if (document.getElementsByName("category")[0].value.length == 0) {
+          document.getElementsByName("category")[0].value = "(none)";
+        }
+
+        var order = document.getElementsByName("ordr")[0]
+        var index = document.getElementsByName("idx")[0]
+        order.value = Date.now();
+        console.log(order);
+        document.getElementById("form").submit();
+        alert("submitted");
+        setTimeout(function() {
+          location.reload();
+        }, 2000);
+
+      }
+
+    </script>
+
+    <iframe width="0" height="0" border="0" name="dummyframe" id="dummyframe" style="display:none;"></iframe><br>
+    <a target="_blank" href="https://script.google.com/d/1ZtCxDsRdIRMH_h-mohAlBgWuCEb7TF-mP6H9rhhs31KYLwe_D5f3fdCR/edit?usp=sharing">Script</a> -
+    <a target="_blank" href="https://github.com/nms553/nms553.github.io/edit/master/picks.html">GH</a> -
+    <a target="_blank" href="https://docs.google.com/spreadsheets/d/1CAyAdtlGMJVQVzqKae8Qk3kUUT4WsrxoDYLBu3w3GbY/edit#gid=1482388299">Sheets</a>
+  </body>
+
+</html>

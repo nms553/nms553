@@ -44,20 +44,20 @@
 
 
     <datalist id="stores">
-    <option>Hardware store</option>
-    <option>Grocery store</option>
-    <option>Online</option>
-    <option>Home Depot></option>
-    <option>House projects</option>
-    <option>Lowes</option>
-    <option>Amazon</option>
-    <option>Walmart</option>
-    <option>Target</option>
+      <option>Hardware store</option>
+      <option>Grocery store</option>
+      <option>Online</option>
+      <option>Home Depot></option>
+      <option>House projects</option>
+      <option>Lowes</option>
+      <option>Amazon</option>
+      <option>Walmart</option>
+      <option>Target</option>
     </datalist>
 
     <br><br>
 
-    <table id="(none)">
+    <table id="none">
       <tr>
         <th>None</th>
       </tr>
@@ -92,17 +92,26 @@
         });
         console.log(archivedarray);
         document.getElementById("body").innerHTML = "";
-        document.getElementById("(none)").innerHTML = "";
+        document.getElementById("none").innerHTML = "";
         archivedarray.forEach(function(item, index) {
           var a = document.createElement("A");
           a.href = "javascript:";
           a.setAttribute("onclick", "pin(this.id, this.className)");
           a.innerHTML = item.gsx$item.$t
           a.id = index;
-          a.className = item.gsx$category.$t
+          if (!item.gsx$category.$t) {
+            a.className = "none"
+          } else {
+            a.className = item.gsx$category.$t
+          }
 
           try {
-            var getcategorytable = document.getElementById(item.gsx$category.$t);
+            var getcategorytable;
+            if (!item.gsx$category.$t) {
+              getcategorytable = document.getElementById("none");
+            } else {
+              getcategorytable = document.getElementById(item.gsx$category.$t);
+            }
             getcategorytable.insertRow().insertCell(0).appendChild(a);
           } catch {
             var getcategorytable = document.createElement("TABLE");
@@ -147,19 +156,34 @@
       }
 
       function saveNew() {
-        if (document.getElementsByName("category")[0].value.length == 0) {
-          document.getElementsByName("category")[0].value = "(none)";
-        }
+        var len = originalarray.length
+        var item = document.getElementsByName("ordr")[0].value
+        var category = document.getElementsByName("ordr")[0].value
+
+        var savenew = originalarray.push({
+          gsx$item: {
+            $t: item
+          },
+          gsx$order: {
+            $t: Date.now()
+          },
+          gsx$category: {
+            $t: category
+          },
+          gsx$archive: {
+            $t: ""
+          },
+          title: {
+            $t: ""
+          }
+        })
+
+        console.log(originalarray)
 
         var order = document.getElementsByName("ordr")[0]
-        var index = document.getElementsByName("idx")[0]
-        order.value = Date.now();
-        console.log(order);
+        order.value = Date.now()
+        //var index = document.getElementsByName("idx")[0] = len
         document.getElementById("form").submit();
-        alert("submitted");
-        setTimeout(function() {
-          location.reload();
-        }, 2000);
 
       }
 
@@ -168,7 +192,7 @@
     <iframe width="0" height="0" border="0" name="dummyframe" id="dummyframe" style="display:none;"></iframe><br>
     <a target="_blank" href="https://script.google.com/d/1ZtCxDsRdIRMH_h-mohAlBgWuCEb7TF-mP6H9rhhs31KYLwe_D5f3fdCR/edit?usp=sharing">Script</a> -
     <a target="_blank" href="https://github.com/nms553/nms553.github.io/edit/master/jewpa.html">GH</a> -
-    <a target="_blank" href="https://docs.google.com/spreadsheets/d/1CAyAdtlGMJVQVzqKae8Qk3kUUT4WsrxoDYLBu3w3GbY/edit#gid=1482388299">Sheets</a>
+    <a target="_blank" href="https://docs.google.com/spreadsheets/d/1gPV1KpSUCEE-0OebVmyy2Fpn-xRd8CvS0gC3E8BwzHc/edit">Sheets</a>
   </body>
 
 </html>

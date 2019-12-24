@@ -5,7 +5,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <style>
       table,
-      td {
+      td,
+      th {
         border: 1px solid;
         border-collapse: collapse;
       }
@@ -14,7 +15,8 @@
         margin-top: 30px;
       }
 
-      td {
+      td,
+      th {
         width: 300px;
       }
 
@@ -71,71 +73,119 @@
 
     </div>
     <script>
+      var genesisarray = [];
       var originalarray = [];
       var archivedarray = [];
+      var body = document.getElementById("body")
+      var none = document.getElementById("none")
       var sheetUrl = 'https://spreadsheets.google.com/feeds/list/1gPV1KpSUCEE-0OebVmyy2Fpn-xRd8CvS0gC3E8BwzHc/4/public/full?alt=json';
 
       $(function() {
-        $.getJSON(sheetUrl, startDOM)
-
-        function startDOM(data) {
-          originalarray = data.feed.entry;
-          //console.log(gsarray);
-          archivedarray = originalarray.filter(removeArchived);
-          sort();
-        }
+        $.getJSON(sheetUrl, feed)
       });
 
-      function sort() {
-        archivedarray.sort(function(a, b) {
-          return b.gsx$order.$t - a.gsx$order.$t
-        });
-        console.log(archivedarray);
-        document.getElementById("body").innerHTML = "";
-        document.getElementById("none").innerHTML = "";
-        archivedarray.forEach(function(item, index) {
-          var a = document.createElement("A");
-          a.href = "javascript:";
-          a.setAttribute("onclick", "pin(this.id, this.className)");
-          a.innerHTML = item.gsx$item.$t
-          a.id = index;
-          if (!item.gsx$category.$t) {
-            a.className = "none"
-          } else {
-            a.className = item.gsx$category.$t
-          }
+      function feed(data) {
+        genesisarray = data.feed.entry;
+        console.log(genesisarray)
+        genesisarray.map(mapIndex);
 
-          try {
-            var getcategorytable;
-            if (!item.gsx$category.$t) {
-              getcategorytable = document.getElementById("none");
-            } else {
-              getcategorytable = document.getElementById(item.gsx$category.$t);
-            }
-            getcategorytable.insertRow().insertCell(0).appendChild(a);
-          } catch {
-            var getcategorytable = document.createElement("TABLE");
-            getcategorytable.id = item.gsx$category.$t;
-            getcategorytable.className = "clearTables"
-            getcategorytable.insertRow().insertCell(0).innerHTML = '<b>' + item.gsx$category.$t + '</b>';
-            var newrow = getcategorytable.insertRow().insertCell(0).appendChild(a)
-            body.appendChild(getcategorytable);
-          } finally {
+        function mapIndex(item, index) {
+          item.index = index
+        }
 
-          }
-
-
-        })
-
+        removeArchs();
       }
 
+      function removeArchs() {
+        filteredarray = genesisarray.filter(removeArchived);
+        buildTables();
+      }
 
+      function buildTables() {
 
-      function pin(id, cname) {
-        var tablerank = document.getElementsByClassName(cname)[0].innerHTML;
-        console.log(tablerank + 'classnametext')
-        if (tablerank == archivedarray[id].gsx$item.$t) {
+        body.innerHTML = ""
+        none.innerHTML = ""
+        //console.log(originalarray)
+        let unique = [...new Set(filteredarray.map(item => item.gsx$category.$t))];
+        console.log(unique);
+        unique.forEach(function(item, index) {
+          if (item) {
+            var table = document.createElement("TABLE")
+            table.id = item
+            //console.log(table.id)
+            var newrow = table.insertRow()
+            var th = document.createElement("TH")
+            th.innerHTML = item
+            newrow.appendChild(th)
+            body.appendChild(table);
+          } else {
+            //console.log("no")
+          }
+        })
+        sort();
+      }
+
+      function sort() {
+        filteredarray.sort(function(a, b) {
+          return b.gsx$order.$t - a.gsx$order.$t
+        })
+        console.log(filteredarray);
+        filteredarray.forEach(function(item, index) {
+          var gettable = document.getElementById(item.gsx$category.$t);
+          var a = document.createElement("A");
+          a.href = "javascript:";
+          a.setAttribute("onclick", "pin(this)");
+          a.innerHTML = item.gsx$item.$t
+          a.id = item.index
+          a.setAttribute("data-newpos", index)
+          a.className = item.gsx$category.$t
+          if (!item.gsx$category.$t) {
+            a.className = "none"
+            gettable = document.getElementById("none");
+          }
+          if (!item.gsx$archive.$t) {}
+          var newrow = gettable.insertRow()
+          var newcell = newrow.insertCell(0)
+          newcell.appendChild(a);
+        })
+      }
+
+      function pin(that) {
+        console.log(that)
+        var newpos = that.getAttribute("data-newpos")
+        var origpos = that.id;
+        console.log(origpos)
+        var zeroindex = document.getElementsByClassName(that.className)[0];
+        console.log(genesisarray[origpos].gsx$item.$t)
+        var indax = parseInt(origpos) + 2
+
+        if (that.innerHTML == zeroindex.innerHTML) {
+          genesisarray[origpos].gsx$archive.$t = "none"
+          document.getElementsByName("archive")[0].value = "1"
+        } else {
+          genesisarray[that.id].gsx$order.$t = Date.now()
+        }
+        document.getElementsByName("ordr")[0].value = Date.now()
+        document.getElementsByName("idx")[0].value = indax
+        $("form").submit();
+        removeArchs();
+        //console.log(originalarray[that.id])
+        //console.log(originalarray[that.id])
+
+        console.log(zeroindex)
+        /*if (var tablerank = document.getElementsByClassName(cname)[0].innerHTML;)
+        
+        var idx = this.index
+        
+        var order = document.getElementsByName("ordr")[0];
+        document.getElementsByName("idx")[0].value = that
+
+        console.log(that.className)
+        var tablerank = document.getElementsByClassName(that.className)[0].innerHTML;
+        if (tablerank == archivedarray[that.id].gsx$item.$t) {
           document.getElementsByName("archive")[0].value = "1";
+          tablerank.gsx$archive.$t = "none"
+          that.parentElement.parentElement.style.display = "none"
         }
         archivedarray[id].gsx$order.$t = Date.now();
         var location = archivedarray[id].title.$t;
@@ -148,7 +198,7 @@
         index.value = location.split(": ")[1];
         //console.log(index.value)
         $("form").submit();
-        sort();
+        startDOM();*/
       }
 
       function removeArchived(item) {
@@ -156,11 +206,11 @@
       }
 
       function saveNew() {
-        var len = originalarray.length
-        var item = document.getElementsByName("ordr")[0].value
-        var category = document.getElementsByName("ordr")[0].value
+        var len = genesisarray.length
+        var item = document.getElementsByName("item")[0].value
+        var category = document.getElementsByName("category")[0].value
 
-        var savenew = originalarray.push({
+        var savenew = genesisarray.push({
           gsx$item: {
             $t: item
           },
@@ -178,12 +228,13 @@
           }
         })
 
-        console.log(originalarray)
-
-        var order = document.getElementsByName("ordr")[0]
-        order.value = Date.now()
-        //var index = document.getElementsByName("idx")[0] = len
+        len = genesisarray.length
+        console.log(genesisarray[len])
+        document.getElementsByName("ordr")[0].value = Date.now()
         document.getElementById("form").submit();
+        document.getElementsByName("item")[0].value = ""
+        document.getElementsByName("category")[0].value = ""
+        removeArchs();
 
       }
 

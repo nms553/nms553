@@ -78,6 +78,7 @@
       var body = document.getElementById("body")
       var none = document.getElementById("none")
       var sheetUrl = 'https://spreadsheets.google.com/feeds/list/1gPV1KpSUCEE-0OebVmyy2Fpn-xRd8CvS0gC3E8BwzHc/4/public/full?alt=json';
+      var datalist = document.getElementById("stores")
 
       $(function() {
         $.getJSON(sheetUrl, feed)
@@ -109,6 +110,9 @@
         console.log(unique);
         unique.forEach(function(item, index) {
           if (item) {
+            var option = document.createElement("OPTION")
+            option.value = item
+            datalist.appendChild(option);
             var table = document.createElement("TABLE")
             table.id = item
             //console.log(table.id)
@@ -241,7 +245,7 @@
 
     <iframe width="0" height="0" border="0" name="dummyframe" id="dummyframe" style="display:none;"></iframe><br>
     <a target="_blank" href="https://script.google.com/d/1ZtCxDsRdIRMH_h-mohAlBgWuCEb7TF-mP6H9rhhs31KYLwe_D5f3fdCR/edit?usp=sharing">Script</a> -
-    <a target="_blank" href="https://github.com/nms553/nms553.github.io/edit/master/jewpa.html">GH</a> -
+    <a target="_blank" href="https://github.com/nms553/nms553.github.io/edit/master/jewpa.html">Github</a> -
     <a target="_blank" href="https://docs.google.com/spreadsheets/d/1gPV1KpSUCEE-0OebVmyy2Fpn-xRd8CvS0gC3E8BwzHc/edit">Sheets</a>
   </body>
 

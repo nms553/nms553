@@ -39,9 +39,9 @@
       <input list="stores" name="category" type="text" placeholder="Store" />
     </form>
     <br>
-    <button onclick="saveNew()">
-      Save It
-    </button>
+    <a href="" id="navigate"><button onclick="saveNew()">
+        Save It
+      </button></a>
 
 
     <datalist id="stores"></datalist>
@@ -75,6 +75,7 @@
       var category = document.getElementsByName("category")[0]
       var fitem = document.getElementsByName("item")[0]
       var form = document.getElementById("form")
+      var navigate = document.getElementById("navigate")
 
       $(function() {
         $.getJSON(sheetUrl, feed)
@@ -207,6 +208,7 @@
         })
         order.value = Date.now()
         form.submit();
+        navigate.href = "#" + category.value
         fitem.value = ""
         category.value = ""
         archive.value = ""

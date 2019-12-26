@@ -1,4 +1,3 @@
-
 <html>
 
   <head>
@@ -70,6 +69,12 @@
       var none = document.getElementById("none")
       var sheetUrl = 'https://spreadsheets.google.com/feeds/list/1gPV1KpSUCEE-0OebVmyy2Fpn-xRd8CvS0gC3E8BwzHc/1/public/full?alt=json';
       var datalist = document.getElementById("stores")
+      var archive = document.getElementsByName("archive")[0]
+      var order = document.getElementsByName("ordr")[0]
+      var findex = document.getElementsByName("idx")[0]
+      var category = document.getElementsByName("category")[0]
+      var fitem = document.getElementsByName("item")[0]
+      var form = document.getElementById("form")
 
       $(function() {
         $.getJSON(sheetUrl, feed)
@@ -78,24 +83,29 @@
       function feed(data) {
         genesisarray = data.feed.entry;
         //console.log(genesisarray)
+        next();
+      }
+
+      function next() {
         genesisarray.map(mapIndex);
-
-        function mapIndex(item, index) {
-          item.index = index
-        }
-
         removeArchs();
       }
 
+      function mapIndex(item, index) {
+        item.index = index
+      }
+
       function removeArchs() {
+        body.innerHTML = ""
+        none.innerHTML = ""
         filteredarray = genesisarray.filter(removeArchived);
+        console.log(filteredarray)
         buildTables();
       }
 
       function buildTables() {
 
-        body.innerHTML = ""
-        none.innerHTML = ""
+
         //console.log(originalarray)
         let unique = [...new Set(filteredarray.map(item => item.gsx$category.$t))];
         //console.log(unique);
@@ -145,52 +155,30 @@
       }
 
       function pin(that) {
-        console.log(that)
+        //console.log(that);
+        //console.log("^^is the one you clicked")
         var newpos = that.getAttribute("data-newpos")
         var origpos = that.id;
-        //console.log(origpos)
         var zeroindex = document.getElementsByClassName(that.className)[0];
-        console.log(zeroindex)
-        var indax = parseInt(origpos) + 2
+        //console.log(zeroindex);
+        //console.log("^^is the top of the list")
 
-        if (that.innerHTML == zeroindex.innerHTML) {
-          genesisarray[origpos].gsx$archive.$t = "none"
-          document.getElementsByName("archive")[0].value = "1"
+        if (that.innerHTML === zeroindex.innerHTML) {
+          //console.log(genesisarray[origpos])
+          genesisarray[origpos].gsx$archive.$t = "1"
+          archive.value = "1"
         } else {
           genesisarray[that.id].gsx$order.$t = Date.now()
         }
-        document.getElementsByName("ordr")[0].value = Date.now()
-        document.getElementsByName("idx")[0].value = indax
+        order.value = Date.now()
+        findex.value = origpos
+        //console.log(archive.value)
         $("form").submit();
-        removeArchs();
-        //console.log(originalarray[that.id])
-        //console.log(originalarray[that.id])
-        /*if (var tablerank = document.getElementsByClassName(cname)[0].innerHTML;)
-        
-        var idx = this.index
-        
-        var order = document.getElementsByName("ordr")[0];
-        document.getElementsByName("idx")[0].value = that
+        archive.value = ""
+        order.value = ""
+        findex.value = "0"
 
-        console.log(that.className)
-        var tablerank = document.getElementsByClassName(that.className)[0].innerHTML;
-        if (tablerank == archivedarray[that.id].gsx$item.$t) {
-          document.getElementsByName("archive")[0].value = "1";
-          tablerank.gsx$archive.$t = "none"
-          that.parentElement.parentElement.style.display = "none"
-        }
-        archivedarray[id].gsx$order.$t = Date.now();
-        var location = archivedarray[id].title.$t;
-        //console.log(archivedarray[id]);
-
-        //console.log(archivedarray);
-        var order = document.getElementsByName("ordr")[0];
-        var index = document.getElementsByName("idx")[0];
-        order.value = Date.now();
-        index.value = location.split(": ")[1];
-        //console.log(index.value)
-        $("form").submit();
-        startDOM();*/
+        next();
       }
 
       function removeArchived(item) {
@@ -199,18 +187,16 @@
 
       function saveNew() {
         var len = genesisarray.length
-        var item = document.getElementsByName("item")[0].value
-        var category = document.getElementsByName("category")[0].value
 
         var savenew = genesisarray.push({
           gsx$item: {
-            $t: item
+            $t: fitem.value
           },
           gsx$order: {
             $t: Date.now()
           },
           gsx$category: {
-            $t: category
+            $t: category.value
           },
           gsx$archive: {
             $t: ""
@@ -219,14 +205,13 @@
             $t: ""
           }
         })
-
-        len = genesisarray.length
-        console.log(genesisarray[len])
-        document.getElementsByName("ordr")[0].value = Date.now()
-        document.getElementById("form").submit();
-        document.getElementsByName("item")[0].value = ""
-        document.getElementsByName("category")[0].value = ""
-        removeArchs();
+        order.value = Date.now()
+        form.submit();
+        fitem.value = ""
+        category.value = ""
+        archive.value = ""
+        order.value = ""
+        next();
 
       }
 

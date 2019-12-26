@@ -25,6 +25,7 @@
 
       th {
         text-align: left;
+        background-color: LightBlue;
       }
       
       tr:nth-child(even) {
@@ -116,11 +117,9 @@
       }
 
       function buildTables() {
-
-
         //console.log(originalarray)
         let unique = [...new Set(filteredarray.map(item => item.gsx$category.$t))];
-        //console.log(unique);
+        console.log(unique);
         unique.forEach(function(item, index) {
           if (item) {
             var option = document.createElement("OPTION")

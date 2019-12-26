@@ -219,7 +219,7 @@
         })
         order.value = Date.now()
         form.submit();
-        navigate.href = "#" + category.value
+        navigate.href = "#" + category.value.replace(/ /g,'')
         fitem.value = ""
         category.value = ""
         archive.value = ""

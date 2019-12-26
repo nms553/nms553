@@ -1,3 +1,4 @@
+
 <html>
 
   <head>
@@ -126,7 +127,7 @@
             option.value = item
             datalist.appendChild(option);
             var table = document.createElement("TABLE")
-            table.id = item
+            table.id = item.replace(/ /g,'')
             //console.log(table.id)
             var newrow = table.insertRow()
             var th = document.createElement("TH")
@@ -146,14 +147,14 @@
         })
         //console.log(filteredarray);
         filteredarray.forEach(function(item, index) {
-          var gettable = document.getElementById(item.gsx$category.$t);
+          var gettable = document.getElementById(item.gsx$category.$t.replace(/ /g,''));
           var a = document.createElement("A");
           a.href = "javascript:";
           a.setAttribute("onclick", "pin(this)");
           a.innerHTML = item.gsx$item.$t
           a.id = item.index
           a.setAttribute("data-newpos", index)
-          a.className = item.gsx$category.$t
+          a.className = item.gsx$category.$t.replace(/ /g,'')
           if (!item.gsx$category.$t) {
             a.className = "none"
             gettable = document.getElementById("none");
@@ -171,7 +172,7 @@
         var newpos = that.getAttribute("data-newpos")
         var origpos = that.id;
         var zeroindex = document.getElementsByClassName(that.className)[0];
-        //console.log(zeroindex);
+        console.log(zeroindex);
         //console.log("^^is the top of the list")
 
         if (that.innerHTML === zeroindex.innerHTML) {

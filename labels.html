@@ -1,0 +1,69 @@
+<head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+  <style>
+
+  </style>
+</head>
+
+<body id="0">
+
+
+  <script>
+    var sheet = "https://spreadsheets.google.com/feeds/cells/1lNy-0mqGVv-Cg83nCG5d51XzxyQBL3bcEd-amzZ7cyQ/1/public/full?alt=json"
+    var rawdata = []
+    var body = document.getElementById("body")
+
+    $(function() {
+      $.getJSON(sheet, getData)
+    });
+
+    function getData(data) {
+      rawdata = data.feed.entry;
+      console.log(rawdata)
+      var prevcol = 0;
+      var prevrow = 1;
+
+      rawdata.forEach(function(item, index) {
+        var details = document.createElement("DETAILS")
+        //details.setAttribute("data.col", item.gs$cell.col)
+        //details.setAttribute("data.row", item.gs$cell.row)
+
+        var summary = document.createElement("SUMMARY")
+        summary.innerHTML = item.content.$t
+        details.appendChild(summary)
+
+        details.id = item.gs$cell.row
+        details.className = item.gs$cell.col
+
+        if (item.gs$cell.col > prevcol) {
+          prevrow = item.gs$cell.row - 1
+          prevcol++
+          var level = document.getElementById(prevrow)
+          level.appendChild(details)
+
+        } else if (item.gs$cell.col < prevcol) {
+          var column = item.gs$cell.col - 1
+          var root = document.getElementsByClassName(column)
+          console.log(root)
+          var iden = root[root.length - 1]
+          console.log(iden)
+          iden.appendChild(details)
+          console.log(iden.id)
+          prevrow = item.gs$cell.row
+
+        } else {
+          var level = document.getElementById(prevrow)
+          level.appendChild(details)
+        }
+
+        $("a").attr("target", "_blank")
+
+
+
+      })
+
+    }
+
+  </script>
+</body>

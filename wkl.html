@@ -48,7 +48,10 @@
     <button class="submit" onclick="add()">Add</button>
     <hr>
     <h3>Unplaced</h3>
-    <table id="0" border="1" bgcolor="lightyellow"></table>
+    <table id="0" border="1" bgcolor="lightblue"></table>
+    <hr>
+    <h3>Accomplished Today</h3>
+    <table id="-1" border="1" bgcolor="lightyellow"></table>
     <hr>
     <h3>Today</h3>
     <table id="1" border="1"></table>
@@ -78,6 +81,7 @@
       var table3 = document.getElementById("3")
       var table4 = document.getElementById("4")
       var table5 = document.getElementById("5")
+      var table6 = document.getElementById("-1")
       $(document).ready(function() {
 
         $.getJSON(gsheet, data)
@@ -85,7 +89,7 @@
       });
 
       function data(result) {
-        //console.log(result.feed.entry)
+        console.log(result.feed.entry)
         gdata = result.feed.entry;
         process();
         return result;
@@ -93,11 +97,13 @@
 
       function process() {
         table0.innerHTML = "";
+        table6.innerHTML = "";
         table1.innerHTML = "";
         table2.innerHTML = "";
         table3.innerHTML = "";
         table4.innerHTML = "";
         table5.innerHTML = "";
+        table6.innerHTML = "";
         gdata.forEach(function(i, index) {
           var upbtn = document.createElement("BUTTON")
           upbtn.setAttribute("onclick", "up(this)")
@@ -108,7 +114,7 @@
           dwnbtn.setAttribute("data-id", index)
           dwnbtn.innerText = "↓"
           var xbtn = document.createElement("BUTTON")
-          xbtn.setAttribute("onclick", "del(this)")
+          xbtn.setAttribute("onclick", "done(this)")
           xbtn.setAttribute("data-id", index)
           xbtn.innerText = "X"
           var select = document.createElement("SELECT")
@@ -118,10 +124,12 @@
           var opt3 = document.createElement("OPTION")
           var opt4 = document.createElement("OPTION")
           var opt5 = document.createElement("OPTION")
+          var opt6 = document.createElement("OPTION")
           var optx = document.createElement("OPTION")
           //var opt6 = document.createElement("OPTION")
           optx.text = "";
           opt0.text = "unplaced";
+          opt6.text = "DONE";
           opt1.text = "today";
           opt2.text = "tomorrow";
           opt3.text = "2 days";
@@ -134,15 +142,18 @@
           opt3.value = "3"
           opt4.value = "4"
           opt5.value = "5"
+          opt6.value = "-1"
 
           //opt6.text = 0;
           select.appendChild(optx)
+          select.appendChild(opt0)
+          select.appendChild(opt6)
           select.appendChild(opt1)
           select.appendChild(opt2)
           select.appendChild(opt3)
           select.appendChild(opt4)
           select.appendChild(opt5)
-          select.appendChild(opt0)
+
           //select.add(document.createElement("OPTION").innerText = 1)
           //select.add(document.createElement("OPTION").innerText = 2)
           //select.add(document.createElement("OPTION").innerText = 3)
@@ -187,7 +198,7 @@
         var dat = that.getAttribute("data-id")
         //console.log(dat)
 
-        gdata[dat].gsx$level.$t = level;
+        gdata[dat].gsx$level.$t = level.toString;
         process();
         autosave();
       }
@@ -202,21 +213,21 @@
         var dat = that.getAttribute("data-id")
         //console.log(dat)
 
-        gdata[dat].gsx$level.$t = level;
+        gdata[dat].gsx$level.$t = level.toStrting();
         process();
         autosave();
       }
 
-      function del(that) {
-
-        var level = that.class
-        //console.log(level)
-        level = -1
-
+      function done(that) {
         var dat = that.getAttribute("data-id")
-        //console.log(dat)
+        var pos = gdata[dat].gsx$level.$t;
 
-        gdata[dat].gsx$level.$t = level;
+        if (pos == -1 || that.class == "-1") {
+          gdata[dat].gsx$level.$t = "-2";
+        } else {
+          gdata[dat].gsx$level.$t = "-1";
+        }
+
         process();
         autosave();
       }

@@ -14,13 +14,12 @@
         margin: auto;
       }
 
-      td {
-        width: 10%;
+      td:not(:first-child) {
+        width: 30px;
         text-align: center;
       }
 
       td:first-child {
-        width: 80%;
         text-align: left;
       }
 
@@ -108,12 +107,58 @@
           dwnbtn.setAttribute("onclick", "dwn(this)")
           dwnbtn.setAttribute("data-id", index)
           dwnbtn.innerText = "↓"
+          var xbtn = document.createElement("BUTTON")
+          xbtn.setAttribute("onclick", "del(this)")
+          xbtn.setAttribute("data-id", index)
+          xbtn.innerText = "X"
+          var select = document.createElement("SELECT")
+          var opt0 = document.createElement("OPTION")
+          var opt1 = document.createElement("OPTION")
+          var opt2 = document.createElement("OPTION")
+          var opt3 = document.createElement("OPTION")
+          var opt4 = document.createElement("OPTION")
+          var opt5 = document.createElement("OPTION")
+          var optx = document.createElement("OPTION")
+          //var opt6 = document.createElement("OPTION")
+          optx.text = "";
+          opt0.text = "unplaced";
+          opt1.text = "today";
+          opt2.text = "tomorrow";
+          opt3.text = "2 days";
+          opt4.text = "this week";
+          opt5.text = "no date";
+          optx.setAttribute("selected", true)
+          opt0.value = "0"
+          opt1.value = "1"
+          opt2.value = "2"
+          opt3.value = "3"
+          opt4.value = "4"
+          opt5.value = "5"
+
+          //opt6.text = 0;
+          select.appendChild(optx)
+          select.appendChild(opt1)
+          select.appendChild(opt2)
+          select.appendChild(opt3)
+          select.appendChild(opt4)
+          select.appendChild(opt5)
+          select.appendChild(opt0)
+          //select.add(document.createElement("OPTION").innerText = 1)
+          //select.add(document.createElement("OPTION").innerText = 2)
+          //select.add(document.createElement("OPTION").innerText = 3)
+          //select.add(document.createElement("OPTION").innerText = 4)
+          //select.add(document.createElement("OPTION").innerText = 5)
+          select.setAttribute("onchange", "jump(this)")
+          select.setAttribute("data-id", index)
           try {
             var tableno = document.getElementById(i.gsx$level.$t)
             var row = tableno.insertRow()
-            row.insertCell(0).innerHTML = i.gsx$i.$t
-            row.insertCell(1).appendChild(dwnbtn)
-            row.insertCell(1).appendChild(upbtn)
+            row.insertCell().innerHTML = i.gsx$i.$t
+            row.insertCell().appendChild(select)
+            row.insertCell().appendChild(dwnbtn)
+            row.insertCell().appendChild(upbtn)
+            row.insertCell().appendChild(xbtn)
+
             upbtn.class = i.gsx$level.$t;
             dwnbtn.class = i.gsx$level.$t;
           } catch {} finally {}
@@ -155,6 +200,27 @@
         //console.log(dat)
 
         gdata[dat].gsx$level.$t = level;
+        process();
+        autosave();
+      }
+
+      function del(that) {
+
+        var level = that.class
+        //console.log(level)
+        level = -1
+
+        var dat = that.getAttribute("data-id")
+        //console.log(dat)
+
+        gdata[dat].gsx$level.$t = level;
+        process();
+        autosave();
+      }
+
+      function jump(that) {
+        var dat = that.getAttribute("data-id")
+        gdata[dat].gsx$level.$t = that.value;
         process();
         autosave();
       }

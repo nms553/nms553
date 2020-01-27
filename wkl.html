@@ -153,7 +153,10 @@
           try {
             var tableno = document.getElementById(i.gsx$level.$t)
             var row = tableno.insertRow()
-            row.insertCell().innerHTML = i.gsx$i.$t
+            var cell0 = row.insertCell()
+            cell0.setAttribute("ondblclick", "edit(this)")
+            cell0.innerHTML = i.gsx$i.$t
+            cell0.setAttribute("data-id", index)
             row.insertCell().appendChild(select)
             row.insertCell().appendChild(dwnbtn)
             row.insertCell().appendChild(upbtn)
@@ -249,6 +252,27 @@
         autosave();
         process();
         $("input").val("")
+      }
+
+      function edit(that) {
+        that.setAttribute("contenteditable", true)
+        var button = document.createElement("BUTTON")
+        var dat = that.getAttribute("data-id")
+        button.setAttribute("onclick", "change(this.parentElement)")
+        button.innerHTML = "✔"
+        button.setAttribute("display", "float: right;")
+        var br = document.createElement("BR")
+        that.appendChild(br)
+        that.appendChild(button)
+      }
+
+      function change(that) {
+        var dat = that.getAttribute("data-id")
+        gdata[dat].gsx$i.$t = that.firstChild.data;
+
+        process();
+        autosave();
+
       }
 
     </script>

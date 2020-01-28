@@ -47,6 +47,13 @@
         display: none
       }
 
+      .input {
+        width: 99%;
+        height: initial;
+        display: initial;
+        font-size: initial;
+      }
+
     </style>
   </head>
 
@@ -192,6 +199,15 @@
           //console.log(i)
         });
 
+        var empty = table1.insertRow()
+        var input = empty.insertCell();
+        input.setAttribute("colspan", "3")
+        var jonkey = document.createElement("INPUT")
+        jonkey.className = "input"
+        jonkey.setAttribute("onchange", "newitem(this)")
+        input.appendChild(jonkey)
+
+
 
       }
 
@@ -265,8 +281,6 @@
           "gsx$level": {
             $t: "0"
           }
-
-
         }
         //console.log(additem)
         gdata.push(additem)
@@ -295,6 +309,26 @@
         process();
         autosave();
 
+      }
+
+
+
+      function newitem(that) {
+        var additem = {
+          "gsx$i": {
+            $t: that.value
+          },
+          "gsx$level": {
+            $t: "1"
+          }
+        }
+        //console.log(additem)
+        gdata.push(additem)
+        //console.log(gdata)
+        autosave();
+        process();
+        $(".input").val("");
+        $(".input").focus();
       }
 
     </script>

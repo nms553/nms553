@@ -39,6 +39,14 @@
         width: 100%;
       }
 
+      h3 {
+        display: inline-block;
+      }
+
+      summary::-webkit-details-marker {
+        display: none
+      }
+
     </style>
   </head>
 
@@ -50,22 +58,25 @@
     <h3>Unplaced</h3>
     <table id="0" border="1" bgcolor="lightblue"></table>
     <hr>
-    <h3>Accomplished Today</h3>
-    <table id="-1" border="1" bgcolor="lightyellow"></table>
-    <hr>
+    <details>
+      <summary>
+        <h3><u>Accomplished Today</u></h3>
+      </summary>
+
+      <table id="-1" border="1" bgcolor="lightyellow"></table>
+
+    </details>
     <h3>Today</h3>
     <table id="1" border="1"></table>
     <hr>
-    <h3>Tomorrow</h3>
+    <h3>Queue</h3>
     <table id="2" border="1"></table>
     <hr>
-    <h3>Two Days</h3>
+    <h3>Hold over</h3>
     <table id="3" border="1"></table>
-    <hr>
-    <h3>This Week</h3>
+
     <table id="4" border="1"></table>
-    <hr>
-    <h3>No Date</h3>
+
     <table id="5" border="1"></table>
 
 
@@ -131,10 +142,10 @@
           opt0.text = "unplaced";
           opt6.text = "DONE";
           opt1.text = "today";
-          opt2.text = "tomorrow";
-          opt3.text = "2 days";
-          opt4.text = "this week";
-          opt5.text = "no date";
+          opt2.text = "queue";
+          opt3.text = "top";
+          opt4.text = "mid";
+          opt5.text = "bottom";
           optx.setAttribute("selected", true)
           opt0.value = "0"
           opt1.value = "1"

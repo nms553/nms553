@@ -14,7 +14,7 @@
         display: inline-block;
         border: 1px solid;
         width: 40%;
-        min-width: 300px;
+        min-width: 275px;
         margin: 20px;
       }
 
@@ -113,12 +113,12 @@
           var optionu = document.createElement("OPTION")
           var optionn = document.createElement("OPTION")
           var optionarch = document.createElement("OPTION")
-          optionun.text = "Unplaced"
-          optionb.text = "1 Urgent and Important"
-          optioni.text = "2 Important"
-          optionu.text = "3 Urgent"
-          optionn.text = "4 Not Urgent, Not Important"
-          optionarch.text = "Archived"
+          optionun.text = "❔ Unplaced"
+          optionb.text = "1 - Urgent and Important"
+          optioni.text = "2 - Important"
+          optionu.text = "3 - Urgent"
+          optionn.text = "4 - Not Urgent, Not Important"
+          optionarch.text = "❌ Archive"
           optionun.value = "un"
           optionb.value = "b"
           optioni.value = "i"
@@ -170,6 +170,7 @@
         getarray.gsx$level.$t = that.value
         //console.log(getarray)
         autosave();
+				$(that).toggle();
       }
 
       function autosave() {

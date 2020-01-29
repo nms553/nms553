@@ -113,10 +113,10 @@
           var optionn = document.createElement("OPTION")
           var optionarch = document.createElement("OPTION")
           optionun.text = "Unplaced"
-          optionb.text = "Urgent and Important"
-          optioni.text = "Important"
-          optionu.text = "Urgent"
-          optionn.text = "Not Urgent, Not Important"
+          optionb.text = "1 Urgent and Important"
+          optioni.text = "2 Important"
+          optionu.text = "3 Urgent"
+          optionn.text = "4 Not Urgent, Not Important"
           optionarch.text = "Archived"
           optionun.value = "un"
           optionb.value = "b"
@@ -126,11 +126,12 @@
           optionarch.value = "arch"
 
           //console.log(level)
-          dropdown.add(optionun)
+          
           dropdown.add(optionb)
           dropdown.add(optioni)
           dropdown.add(optionu)
           dropdown.add(optionn)
+          dropdown.add(optionun)
           dropdown.add(optionarch)
           dropdown.setAttribute("onchange", "change(this)")
 

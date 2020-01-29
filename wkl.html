@@ -6,89 +6,59 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script>
 
+
     </script>
+
     <style>
+      div {
+        display: inline-block;
+        border: 1px solid;
+        width: 300px;
+        margin: 20px;
+      }
+
+      div {
+        vertical-align: top;
+
+      }
+
       html,
       body {
-        max-width: 500px;
-        margin: auto;
-      }
-
-      td:not(:first-child) {
-        width: 30px;
-        text-align: center;
-      }
-
-      td:first-child {
-        text-align: left;
-      }
-
-      table {
-        width: 100%;
+        font-family: sans-serif;
+        font-size: 0.91em;
       }
 
       input {
-        width: 100%;
+        width: 90%;
         height: 50px;
         display: block;
         font-size: 1.5em;
-      }
-
-      .submit {
-        height: 4em;
-        width: 100%;
-      }
-
-      h3 {
-        display: inline-block;
-      }
-
-      summary::-webkit-details-marker {
-        display: none
-      }
-
-      .input {
-        width: 99%;
-        height: initial;
-        display: initial;
-        font-size: initial;
       }
 
     </style>
   </head>
 
   <body>
-    <br>
-    <input>
-    <button class="submit" onclick="add()">Add</button>
+    <input onchange="add(this.value)" placeholder="Enter new item">
+    <div>Unplaced
+      <ul id="un">
+      </ul>
+    </div>
     <hr>
-    <h3>Today</h3>
-    <table id="0" border="1" bgcolor="lightblue"></table>
-    <hr>
+
+    <div class="left">Urgent and Important<ul id="b"></ul>
+    </div>
+    <div class="right">Important<ul id="i"></ul>
+    </div>
+    <div class="left">Urgent<ul id="u"></ul>
+    </div>
+    <div class="right">Not Urgent, Not Important<ul id="n"></ul>
+    </div>
+
     <details>
-      <summary>
-        <h3><u>Accomplished Today</u></h3>
-      </summary>
-
-      <table id="-1" border="1" bgcolor="lightyellow"></table>
-
+      <summary>Archive</summary>
+      <ul id="arch"></ul>
     </details>
-    <details>
-      <summary>
-    <h3>Unplaced</h3>
-        </summary>
-    <table id="1" border="1"></table>
-    </details>
-    <hr>
-    <h3>Pinned</h3>
-    <table id="2" border="1"></table>
-    <hr>
-    <h3>Hold over</h3>
-    <table id="3" border="1"></table>
-
-    <table id="4" border="1"></table>
-
-    <table id="5" border="1"></table>
 
 
     <script>
@@ -97,176 +67,104 @@
       var gtab = "5"
       var gsheet = "https://spreadsheets.google.com/feeds/list/" +
         gkey + "/" + gtab + "/public/full?alt=json"
-      var table0 = document.getElementById("0")
-      var table1 = document.getElementById("1")
-      var table2 = document.getElementById("2")
-      var table3 = document.getElementById("3")
-      var table4 = document.getElementById("4")
-      var table5 = document.getElementById("5")
-      var table6 = document.getElementById("-1")
+      var table1 = document.getElementById("0")
+      var both = document.getElementById("1")
+      var important = document.getElementById("2")
+      var urgent = document.getElementById("3")
+      var neither = document.getElementById("4")
+      var transferarray = [];
+
       $(document).ready(function() {
 
         $.getJSON(gsheet, data)
 
+        function data(result) {
+          //console.log(result.feed.entry)
+          gdata = result.feed.entry;
+          transferarray = gdata;
+          process();
+        }
+
+
+        $("ul").on("dblclick", 'li', function() {
+          $(this).children("select").toggle();
+        });
+
+
       });
 
-      function data(result) {
-        console.log(result.feed.entry)
-        gdata = result.feed.entry;
+      function addnew(data) {
+        transferarray = []
+        transferarray[0] = data;
+        //console.log(transferarray)
         process();
-        return result;
       }
 
       function process() {
-        table0.innerHTML = "";
-        table6.innerHTML = "";
-        table1.innerHTML = "";
-        table2.innerHTML = "";
-        table3.innerHTML = "";
-        table4.innerHTML = "";
-        table5.innerHTML = "";
-        table6.innerHTML = "";
-        gdata.forEach(function(i, index) {
-          var upbtn = document.createElement("BUTTON")
-          upbtn.setAttribute("onclick", "up(this)")
-          upbtn.innerText = "↑"
-          upbtn.setAttribute("data-id", index)
-          var dwnbtn = document.createElement("BUTTON")
-          dwnbtn.setAttribute("onclick", "dwn(this)")
-          dwnbtn.setAttribute("data-id", index)
-          dwnbtn.innerText = "↓"
-          var xbtn = document.createElement("BUTTON")
-          xbtn.setAttribute("onclick", "done(this)")
-          xbtn.setAttribute("data-id", index)
-          xbtn.innerText = "X"
-          var select = document.createElement("SELECT")
-          var opt0 = document.createElement("OPTION")
-          var opt1 = document.createElement("OPTION")
-          var opt2 = document.createElement("OPTION")
-          var opt3 = document.createElement("OPTION")
-          var opt4 = document.createElement("OPTION")
-          var opt5 = document.createElement("OPTION")
-          var opt6 = document.createElement("OPTION")
-          var optx = document.createElement("OPTION")
-          //var opt6 = document.createElement("OPTION")
-          optx.text = "";
-          opt0.text = "unplaced";
-          opt6.text = "DONE";
-          opt1.text = "today";
-          opt2.text = "pin";
-          opt3.text = "top";
-          opt4.text = "mid";
-          opt5.text = "bottom";
-          optx.setAttribute("selected", true)
-          opt0.value = "0"
-          opt1.value = "1"
-          opt2.value = "2"
-          opt3.value = "3"
-          opt4.value = "4"
-          opt5.value = "5"
-          opt6.value = "-1"
+        transferarray.forEach(function(i, n) {
+          var dropdown = document.createElement("SELECT")
+          dropdown.style.display = "none"
+          var optionun = document.createElement("OPTION")
+          var optionb = document.createElement("OPTION")
+          var optioni = document.createElement("OPTION")
+          var optionu = document.createElement("OPTION")
+          var optionn = document.createElement("OPTION")
+          var optionarch = document.createElement("OPTION")
+          optionun.text = "Unplaced"
+          optionb.text = "Urgent and Important"
+          optioni.text = "Important"
+          optionu.text = "Urgent"
+          optionn.text = "Not Urgent, Not Important"
+          optionarch.text = "Archived"
+          optionun.value = "un"
+          optionb.value = "b"
+          optioni.value = "i"
+          optionu.value = "u"
+          optionn.value = "n"
+          optionarch.value = "arch"
 
-          //opt6.text = 0;
-          select.appendChild(optx)
-          select.appendChild(opt0)
-          select.appendChild(opt6)
-          select.appendChild(opt1)
-          select.appendChild(opt2)
-          select.appendChild(opt3)
-          select.appendChild(opt4)
-          select.appendChild(opt5)
+          //console.log(level)
+          dropdown.add(optionun)
+          dropdown.add(optionb)
+          dropdown.add(optioni)
+          dropdown.add(optionu)
+          dropdown.add(optionn)
+          dropdown.add(optionarch)
+          dropdown.setAttribute("onchange", "change(this)")
 
-          //select.add(document.createElement("OPTION").innerText = 1)
-          //select.add(document.createElement("OPTION").innerText = 2)
-          //select.add(document.createElement("OPTION").innerText = 3)
-          //select.add(document.createElement("OPTION").innerText = 4)
-          //select.add(document.createElement("OPTION").innerText = 5)
-          select.setAttribute("onchange", "jump(this)")
-          select.setAttribute("data-id", index)
+          var level;
+          var place;
+          var li;
+
           try {
-            var tableno = document.getElementById(i.gsx$level.$t)
-            var row = tableno.insertRow()
-            var cell0 = row.insertCell()
-            cell0.setAttribute("ondblclick", "edit(this)")
-            cell0.innerHTML = i.gsx$i.$t
-            cell0.setAttribute("data-id", index)
-            row.insertCell().appendChild(select)
-            //row.insertCell().appendChild(dwnbtn)
-            //row.insertCell().appendChild(upbtn)
-            row.insertCell().appendChild(xbtn)
+            place = document.getElementById(i.gsx$level.$t)
+            level = eval("option" + i.gsx$level.$t)
+            level.setAttribute("selected", true)
 
-            upbtn.class = i.gsx$level.$t;
-            dwnbtn.class = i.gsx$level.$t;
-          } catch {} finally {}
+          } catch {
+            place = document.getElementById("arch")
+            level = eval("option" + "arch")
+          } finally {
+            level.setAttribute("selected", true)
 
 
-          //console.log(i)
-        });
+            li = document.createElement("LI")
 
-        var empty = table1.insertRow()
-        var input = empty.insertCell();
-        input.setAttribute("colspan", "3")
-        var jonkey = document.createElement("INPUT")
-        jonkey.className = "input"
-        jonkey.setAttribute("onchange", "newitem(this)")
-        input.appendChild(jonkey)
+            li.textContent = i.gsx$i.$t
+            li.id = n
+            li.appendChild(dropdown)
+            place.appendChild(li)
+          }
 
-
-
+        })
       }
 
-
-
-
-
-      function up(that) {
-
-        var level = that.class
-        console.log(level)
-        level = parseInt(level)
-        level--
-
-        var dat = that.getAttribute("data-id")
-        //console.log(dat)
-
-        gdata[dat].gsx$level.$t = level.toString;
-        process();
-        autosave();
-      }
-
-      function dwn(that) {
-
-        var level = that.class
-        console.log(level)
-        level = parseInt(level)
-        level++
-
-        var dat = that.getAttribute("data-id")
-        //console.log(dat)
-
-        gdata[dat].gsx$level.$t = level.toStrting();
-        process();
-        autosave();
-      }
-
-      function done(that) {
-        var dat = that.getAttribute("data-id")
-        var pos = gdata[dat].gsx$level.$t;
-
-        if (pos == -1 || that.class == "-1") {
-          gdata[dat].gsx$level.$t = "-2";
-        } else {
-          gdata[dat].gsx$level.$t = "-1";
-        }
-
-        process();
-        autosave();
-      }
-
-      function jump(that) {
-        var dat = that.getAttribute("data-id")
-        gdata[dat].gsx$level.$t = that.value;
-        process();
+      function change(that) {
+        var li = that.parentElement;
+        document.getElementById(that.value).appendChild(li)
+        var getarray = gdata[li.id]
+        getarray.gsx$level.$t = that.value
+        //console.log(getarray)
         autosave();
       }
 
@@ -277,62 +175,22 @@
 
       }
 
-      function add() {
+      function add(that) {
         var additem = {
           "gsx$i": {
-            $t: $("input").val()
+            $t: that
           },
           "gsx$level": {
-            $t: "0"
+            $t: "un"
           }
         }
         //console.log(additem)
         gdata.push(additem)
-        //console.log(gdata)
+
+
         autosave();
-        process();
+        addnew(additem);
         $("input").val("")
-      }
-
-      function edit(that) {
-        that.setAttribute("contenteditable", true)
-        var button = document.createElement("BUTTON")
-        var dat = that.getAttribute("data-id")
-        button.setAttribute("onclick", "change(this.parentElement)")
-        button.innerHTML = "✔"
-        button.setAttribute("display", "float: right;")
-        var br = document.createElement("BR")
-        that.appendChild(br)
-        that.appendChild(button)
-      }
-
-      function change(that) {
-        var dat = that.getAttribute("data-id")
-        gdata[dat].gsx$i.$t = that.firstChild.data;
-
-        process();
-        autosave();
-
-      }
-
-
-
-      function newitem(that) {
-        var additem = {
-          "gsx$i": {
-            $t: that.value
-          },
-          "gsx$level": {
-            $t: "1"
-          }
-        }
-        //console.log(additem)
-        gdata.push(additem)
-        //console.log(gdata)
-        autosave();
-        process();
-        $(".input").val("");
-        $(".input").focus();
       }
 
     </script>
@@ -344,14 +202,6 @@
 
 
     <iframe name="dummy" style="display: none;"></iframe>
-
-    <footer>
-      <br>
-      <hr><br>
-      <a href="https://docs.google.com/spreadsheets/d/1GmuPPMYLhYUZL0LRzOmlJ7MCTmgp9qUcFLr43wNfD7M/edit#gid=1132993977" target="_blank">GSheet</a>
-      -
-      <a href="https://github.com/nms553/nms553.github.io/edit/master/wkl.html" target="_blank">GitHub</a>
-    </footer>
   </body>
 
 </html>

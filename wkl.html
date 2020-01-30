@@ -36,7 +36,12 @@
         height: 50px;
         display: block;
         font-size: 1.5em;
+        margin: 5%;
       }
+			
+			details {
+				margin: 2%;
+			}
 
     </style>
   </head>
@@ -127,7 +132,7 @@
           optionarch.value = "arch"
 
           //console.log(level)
-          
+
           dropdown.add(optionb)
           dropdown.add(optioni)
           dropdown.add(optionu)
@@ -155,7 +160,8 @@
             li = document.createElement("LI")
 
             li.textContent = i.gsx$i.$t
-            li.id = n
+            li.id = i.gsx$id.$t
+            li.setAttribute("data-index", n)
             li.appendChild(dropdown)
             place.appendChild(li)
           }
@@ -166,11 +172,11 @@
       function change(that) {
         var li = that.parentElement;
         document.getElementById(that.value).appendChild(li)
-        var getarray = gdata[li.id]
+        var getarray = gdata[li.getAttribute("data-index")]
         getarray.gsx$level.$t = that.value
         //console.log(getarray)
         autosave();
-				$(that).toggle();
+        $(that).toggle();
       }
 
       function autosave() {
@@ -181,20 +187,27 @@
       }
 
       function add(that) {
+        var datenow = Date.now()
+        var len = gdata.length
         var additem = {
           "gsx$i": {
             $t: that
           },
           "gsx$level": {
             $t: "un"
+          },
+          "gsx$id": {
+            $t: datenow
           }
         }
+
         //console.log(additem)
         gdata.push(additem)
 
 
         autosave();
         addnew(additem);
+        document.getElementById(datenow).setAttribute("data-index", len)
         $("input").val("")
       }
 
@@ -207,7 +220,7 @@
 
 
     <iframe name="dummy" style="display: none;"></iframe>
-    
+
     <footer>
       <a href="https://github.com/nms553/nms553.github.io/edit/master/wkl.html">GitHub</a>
       <a href="https://docs.google.com/spreadsheets/d/1GmuPPMYLhYUZL0LRzOmlJ7MCTmgp9qUcFLr43wNfD7M/edit#gid=1132993977">Sheets</a>

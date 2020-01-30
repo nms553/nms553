@@ -10,17 +10,12 @@
     </script>
 
     <style>
-      div {
+      fieldset {
         display: inline-block;
-        border: 1px solid;
         width: 40%;
         min-width: 275px;
         margin: 20px;
-      }
-
-      div {
         vertical-align: top;
-
       }
 
       html,
@@ -37,31 +32,42 @@
         display: block;
         font-size: 1.5em;
         margin: 5%;
+        background-color: lightblue;
       }
-			
-			details {
-				margin: 2%;
-			}
+
+      details {
+        margin: 2%;
+      }
 
     </style>
   </head>
 
   <body>
+
     <input onchange="add(this.value)" placeholder="Enter new item">
-    <div>Unplaced
+    <fieldset>
+      <legend>Unplaced</legend>
       <ul id="un">
       </ul>
-    </div>
+    </fieldset>
     <hr>
 
-    <div class="left">Urgent and Important<ul id="b"></ul>
-    </div>
-    <div class="right">Important<ul id="i"></ul>
-    </div>
-    <div class="left">Urgent<ul id="u"></ul>
-    </div>
-    <div class="right">Not Urgent, Not Important<ul id="n"></ul>
-    </div>
+    <fieldset class="left">
+      <legend>Urgent and Important</legend>
+      <ul id="b"></ul>
+    </fieldset>
+    <fieldset class="right">
+      <legend>Important</legend>
+      <ul id="i"></ul>
+    </fieldset>
+    <fieldset class="left">
+      <legend>Urgent</legend>
+      <ul id="u"></ul>
+    </fieldset>
+    <fieldset class="right">
+      <legend>Not Urgent, Not Important</legend>
+      <ul id="n"></ul>
+    </fieldset>
 
     <details>
       <summary>Archive</summary>
@@ -96,6 +102,8 @@
 
         $("ul").on("dblclick", 'li', function() {
           $(this).children("select").toggle();
+          this.setAttribute("contenteditable", true)
+          //this.setAttribute("onchange", "change(this);")
         });
 
 
@@ -139,7 +147,7 @@
           dropdown.add(optionn)
           dropdown.add(optionun)
           dropdown.add(optionarch)
-          dropdown.setAttribute("onchange", "change(this)")
+          dropdown.setAttribute("onchange", "change(this.parentElement)")
 
           var level;
           var place;
@@ -162,7 +170,8 @@
             li.textContent = i.gsx$i.$t
             li.id = i.gsx$id.$t
             li.setAttribute("data-index", n)
-            li.appendChild(dropdown)
+            var spaces =
+              li.appendChild(dropdown)
             place.appendChild(li)
           }
 
@@ -170,13 +179,16 @@
       }
 
       function change(that) {
-        var li = that.parentElement;
-        document.getElementById(that.value).appendChild(li)
+        var li = that
+        var el = that.getElementsByTagName('SELECT')[0]
+        document.getElementById(el.value).appendChild(li)
         var getarray = gdata[li.getAttribute("data-index")]
-        getarray.gsx$level.$t = that.value
-        //console.log(getarray)
+        getarray.gsx$level.$t = el.value
+        getarray.gsx$i.$t = that.firstChild.data
+        console.log(getarray)
+
         autosave();
-        $(that).toggle();
+        $(el).toggle();
       }
 
       function autosave() {

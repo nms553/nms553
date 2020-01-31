@@ -10,7 +10,6 @@
     </script>
 
     <style>
-
       body {
         width: 90%;
         max-width: 900px;
@@ -19,13 +18,13 @@
 
       td:second-child {
         width: 150px;
-        
+
       }
 
       table {
         width: 100%;
         border-spacing: 0 15px;
-        
+
       }
 
       button {
@@ -42,12 +41,14 @@
         margin: 5%;
         background-color: lightblue;
       }
-      
+
       tr:nth-child(even) {
-        background-color: whitesmoke; 
+        background-color: whitesmoke;
       }
 
-
+      .hide {
+        display: none;
+      }
 
     </style>
   </head>
@@ -62,7 +63,7 @@
       var gdata = [];
       var gdatacopy = [];
       var gkey = "1GmuPPMYLhYUZL0LRzOmlJ7MCTmgp9qUcFLr43wNfD7M"
-      var gtab = "9"
+      var gtab = "8"
       var gsheet = "https://spreadsheets.google.com/feeds/list/" +
         gkey + "/" + gtab + "/public/full?alt=json";
       var main = document.getElementById("main")
@@ -102,6 +103,9 @@
         gdatacopy.forEach(function(item, index) {
           //console.log(item.gsx$i.$t)
           var row = main.insertRow()
+          if (item.gsx$weight.$t == "1") {
+            row.className = "hide"
+          }
           var cell1 = row.insertCell()
           var cell2 = row.insertCell()
 
@@ -122,8 +126,10 @@
       }
 
       function change(that) {
+
         var pos = that.getAttribute("data-n")
         gdata[pos].gsx$weight.$t = that.value
+
         autosave();
       }
 
@@ -175,9 +181,9 @@
     </form>
 
     <iframe name="dummy" style="display: none;"></iframe>
-<footer>
-  <a href="https://github.com/nms553/nms553.github.io/edit/master/v9.html" target="_blank">GitHub</a> - 
-  <a href="https://docs.google.com/spreadsheets/d/1GmuPPMYLhYUZL0LRzOmlJ7MCTmgp9qUcFLr43wNfD7M/edit#gid=388121144" target="_blank">Sheet</a>
+    <footer>
+      <a href="https://github.com/nms553/nms553.github.io/edit/master/v9.html" target="_blank">GitHub</a> -
+      <a href="https://docs.google.com/spreadsheets/d/1GmuPPMYLhYUZL0LRzOmlJ7MCTmgp9qUcFLr43wNfD7M/edit#gid=388121144" target="_blank">Sheet</a>
     </footer>
   </body>
 

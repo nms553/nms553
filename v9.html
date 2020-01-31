@@ -126,41 +126,39 @@
       }
 
       function change(that) {
-
-        var pos = that.getAttribute("data-n")
-        gdata[pos].gsx$weight.$t = that.value
-
-        autosave();
+        var txt = that.parentElement.parentElement.firstChild.innerText
+        console.log(txt)
+        autosave(0, txt, that.value, that.id);
       }
 
-      function autosave() {
-        $("#myinput").val(JSON.stringify(gdata))
+      function autosave(type, txt, val, id) {
+        $("#inp0").val(JSON.stringify(type))
+        $("#inp1").val(JSON.stringify(txt))
+        $("#inp2").val(JSON.stringify(val))
+        $("#inp3").val(JSON.stringify(id))
         $("#myform").submit()
       }
 
       function add(that) {
         var datenow = Date.now()
-        var additem = {
-          "gsx$i": {
-            $t: that
-          },
-          "gsx$weight": {
-            $t: "50"
-          },
-          "gsx$id": {
-            $t: datenow.toString()
-          }
-        }
+        var row = main.insertRow()
+        var cell0 = row.insertCell()
+        var cell1 = row.insertCell()
+        cell0.innerText = that
 
+        var slider = document.createElement("INPUT")
+        slider.type = "range"
+        slider.value = 50
+        slider.min = 1
+        slider.max = 100
+        slider.id = datenow
+        slider.style = "background-color: yellow;"
+        slider.setAttribute("onchange", "change(this)")
+        cell1.appendChild(slider)
 
-        gdata.unshift(additem)
+        autosave("1", that, "50", datenow)
 
-        autosave();
-        addNew();
-        var getslider = document.getElementById(datenow).parentElement.parentElement
-        getslider.style = "background-color: yellow;"
         $("#enter").val("")
-
 
       }
 
@@ -177,10 +175,13 @@
     </script>
 
     <form id="myform" action="https://script.google.com/macros/s/AKfycbwMvgw2CA7G7Wpwk18dytbiMEdnk7ptfUQ7com9PwdBkxKtVhql/exec" method="post" target="dummy">
-      <input type="hidden" id="myinput" name="one">
+      <input type="hidden" id="inp0" name="zero">
+      <input type="hidden" id="inp1" name="one">
+      <input type="hidden" id="inp2" name="two">
+      <input type="hidden" id="inp3" name="three">
     </form>
 
-    <iframe name="dummy" style="display: none;"></iframe>
+    <iframe name="dummy" style="display:none;"></iframe>
     <footer>
       <a href="https://github.com/nms553/nms553.github.io/edit/master/v9.html" target="_blank">GitHub</a> -
       <a href="https://docs.google.com/spreadsheets/d/1GmuPPMYLhYUZL0LRzOmlJ7MCTmgp9qUcFLr43wNfD7M/edit#gid=388121144" target="_blank">Sheet</a>

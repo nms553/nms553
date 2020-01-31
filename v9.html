@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script>
+
+
+    </script>
+
+    <style>
+      html,
+      body {
+        max-width: 900px;
+        margin: auto;
+      }
+
+      td:second-child {
+        width: 150px;
+      }
+
+      table {
+        width: 100%;
+        border-spacing: 0 15px;
+      }
+
+      button {
+        margin-top: 30px;
+        margin-bottom: 30px;
+        width: 40%;
+      }
+
+      #enter {
+        width: 90%;
+        height: 50px;
+        display: block;
+        font-size: 1.5em;
+        margin: 5%;
+        background-color: lightblue;
+      }
+
+      input[type=range] {
+        -webkit-appearance: none;
+        min-width: 150px;
+        height: 25px;
+        background: #d3d3d3;
+        outline: none;
+        opacity: 0.7;
+        -webkit-transition: .2s;
+        transition: opacity .2s;
+      }
+
+      input[type=range]:hover {
+        opacity: 1;
+      }
+
+      input[type=range]::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 25px;
+        height: 25px;
+        background: #4CAF50;
+        cursor: pointer;
+      }
+
+      input[type=range]::-moz-range-thumb {
+        width: 25px;
+        height: 25px;
+        background: #4CAF50;
+        cursor: pointer;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <input id="enter" onchange="add(this.value)" placeholder="Enter new item">
+    <button onclick="toggleSort()">Sort</button>
+
+    <table id="main"></table>
+
+    <script>
+      var gdata = [];
+      var gdatacopy = [];
+      var gkey = "1GmuPPMYLhYUZL0LRzOmlJ7MCTmgp9qUcFLr43wNfD7M"
+      var gtab = "8"
+      var gsheet = "https://spreadsheets.google.com/feeds/list/" +
+        gkey + "/" + gtab + "/public/full?alt=json";
+      var main = document.getElementById("main")
+      var myinput = document.getElementById("myinput")
+      var togglecount = 1;
+
+
+      $(document).ready(function() {
+
+        $.getJSON(gsheet, data)
+
+        function data(result) {
+          console.log(result.feed.entry)
+          gdata = result.feed.entry;
+          gdatacopy = [...gdata]
+          process();
+        }
+      });
+
+      function sort() {
+        gdatacopy = [...gdata]
+        gdatacopy.sort(function(a, b) {
+          return b.gsx$weight.$t - a.gsx$weight.$t
+        });
+        process();
+
+      }
+
+      function addNew() {
+        gdatacopy = [...gdata]
+        console.log(gdata)
+        process();
+      }
+
+      function process() {
+        main.innerHTML = ""
+        gdatacopy.forEach(function(item, index) {
+          //console.log(item.gsx$i.$t)
+          var row = main.insertRow()
+          var cell1 = row.insertCell()
+          var cell2 = row.insertCell()
+
+          var slider = document.createElement("INPUT")
+          slider.type = "range"
+          slider.value = item.gsx$weight.$t
+          slider.min = 1
+          slider.max = 100
+          slider.id = item.gsx$id.$t
+          slider.setAttribute("data-n", index)
+          slider.setAttribute("onchange", "change(this)")
+
+          cell1.innerText = item.gsx$i.$t
+          cell2.appendChild(slider)
+
+
+        })
+      }
+
+      function change(that) {
+        var pos = that.getAttribute("data-n")
+        gdata[pos].gsx$weight.$t = that.value
+        autosave();
+      }
+
+      function autosave() {
+        $("#myinput").val(JSON.stringify(gdata))
+        $("#myform").submit()
+      }
+
+      function add(that) {
+        var datenow = Date.now()
+        var len = gdata.length
+        var additem = {
+          "gsx$i": {
+            $t: that
+          },
+          "gsx$weight": {
+            $t: "50"
+          },
+          "gsx$id": {
+            $t: datenow.toString()
+          }
+        }
+
+
+        gdata.unshift(additem)
+        console.log("new gdata")
+        console.log(gdata[len])
+
+        autosave();
+        addNew();
+        var getslider = document.getElementById(datenow).parentElement.parentElement
+        getslider.style = "background-color: yellow;"
+        $("#enter").val("")
+
+
+      }
+
+      function toggleSort() {
+        if (togglecount == 0) {
+          addNew();
+          togglecount = 1;
+        } else {
+          sort();
+          togglecount = 0;
+        }
+      }
+
+    </script>
+
+    <form id="myform" action="https://script.google.com/macros/s/AKfycbwMvgw2CA7G7Wpwk18dytbiMEdnk7ptfUQ7com9PwdBkxKtVhql/exec" method="post" target="dummy">
+      <input type="hidden" id="myinput" name="one">
+    </form>
+
+    <iframe name="dummy" style="display: none;"></iframe>
+
+  </body>
+
+</html>

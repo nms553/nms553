@@ -72,35 +72,39 @@
 
 
       $(document).ready(function() {
+        sort();
+      });
 
+      function initial() {
+        $.getJSON(gsheet, data)
+
+        function data(result) {
+          //console.log(result.feed.entry)
+          gdata = result.feed.entry;
+          process();
+        }
+      }
+
+
+
+      function sort() {
         $.getJSON(gsheet, data)
 
         function data(result) {
           console.log(result.feed.entry)
           gdata = result.feed.entry;
-          gdatacopy = [...gdata]
+          gdata.sort(function(a, b) {
+            return b.gsx$weight.$t - a.gsx$weight.$t
+          });
           process();
+
         }
-      });
-
-      function sort() {
-        gdatacopy = [...gdata]
-        gdatacopy.sort(function(a, b) {
-          return b.gsx$weight.$t - a.gsx$weight.$t
-        });
-        process();
-
       }
 
-      function addNew() {
-        gdatacopy = [...gdata]
-        console.log(gdata)
-        process();
-      }
 
       function process() {
         main.innerHTML = ""
-        gdatacopy.forEach(function(item, index) {
+        gdata.forEach(function(item, index) {
           //console.log(item.gsx$i.$t)
           var row = main.insertRow()
           if (item.gsx$weight.$t == "1") {
@@ -141,7 +145,7 @@
 
       function add(that) {
         var datenow = Date.now()
-        var row = main.insertRow()
+        var row = main.insertRow(0)
         var cell0 = row.insertCell()
         var cell1 = row.insertCell()
         cell0.innerText = that
@@ -164,10 +168,10 @@
 
       function toggleSort() {
         if (togglecount == 0) {
-          addNew();
+          sort();
           togglecount = 1;
         } else {
-          sort();
+          initial();
           togglecount = 0;
         }
       }

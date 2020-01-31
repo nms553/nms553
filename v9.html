@@ -134,7 +134,6 @@
 
       function add(that) {
         var datenow = Date.now()
-        var len = gdata.length
         var additem = {
           "gsx$i": {
             $t: that
@@ -148,9 +147,7 @@
         }
 
 
-        gdata.unshift(additem)
-        console.log("new gdata")
-        console.log(gdata[len])
+        gdata.push(additem)
 
         autosave();
         addNew();
@@ -178,7 +175,10 @@
     </form>
 
     <iframe name="dummy" style="display: none;"></iframe>
-
+<footer>
+  <a href="https://github.com/nms553/nms553.github.io/edit/master/v9.html" target="_blank">GitHub</a> - 
+  <a href="https://docs.google.com/spreadsheets/d/1GmuPPMYLhYUZL0LRzOmlJ7MCTmgp9qUcFLr43wNfD7M/edit#gid=388121144" target="_blank">Sheet</a>
+    </footer>
   </body>
 
 </html>

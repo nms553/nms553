@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 
@@ -19,6 +18,7 @@
         margin: auto;
         text-align: center;
         width: 100%;
+        max-width:500px;
       }
 
       .div {
@@ -67,7 +67,7 @@
         margin: auto;
       }
 
-      a {
+      div a {
         display: block;
         margin-top: 20px;
         margin-bottom: 20px;
@@ -87,9 +87,17 @@
         font-family: sans-serif;
       }
 
-sup {
-vertical-align: top;
-}
+      sup {
+        vertical-align: top;
+      }
+      
+      #announcement {
+        display: block;
+        margin-left:auto;
+        margin-right:auto;
+        margin-top: 40px;
+        text-align: left;
+      }
 
     </style>
 
@@ -100,7 +108,7 @@ vertical-align: top;
     <br>
     <a href="http://stupid-fast.com"><img src="https://lh5.googleusercontent.com/VHx2YhJbF08rhdVwHzCO8EzWDAGaFsithJ4PONeGeKZ8cAu8iJL8f3Ne_WZDGEcHIYOmF-FIJcdYbg7XWHGDUbU_p18_rAfTSGeMuSk1kji9TNTwviXW9GGugjlQbcX8RV8" /></a>
 
-      <div id="announcement">
+    <div id="announcement">
     </div>
 
     <div class="div">
@@ -135,7 +143,7 @@ vertical-align: top;
 
 
     <table id="table"></table>
-    
+
 
     <script>
       var x = document.getElementById("table");
@@ -160,7 +168,7 @@ vertical-align: top;
       });
 
     </script>
-    
+
     <script>
       var y = document.getElementById("announcement");
       $(function() {
@@ -176,10 +184,10 @@ vertical-align: top;
 
 
 
-<footer>
-  <a href="https://github.com/nms553/nms553.github.io/edit/master/index.html" target="_blank">ghadmin</a> - 
-  <a href="https://docs.google.com/spreadsheets/d/1CAyAdtlGMJVQVzqKae8Qk3kUUT4WsrxoDYLBu3w3GbY/edit#gid=1329429225" target="_blank">GSheet</a>
-  </footer>
+    <footer>
+      <a href="https://github.com/nms553/nms553.github.io/edit/master/index.html" target="_blank">ghadmin</a> -
+      <a href="https://docs.google.com/spreadsheets/d/1CAyAdtlGMJVQVzqKae8Qk3kUUT4WsrxoDYLBu3w3GbY/edit#gid=1329429225" target="_blank">GSheet</a>
+    </footer>
   </body>
 
 </html>

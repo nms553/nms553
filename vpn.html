@@ -24,6 +24,9 @@ input {
 <p>2256</p>
 
 <script>
+$(document).ready(function() {
+	$('input').focus();
+})
 $(document).on('keydown', 'input', function(e) {
 	if(e.which == 13) {
   	splitString();

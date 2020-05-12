@@ -21,8 +21,8 @@
       a {font-size: .75em;}
       input {width: 135px;}
       
-      img {
-        margin: auto;
+      td:first-child {
+      	text-align: center;
       }
 
     </style>
@@ -47,7 +47,7 @@
       var table = document.getElementById("table");
       var newarray0 = [];
       var toptenarray = [];
-      var players = ["Schriewer", "Mike", "Chris", "Dave", "Curt", "Tim", "Dean", "Unknown!", "Poepsel", "Nick", "(test)"];
+      var players = ["Schriewer", "Mike", "Chris", "Dave", "Curt", "Tim", "Dean", "Poepsel", "Nick", "(test)"];
 
       function validate(playr, indx) {
         document.getElementsByName("index")[0].value = indx;

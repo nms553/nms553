@@ -110,31 +110,25 @@
         })
       }
 
-      function jewpa() {
-        $("ol ol").toggleClass("bold")
-        $("ol ol ol").toggle(function() {
-          if ($(this).is(":hidden")) {
-            $(".jewpa").text("Show & Edit")
-            document.designMode = "off"
-          } else {
-            $(".jewpa").text("Hide")
-            document.designMode = "on"
-          }
-        });
-      }
-
       $("#main").on('click', "a:first-child", function(e) {
-        console.log(this);
+				e.stopPropagation();
         $("#main").append(this);
         save();
       })
 
       $("#main").on('click', "a:not(:first-child)", function(e) {
+				e.stopPropagation();
         $("#main").prepend(this)
         save();
       })
-
-
+			
+			$("#input").keydown(function(e) {
+        if (e.which == 13) {
+					$("button:first-child").click();
+					add();
+				}
+        
+      })
 
       function add() {
         var input = $("input").val()
@@ -143,7 +137,8 @@
           .attr("href", "javascript:")
           .attr("draggable", true)
           .attr("ondragstart", "drag(event)")
-        $("#main").append(a)
+					.css("background-color", "yellow")
+        $("#main").prepend(a)
         save();
       }
 
@@ -179,6 +174,33 @@
         ev.preventDefault();
         save();
       }
+			
+			/*
+			var timeout;
+			$('#main').on('mousedown', 'a', change2Input)
+			$('#main').on('mouseup', 'a', function() {
+				clearTimeout(timeout);
+			})
+			
+			function change2Input(e) {
+			e.stopPropagation();
+				var a = this
+				timeout = setTimeout(function(){
+					var innerText = a.innerText
+					$(a).text("")
+					var input = $("<input>").val(innerText)
+					$(a).append(input)
+					$(input).focus();
+					
+				}, 3000);
+			}
+			
+			$("#main").on('change', 'input:not(:first-child)', function(e) {
+					var txt = $(this).val();
+					var parent = $(this).parent()
+					$(parent).html("").text(txt)
+			})
+			*/
 
     </script>
 

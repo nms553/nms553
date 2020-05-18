@@ -20,7 +20,7 @@
         margin: auto;
         text-align: center;
         width: 100%;
-        max-width:500px;
+        max-width: 500px;
       }
 
       .div {
@@ -78,8 +78,20 @@
       details {
         margin-top: 30px;
         margin-bottom: 10px;
-        display: none;
       }
+			
+			summary {
+        color: blue;
+				text-decoration: underline;
+      }
+			
+			details {
+				margin-left: 20px;
+			}
+			
+			summary {
+				margin-left: -20px;
+			}
 
       tr:nth-child(even) {
         background-color: #EFD;
@@ -93,14 +105,23 @@
       sup {
         vertical-align: top;
       }
-      
+
       #announcement {
         display: block;
-        margin-left:auto;
-        margin-right:auto;
+        margin-left: auto;
+        margin-right: auto;
         margin-top: 40px;
         text-align: left;
       }
+			
+			#annc {
+				display: initial;
+				font-size: .7em;
+			}
+			
+			.dashes {
+				display: none;
+			}
 
     </style>
 
@@ -117,16 +138,11 @@
     <div class="div">
 
       <h3><a href="https://www.stupid-fast.com/picks">Click HERE to Make Picks!</a></h3>
-      <a href="./MRN.html"><b>NEW!</b> MRN Averages</a>
+      <a href="./MRN.html"><b>NEW!</b> MRN Averages</a><span class="dashes">&nbsp;-&nbsp;</span><a id="annc" target="_blank"></a>
       <a href="https://www.driveraverages.com/">DriverAverages.com</a>
       <a href="https://www.nascar.com/standings/monster-energy-nascar-cup-series/">Official NASCAR Top 10 Drivers</a>
-      <a href="https://docs.google.com/spreadsheets/d/15wQwmD8pa9U3E8CbB4vQIcvFbFx1eSXVlmIE9Rvlm7g/edit#gid=371696352">2018 Stupid Fast Database</a>
-      <a href="https://docs.google.com/spreadsheets/d/1SFVIas6kaneRhranvFD-TqVsgEXJoSxiBmpmx1VRSBs/edit#gid=1656042318">2017 Stupid Fast Database</a>
-      <a href="./rules.html">Rules</a>
-      <h3><a href="https://docs.google.com/spreadsheets/d/1CAyAdtlGMJVQVzqKae8Qk3kUUT4WsrxoDYLBu3w3GbY/htmlembed?single=true&gid=378404473&range=a1:M450&widget=false&chrome=false">View points by race</a></h3>
-      <h3><a href="https://docs.google.com/spreadsheets/d/1CAyAdtlGMJVQVzqKae8Qk3kUUT4WsrxoDYLBu3w3GbY/htmlembed?single=true&gid=371696352&range=a1:k66&widget=false&chrome=false">View standings</a></h3>
-
-      <details>
+			<details><summary>More</summary>
+			<details id="res">
         <summary>2019 Final Results</summary>
         <a href="https://docs.google.com/spreadsheets/d/1CAyAdtlGMJVQVzqKae8Qk3kUUT4WsrxoDYLBu3w3GbY/htmlembed?single=true&gid=1962987389&range=a1:k66&widget=false&chrome=false">Click here for detailed breakdown</a>
         <ol>
@@ -142,6 +158,15 @@
           <li><b>Evan</b> - owes $44 (Evan pays Dean $44)</li>
         </ol>
       </details>
+			<a href="https://docs.google.com/spreadsheets/d/15wQwmD8pa9U3E8CbB4vQIcvFbFx1eSXVlmIE9Rvlm7g/edit#gid=371696352">2018 Stupid Fast Database</a>
+      <a href="https://docs.google.com/spreadsheets/d/1SFVIas6kaneRhranvFD-TqVsgEXJoSxiBmpmx1VRSBs/edit#gid=1656042318">2017 Stupid Fast Database</a>
+      <a href="./rules.html">Rules</a>
+			</details>
+      
+      <h3><a href="https://docs.google.com/spreadsheets/d/1CAyAdtlGMJVQVzqKae8Qk3kUUT4WsrxoDYLBu3w3GbY/htmlembed?single=true&gid=378404473&range=a1:M450&widget=false&chrome=false">View points by race</a></h3>
+      <h3><a href="https://docs.google.com/spreadsheets/d/1CAyAdtlGMJVQVzqKae8Qk3kUUT4WsrxoDYLBu3w3GbY/htmlembed?single=true&gid=371696352&range=a1:k66&widget=false&chrome=false">View standings</a></h3>
+
+      
 
     </div>
 
@@ -170,17 +195,28 @@
           })
         });
       });
+			
+		 $("summary a").click(function() {
+		 	$("details:first-child").attr("open", true)
+		 })
 
     </script>
 
     <script>
-      var y = document.getElementById("announcement");
+      var y = document.getElementById("annc");
       $(function() {
         var sheetUrl = 'https://spreadsheets.google.com/feeds/cells/1CAyAdtlGMJVQVzqKae8Qk3kUUT4WsrxoDYLBu3w3GbY/2/public/full?alt=json';
         $.getJSON(sheetUrl, function(data) {
           var entry = data.feed.entry;
           //console.log(entry[0].gs$cell.$t);
-          y.innerHTML = entry[0].gs$cell.$t
+					if (entry[0].gs$cell.$t) {
+					var str = entry[0].gs$cell.$t
+					var str2 = str.replace("https://www.", "")
+					$(".dashes").show();
+          y.innerHTML = str2
+					y.href = entry[0].gs$cell.$t
+					}
+					
         });
       });
 

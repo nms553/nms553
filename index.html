@@ -206,7 +206,7 @@
         $.getJSON(sheetUrl, function(data) {
           var entry = data.feed.entry;
           //console.log(entry[0].gs$cell.$t);
-          if (entry[0].gs$cell.$t) {
+          if (entry[0].gs$cell.$t !== "void") {
             var str = entry[0].gs$cell.$t
             var str2 = str.replace("https://www.", "")
             $(".dashes").show();

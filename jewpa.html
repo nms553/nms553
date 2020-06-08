@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 
@@ -29,6 +30,15 @@
       a {
         display: table;
         margin-top: 5px;
+				padding: 10px;
+				border: 1px solid black;
+				border-radius: 5px;
+				background-color: green;
+				cursor: move;
+				color: white;
+				font-weight: initial;
+				font-family: sans-serif;
+				text-decoration: initial;
       }
 
       #div {
@@ -42,6 +52,12 @@
         margin-right: auto;
         text-align: left;
       }
+			
+			h2 {
+				display: block;
+				text-align: left;
+				text-decoration: underline;
+			}
 
     </style>
   </head>
@@ -58,6 +74,9 @@
         Clear
       </button>
     </header>
+		<h2>
+		Projects
+		</h2>
 
     <div id="div">
       <div id="main" ondrop="drop(event)" ondragover="allowDrop(event)"></div>

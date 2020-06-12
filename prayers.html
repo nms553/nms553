@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <style>
+      body {
+        width: 100%;
+        max-width: 600px;
+        margin: auto;
+        padding: 50px;
+      }
+
+      #emoji {
+        width: 50px;
+        /*height: 50px;
+	font-size: 1.5em; */
+        margin: 10px 0px 10px 0px;
+      }
+
+      #prayer {
+        width: 350px;
+        /*height: 50px;
+	font-size: 1.5em;*/
+        margin: 10px 0px 10px 0px;
+      }
+
+      #rangeval {
+        width: 50px;
+        margin: 10px 0px 10px 0px;
+      }
+
+      #table {
+        margin: 20px 0px 20px 0px;
+      }
+
+    </style>
+
+  </head>
+
+  <body>
+    <form>
+      <input type="text" id="emoji" placeholder="emoji">
+      <input type="text" id="prayer" placeholder="prayer"><br>
+      <input type="range" id="range" value="3" min="1" max="5" step="1">
+      <input type="text" id="rangeval" value="3" disabled>
+
+    </form>
+    <button id="subm">
+      Submit
+    </button>
+
+    <!-- <table id="table" border="1">
+<tr><td data-rangeval="4">❤ stupi fast</td></tr>
+<tr><td data-rangeval="2">👍 yes sir</td></tr>
+<tr><td data-rangeval="3">🎂 birthday cake</td></tr>
+</table> -->
+
+    <button id="shuffle">
+      Shuffle
+    </button>
+    <input type="text" id="output" disabled>
+
+    <script>
+      var arr = [];
+
+      $(document).ready(function() {
+        arr = JSON.parse(localStorage.getItem("prayerarray"));
+        console.log(arr)
+      })
+
+      $("#range").change(function() {
+        var val = $(this).val();
+        $("#rangeval").val(val)
+      })
+
+      $("#subm").click(function() {
+        var concat = $("#emoji").val() + " " + $("#prayer").val()
+
+        switch ($("#range").val()) {
+          case "1":
+            arr.push(concat)
+            break;
+          case "2":
+            arr.push(concat)
+            arr.push(concat)
+            break;
+          case "4":
+            arr.push(concat)
+            arr.push(concat)
+            arr.push(concat)
+            arr.push(concat)
+            break;
+          case "5":
+            arr.push(concat)
+            arr.push(concat)
+            arr.push(concat)
+            arr.push(concat)
+            arr.push(concat)
+            break;
+          default:
+            arr.push(concat)
+            arr.push(concat)
+            arr.push(concat)
+            break;
+        }
+
+        saveArr();
+        //var tr = $("<tr></tr>")
+        //var td = $("<td></td>").text(concat).attr("data-rangeval", $("#range").val())
+        //$(tr).append(td)
+        //$("#table").append(tr)
+      })
+
+      $("#shuffle").click(function() {
+        var rand = Math.random()
+        var len = arr.length
+        var rounded = Math.ceil(rand * len) - 1
+        $("#output").val(arr[rounded])
+        //arr.splice(rounded, 1)
+        saveArr();
+      })
+
+      function saveArr() {
+        localStorage.setItem("prayerarray", JSON.stringify(arr));
+      }
+
+    </script>
+  </body>
+
+</html>

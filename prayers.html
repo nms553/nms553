@@ -69,14 +69,17 @@
       Shuffle
     </button>
     <input type="text" id="output" disabled>
+		
+		<details><summary>Emergency Reset</summary><button onclick="emergencyReset()">
+      Emergency Reset
+    </button></details>
+		
 
     <script>
       var arr = [];
 
       $(document).ready(function() {
         arr = JSON.parse(localStorage.getItem("prayerarray"));
-	arr.push("test")
-	arr.push("test2")
         console.log(arr)
       })
 
@@ -135,6 +138,11 @@
       function saveArr() {
         localStorage.setItem("prayerarray", JSON.stringify(arr));
       }
+			
+			function emergencyReset() {
+			  arr = ["test"]
+				localStorage.setItem("prayerarray", JSON.stringify(arr));
+			}
 
     </script>
   </body>

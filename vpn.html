@@ -28,10 +28,13 @@ $(document).ready(function() {
 	$('input').focus();
 })
 $(document).on('keydown', 'input', function(e) {
-	if(e.which == 13) {
-  	splitString();
+	if(e.which == 86) {
+    setTimeout(function(){splitString();}, 100);
   }
+  
 })
+
+$("input").change(splitString)
 
 var arr = [];
 				

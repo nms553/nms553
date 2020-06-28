@@ -31,8 +31,10 @@
     <script type="text/javascript">//<![CDATA[
 
 
-var x = window.location.href
-alert(x)
+var url_string = window.location.href
+var url = new URL(url_string);
+var c = url.searchParams.get("c");
+alert(c);
 
 
   //]]></script>

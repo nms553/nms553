@@ -37,7 +37,7 @@ var url = new URL(url_string);
 var person = url.searchParams.get("person");
 $("option").each(function() {
 	console.log($(this).text())
-	if ($(this).text() == "person") {
+	if ($(this).text() == person) {
 		$(this).attr("selected", true)
 		
 		

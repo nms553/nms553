@@ -38,10 +38,12 @@ var person = url.searchParams.get("person");
 $("option").each(function() {
 	if ($(this).text() == "person") {
 		$(this).attr("selected", true)
+		console.log($(this).text())
+		
 	}
 })
 
-
+alert(person)
   //]]></script>
 
 

@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -33,8 +34,12 @@
 
 var url_string = window.location.href
 var url = new URL(url_string);
-var c = url.searchParams.get("c");
-alert(c);
+var person = url.searchParams.get("person");
+$("option").each(function() {
+	if ($(this).val() == "person") {
+		$(this).attr("selected", true)
+	}
+})
 
 
   //]]></script>

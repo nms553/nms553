@@ -34,11 +34,11 @@ body {
 }
 
 h1 {
-	text-align: center;
+	text-align: left;
 }
 
 input {
-	margin: auto;
+	margin: initial;
 	display: block;
 }
 
@@ -47,8 +47,12 @@ details a, #main a {
 	margin: 10px 0px 10px 0px;
 }
 
-details {
-	margin: 30px 0px 10px 0px;
+#complete {
+	margin: 40px 0px 0px 0px;
+}
+
+#trash {
+	margin: 140px 0px 0px 0px;
 }
 
 footer {
@@ -57,10 +61,28 @@ footer {
 	font-size: 0.8em;
 }
 	  
-summary:first-child {
+#main summary {
 	visibility: hidden;
-	  color: white;
+}
 
+#trash summary {
+	color: lightgray;
+	text-decoration: initial;
+	margin-left: -20px;
+}
+
+#complete summary::-webkit-details-marker {
+  color: initial;
+}
+
+#trash summary::-webkit-details-marker {
+  color: lightgray;
+}
+
+#complete summary {
+	color: initial;
+	text-decoration: initial;
+	margin-left: -20px;
 }
     /* EOS */
   </style>

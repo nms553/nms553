@@ -35,6 +35,14 @@ a {
 	  td:first-child, td:nth-child(2) {
 	border: 1px solid;
 }
+td {
+	text-align: center;
+	padding: 3px 15px 3px 15px;
+}
+
+td:first-child {
+	text-align: left;
+}
     /* EOS */
   </style>
 
@@ -63,6 +71,15 @@ $(document).ready(function(){
       row.insertCell().innerText = item.gsx$player.$t
       row.insertCell().innerText = item.gsx$newtotal.$t
 	row.insertCell().innerText = item.gsx$behind.$t
+	if(item.gsx$lastweek.$t == "0") {
+	row.insertCell()
+	} else if (item.gsx$lastweek.$t > 0) {
+	row.insertCell().innerText = "+" + item.gsx$lastweek.$t
+	}
+	else {
+	row.insertCell().innerText = item.gsx$lastweek.$t
+	}
+	
 	    row.insertCell().innerText = item.gsx$weeklywinnings.$t
     })
   });

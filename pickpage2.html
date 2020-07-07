@@ -1,0 +1,161 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <title></title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="googlebot" content="noindex, nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <script
+    type="text/javascript"
+    src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"
+    
+  ></script>
+
+
+
+  <style id="compiled-css" type="text/css">
+      * {
+	border: 1px solid;
+}
+
+body {
+	padding: 50px;
+	text-align: center;
+	font-family: sans-serif, serif;
+	background-color: black;
+}
+
+h1 {
+	display: block;
+	margin: auto;
+	text-align: center;
+}
+
+div {
+	display: inline-block;
+
+	margin: auto;
+}
+
+a {
+	display: table;
+	margin-top: 10px;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+td {
+	text-align: left;
+	background-color: #222;
+	color: white;
+	padding: 10px;
+	border-top: 10px solid black;
+	border-bottom: 10px solid black;
+	border-left: 0px black;
+	border-right: 0px black;
+}
+
+
+
+
+    /* EOS */
+  </style>
+
+
+
+
+</head>
+<body>
+    <select name="select" id="select">
+	<option value="">Dean</option>
+	<option value="">Dave</option>
+	<option value="">Curt</option>
+	<option value="">Kurt P</option>
+	<option value="">Schriewer</option>
+	<option value="">Mike</option>
+	<option value="">Chris</option>
+	<option value="">Tim</option>
+	<option value="">Nick</option>
+</select>
+
+<table id="table">
+
+</table>
+
+
+    <script type="text/javascript">//<![CDATA[
+
+
+
+
+      //variables
+      var form = document.getElementById("form");
+      var table = document.getElementById("table");
+      var newarray0 = [];
+      var toptenarray = [];
+
+
+const urlParams = new URLSearchParams(window.location.search);
+const myParam = urlParams.get('name');
+
+
+
+      //Data feed pull from Sheets
+      $(function() {
+        var sheetUrl = 'https://spreadsheets.google.com/feeds/list/1CAyAdtlGMJVQVzqKae8Qk3kUUT4WsrxoDYLBu3w3GbY/3/public/full?alt=json';
+        $.getJSON(sheetUrl, function(data) {
+          entry = data.feed.entry;
+					$("select").val(myParam).change();
+					var table = document.getElementById("table")
+          entry.forEach(function(item, index) {
+						var row = table.insertRow()
+						var cell1 = row.insertCell()
+						var check = $("<input>").attr("type", "checkbox")
+						$(cell1).append(check)
+						var cell2 = row.insertCell()
+						var img = $("<img>").attr("src", item.gsx$image.$t)
+						$(cell2).append(img)
+						var cell3 = row.insertCell()
+						cell3.innerText = item.gsx$drivers.$t
+						
+          });
+
+          var tenthrow = document.getElementsByTagName("TR")[10];
+          tenthrow.innerHTML = "<td colspan='3'><hr></td>";
+
+        });
+      });
+			
+			$("table").on('click', 'tr', function(e) {
+				if(e.target.nodeName == "INPUT") {
+				}
+				else {
+				var inp = $(this).find("input")
+				var ischecked = $(inp).prop("checked")
+				if (ischecked ==true) {
+				$(inp).prop("checked", false);
+				} else {
+				$(inp).prop("checked", true);
+				}
+				
+
+				}
+				
+				//console.log($(this).prev("tr"))
+			})
+
+
+  //]]></script>
+
+
+
+
+</body>
+</html>

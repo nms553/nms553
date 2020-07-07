@@ -49,6 +49,7 @@ a {
 
 table {
 	border-collapse: collapse;
+	margin: auto;
 }
 
 td {
@@ -62,7 +63,15 @@ td {
 	border-right: 0px black;
 }
 
+p {
+	color: white;
+	display:inline-block;
+	border: 0px solid;
+}
 
+span {
+	border: 0px solid;
+}
 
 
     /* EOS */
@@ -72,7 +81,11 @@ td {
 
 
 </head>
+
 <body>
+<p>
+Not&nbsp;<span>(blank)</span>?  Change here →
+</p>
     <select name="select" id="select">
 	    <option value=""></option>
 	<option value="Dean">Dean</option>
@@ -114,6 +127,7 @@ const myParam = urlParams.get('name');
         $.getJSON(sheetUrl, function(data) {
           entry = data.feed.entry;
 					$('body option[value="' + myParam + '"]').prop("selected", true)
+					$("span").text(myParam)
 					var table = document.getElementById("table")
           entry.forEach(function(item, index) {
 						var row = table.insertRow()

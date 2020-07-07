@@ -112,7 +112,7 @@ const myParam = urlParams.get('name');
         var sheetUrl = 'https://spreadsheets.google.com/feeds/list/1CAyAdtlGMJVQVzqKae8Qk3kUUT4WsrxoDYLBu3w3GbY/3/public/full?alt=json';
         $.getJSON(sheetUrl, function(data) {
           entry = data.feed.entry;
-					$("select").val(myParam).change();
+					$('select option[value="Mike"]')
 					var table = document.getElementById("table")
           entry.forEach(function(item, index) {
 						var row = table.insertRow()

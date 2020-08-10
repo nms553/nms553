@@ -78,10 +78,10 @@ $(document).ready(function(){
 	if(item.gsx$lastweek.$t == "0") {
 	row.insertCell()
 	} else if (item.gsx$lastweek.$t > 0) {
-	row.insertCell().innerText = "+" + item.gsx$lastweek.$t
+	row.insertCell().innerText = "+" + item.gsx$jump.$t
 	}
 	else {
-	row.insertCell().innerText = item.gsx$lastweek.$t
+	row.insertCell().innerText = item.gsx$jump.$t
 	}
 	
 	    row.insertCell().innerText = item.gsx$weeklywinnings.$t

@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -65,7 +66,7 @@ textarea {
 
 <input type="text" placeholder="insert item" id="maininp">
 
-<textarea disabled></textarea>
+<textarea></textarea>
 <button onclick="generate()">
   Generate
 </button>
@@ -129,19 +130,22 @@ function save() {
 	$("#dataB").val(v)
 	$("#form").submit()
 }
-
+var selectedNode;
 function generate() {
   var x = Math.random()
   var y = document.getElementById("items").getElementsByTagName("a")
   var z = y.length - 1
   var w = Math.round(x * z)
   console.log(w)
+	selectedNode = y[w]
   var v = y[w].innerText
   $("textarea").val(v)
 }
 
 $("#items").on('click', 'a', function() {
   var x = $("#items a:first-child").text()
+	selectedNode = $(this)
+	$("textarea").val($(selectedNode).text())
   if (x == $(this).text()) {
     $("#done").prepend($(this))
   } else {
@@ -158,6 +162,16 @@ $("#done").on('click', 'a', function() {
     $("#done").prepend($(this))
   }
   save();
+})
+
+$("textarea").click(function() {
+	var x = $(selectedNode).attr("title")
+	$(this).val(x)
+})
+
+$("textarea").change(function() {
+	$(selectedNode).attr("title", $(this).val())
+	save();
 })
 
 </script>

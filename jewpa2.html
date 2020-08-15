@@ -1,31 +1,146 @@
+
 <!DOCTYPE html>
 <html>
-
-  <head>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.2.2/jquery.form.min.js" integrity="sha256-2Pjr1OlpZMY6qesJM68t2v39t+lMLvxwpa8QlRjJroA=" crossorigin="anonymous"></script>
-
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <title></title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="googlebot" content="noindex, nofollow">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <style>
-      html,
+
+  <script
+    type="text/javascript"
+    src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"
+    
+  ></script>
+
+
+
+  <style id="compiled-css" type="text/css">
       body {
-        margin-left: 10px;
-      }
+	width: 90%;
+	max-width: 200px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 50px;
+	border: 0px solid;
+}
 
-      h3 a {
-        font-weight: normal;
-        color: Sienna;
-      }
+h1 {
+	text-align: center;
+}
 
-    </style>
+a {
+	display: block;
+	margin-top: 15px;
+	margin-bottom: 15px;
+}
 
-  </head>
+#maininp {
+	display: block;
+	margin: auto;
+	margin-bottom: 25px;
+	margin-top: 25px;
+}
 
-  <frameset>
-  <frame src="https://script.google.com/macros/s/AKfycbxQ8hndmXuLWXSBWCbjnVLBCNkkta2KF--MfzHqwpCFrfoVac4/exec">
+#items {
+	margin-top: 30px;
+}
 
-</frameset>
+textarea {
+	width: 100%;
+	height: 50px;
+}
+    /* EOS */
+  </style>
 
+
+
+</head>
+<body>
+    <h1>
+  Jewpa 3000
+</h1>
+
+<input type="text" placeholder="insert item" id="maininp">
+
+<textarea disabled></textarea>
+<button onclick="generate()">
+  Generate
+</button>
+
+<div id="items">
+
+</div>
+
+<details id="done">
+  <summary>Completed</summary>
+</details>
+
+
+    <script type="text/javascript">//<![CDATA[
+
+
+$(document).ready(function() {
+  var x = localStorage.getItem("single_list")
+  var y = JSON.parse(x)
+  $("#items").html(y)
+	var w = localStorage.getItem("single_done")
+  var v = JSON.parse(w)
+  $("#done").html(v)
+})
+
+$("input").keydown(function(e) {
+  if (e.which == 13) {
+    var x = $(this).val()
+    var a = $("<a href='javascript:'></a>").text(x)
+    $("#items").prepend(a)
+    $("#maininp").val("")
+    save();
+  }
+})
+
+function save() {
+  var x = $("#items").html()
+  var y = JSON.stringify(x)
+  localStorage.setItem("single_list", y)
+	var w = $("#done").html()
+  var v = JSON.stringify(w)
+  localStorage.setItem("single_done", v)
+}
+
+function generate() {
+  var x = Math.random()
+  var y = document.getElementById("items").getElementsByTagName("a")
+  var z = y.length - 1
+  var w = Math.round(x * z)
+  console.log(w)
+  var v = y[w].innerText
+  $("textarea").val(v)
+}
+
+$("#items").on('click', 'a', function() {
+  var x = $("#items a:first-child").text()
+  if (x == $(this).text()) {
+    $("#done").prepend($(this))
+  } else {
+    $("#items").prepend($(this))
+  }
+	save();
+})
+
+$("#done").on('click', 'a', function() {
+  var x = $("#done a:first-child").text()
+  if (x == $(this).text()) {
+    $("#items").append($(this))
+  } else {
+    $("#done").prepend($(this))
+  }
+	save();
+})
+
+</script>
+</body>
 </html>

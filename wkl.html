@@ -1,182 +1,185 @@
-
-
-
 <!DOCTYPE html>
 <html>
-<head>
-  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-  <title></title>
-  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-  <meta name="robots" content="noindex, nofollow">
-  <meta name="googlebot" content="noindex, nofollow">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title></title>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="googlebot" content="noindex, nofollow">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-  <script
-    type="text/javascript"
-    src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"
-    
-  ></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
 
 
 
-  <style id="compiled-css" type="text/css">
+    <style id="compiled-css" type="text/css">
       body {
-	width: 90%;
-	max-width: 300px;
-	margin-left: auto;
-	margin-right: auto;
-	margin-bottom: 50px;
-	border: 0px solid;
-}
+        width: 90%;
+        max-width: 300px;
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 50px;
+        border: 0px solid;
+      }
 
-h1 {
-	text-align: center;
-}
+      h1 {
+        text-align: center;
+      }
 
-a {
-	display: block;
-	margin-top: 15px;
-	margin-bottom: 15px;
-}
+      a {
+        display: block;
+        margin-top: 15px;
+        margin-bottom: 15px;
+      }
 
-#maininp {
-	display: block;
-	margin: auto;
-	margin-bottom: 25px;
-	margin-top: 25px;
-}
+      #maininp {
+        display: block;
+        margin: auto;
+        margin-bottom: 25px;
+        margin-top: 25px;
+      }
 
-#items {
-	margin-top: 30px;
-}
+      #items {
+        margin-top: 30px;
+      }
 
-textarea {
-	width: 100%;
-	height: 50px;
-}
-    /* EOS */
-  </style>
+      textarea {
+        width: 100%;
+        height: 50px;
+      }
+
+      /* EOS */
+
+    </style>
 
 
-</head>
-<body>
+  </head>
+
+  <body>
     <h1>
-  Jewpa 3000
-</h1>
+      Jewpa 3000
+    </h1>
 
-<input type="text" placeholder="insert item" id="maininp">
+    <input type="text" placeholder="insert item" id="maininp">
 
-<textarea></textarea>
-<button onclick="generate()">
-  Generate
-</button>
-
-<div id="items">
-
-</div>
-
-<details id="done">
-  <summary>Completed</summary>
-</details>
-
-<form id="form" method="post" action="https://script.google.com/macros/s/AKfycbzpZHMWb2YiY6-B1llGVlT7dmPAu_Su6wwDLoaUhYOoLbexG7-5/exec" target="iframe" style="display: none;">
-  index of row (>0)<input name="row" id="inp_row" value="4"><br>
-  dataA<input name="dataA" id="dataA" placeholder=""><br>
-  dataB<input name="dataB" id="dataB" placeholder=""><br>
-  dataC<input name="dataC" id="dataC" placeholder=""><br>
-  <input type="submit"><br><br>
-  <iframe src="" name="iframe" id="iframe" style="display: none;"></iframe>
-</form>
-
-    <script type="text/javascript">//<![CDATA[
-
-
-$(document).ready(function() {
-  $.getJSON("https://spreadsheets.google.com/feeds/list/1DvaYXhcpPJvMFNDlDtx9oG-YGKfqtT6ZbPWqZIvaIxw/1/public/full?alt=json", function(result) {
-    var data = result.feed.entry
-    var n = $("#inp_row").val() - 2 //two less
-		console.log(data[n])
-    var x = JSON.parse(data[n].gsx$cola.$t)
-    var y = JSON.parse(data[n].gsx$colb.$t)
+    <button id="gen" onclick="generate()">
+      Generate
+    </button>
+		<textarea></textarea>
     
-    $("#items").html(x)
-    $("#done").html(y)
 
-    /*var x = localStorage.getItem("single_list")
+    <div id="items">
+
+    </div>
+
+    <details id="done">
+      <summary>Completed</summary>
+    </details>
+
+    <form id="form" method="post" action="https://script.google.com/macros/s/AKfycbzpZHMWb2YiY6-B1llGVlT7dmPAu_Su6wwDLoaUhYOoLbexG7-5/exec" target="iframe" style="display: none;">
+      index of row (>0)<input name="row" id="inp_row" value="4"><br>
+      dataA<input name="dataA" id="dataA" placeholder=""><br>
+      dataB<input name="dataB" id="dataB" placeholder=""><br>
+      dataC<input name="dataC" id="dataC" placeholder=""><br>
+      <input type="submit"><br><br>
+      <iframe src="" name="iframe" id="iframe" style="display: none;"></iframe>
+    </form>
+
+    <script type="text/javascript">
+      //<![CDATA[
+
+
+      $(document).ready(function() {
+        $.getJSON("https://spreadsheets.google.com/feeds/list/1DvaYXhcpPJvMFNDlDtx9oG-YGKfqtT6ZbPWqZIvaIxw/1/public/full?alt=json", function(result) {
+          var data = result.feed.entry
+          var n = $("#inp_row").val() - 2 //two less
+          console.log(data[n])
+          var x = JSON.parse(data[n].gsx$cola.$t)
+          var y = JSON.parse(data[n].gsx$colb.$t)
+
+          $("#items").html(x)
+          $("#done").html(y)
+
+          /*var x = localStorage.getItem("single_list")
   var y = JSON.parse(x)
   $("#items").html(y)
 	var w = localStorage.getItem("single_done")
   var v = JSON.parse(w)
   $("#done").html(v)*/
-  })
-})
+        })
+      })
 
-$("input").keydown(function(e) {
-  if (e.which == 13) {
-    var x = $(this).val()
-    var a = $("<a href='javascript:'></a>").text(x)
-    $("#items").prepend(a)
-    $("#maininp").val("")
-    save();
-  }
-})
+      $("input").keydown(function(e) {
+        if (e.which == 13) {
+          var x = $(this).val()
+          var a = $("<a href='javascript:'></a>").text(x)
+          $("#items").prepend(a)
+          $("#maininp").val("")
+          save();
+        }
+      })
 
-function save() {
-  var x = $("#items").html()
-  var y = JSON.stringify(x)
-  $("#dataA").val(y)
-  var w = $("#done").html()
-  var v = JSON.stringify(w)
-	$("#dataB").val(v)
-	$("#form").submit()
-}
-var selectedNode;
-function generate() {
-  var x = Math.random()
-  var y = document.getElementById("items").getElementsByTagName("a")
-  var z = y.length - 1
-  var w = Math.round(x * z)
-  console.log(w)
-	selectedNode = y[w]
-  var v = y[w].innerText
-  $("textarea").val(v)
-}
+      function save() {
+        var x = $("#items").html()
+        var y = JSON.stringify(x)
+        $("#dataA").val(y)
+        var w = $("#done").html()
+        var v = JSON.stringify(w)
+        $("#dataB").val(v)
+        $("#form").submit()
+      }
+      var selectedNode;
 
-$("#items").on('click', 'a', function() {
-  var x = $("#items a:first-child").text()
-	selectedNode = $(this)
-	$("textarea").val($(selectedNode).text())
-  if (x == $(this).text()) {
-    $("#done").prepend($(this))
-  } else {
-    $("#items").prepend($(this))
-  }
-  save();
-})
+      function generate() {
+        var x = Math.random()
+        var y = document.getElementById("items").getElementsByTagName("a")
+        var z = y.length - 1
+        var w = Math.round(x * z)
+        console.log(w)
+        selectedNode = y[w]
+        var v = y[w]
+        $("#gen").text($(v).text())
+				$("textarea").val($(v).prop("title"))
 
-$("#done").on('click', 'a', function() {
-  var x = $("#done a:first-child").text()
-  if (x == $(this).text()) {
-    $("#items").append($(this))
-  } else {
-    $("#done").prepend($(this))
-  }
-  save();
-})
+      }
 
-$("textarea").click(function() {
-	var x = $(selectedNode).attr("title")
-	$(this).val(x)
-})
+      $("#items").on('click', 'a', function() {
+        var x = $("#items a:first-child").text()
+        selectedNode = $(this)
+				$("#gen").text($(this).text())
+        $("textarea").val($(this).attr("title"))
+        if (x == $(this).text()) {
+          var p = confirm("Are you sure?")
+          if (p == true) {
+            $("#done").prepend($(this))
+          }
+        } else {
+          $("#items").prepend($(this))
+        }
+        save();
+      })
 
-$("textarea").change(function() {
-	$(selectedNode).attr("title", $(this).val())
-	save();
-})
+      $("#done").on('click', 'a', function() {
+        var x = $("#done a:first-child").text()
+				$("textarea").val("")
+        if (x == $(this).text()) {
+          $("#items").append($(this))
+        } else {
+          $("#done").prepend($(this))
+        }
+        save();
+      })
 
-</script>
+      $("textarea").change(function() {
+        $(selectedNode).attr("title", $(this).val())
+        save();
+      })
+
+    </script>
 
 
-</body>
+  </body>
+
 </html>

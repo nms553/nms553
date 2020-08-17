@@ -67,8 +67,8 @@
     <button id="gen" onclick="generate()">
       Generate
     </button>
-		<textarea></textarea>
-    
+    <textarea></textarea>
+
 
     <div id="items">
 
@@ -110,14 +110,20 @@
   $("#done").html(v)*/
         })
       })
+      var selectedNode;
+			
 
-      $("input").keydown(function(e) {
+
+      $("#maininp").keydown(function(e) {
         if (e.which == 13) {
           var x = $(this).val()
-          var a = $("<a href='javascript:'></a>").text(x)
+					var y = $("textarea").val()
+          var a = $("<a href='javascript:'></a>").text(x).attr("title", y);
           $("#items").prepend(a)
+					a.click()
           $("#maininp").val("")
           save();
+					console.log(selectedNode)
         }
       })
 
@@ -130,7 +136,7 @@
         $("#dataB").val(v)
         $("#form").submit()
       }
-      var selectedNode;
+
 
       function generate() {
         var x = Math.random()
@@ -141,19 +147,20 @@
         selectedNode = y[w]
         var v = y[w]
         $("#gen").text($(v).text())
-				$("textarea").val($(v).prop("title"))
+        $("textarea").val($(v).prop("title"))
 
       }
 
       $("#items").on('click', 'a', function() {
         var x = $("#items a:first-child").text()
         selectedNode = $(this)
-				$("#gen").text($(this).text())
+        $("#gen").text($(this).text())
         $("textarea").val($(this).attr("title"))
         if (x == $(this).text()) {
           var p = confirm("Are you sure?")
           if (p == true) {
             $("#done").prepend($(this))
+						generate();
           }
         } else {
           $("#items").prepend($(this))
@@ -163,7 +170,7 @@
 
       $("#done").on('click', 'a', function() {
         var x = $("#done a:first-child").text()
-				$("textarea").val("")
+        $("textarea").val("")
         if (x == $(this).text()) {
           $("#items").append($(this))
         } else {

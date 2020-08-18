@@ -49,6 +49,10 @@
         width: 100%;
         height: 50px;
       }
+			
+			#summary {
+				width: 100%;
+			}
 
       /* EOS */
 
@@ -64,10 +68,12 @@
 
     <input type="text" placeholder="insert item" id="maininp">
 
-    <button id="gen" onclick="generate()">
+      <input id="summary" disabled /><br><br>
+      <textarea></textarea>
+		<button id="gen" onclick="generate()">
       Generate
     </button>
-    <textarea></textarea>
+
 
 
     <div id="items">
@@ -111,19 +117,19 @@
         })
       })
       var selectedNode;
-			
+
 
 
       $("#maininp").keydown(function(e) {
         if (e.which == 13) {
           var x = $(this).val()
-					var y = $("textarea").val()
+          var y = $("textarea").val()
           var a = $("<a href='javascript:'></a>").text(x).attr("title", y);
           $("#items").prepend(a)
-					a.click()
+          a.click()
           $("#maininp").val("")
           save();
-					console.log(selectedNode)
+          console.log(selectedNode)
         }
       })
 
@@ -146,7 +152,7 @@
         console.log(w)
         selectedNode = y[w]
         var v = y[w]
-        $("#gen").text($(v).text())
+        $("#summary").val($(v).text())
         $("textarea").val($(v).prop("title"))
 
       }
@@ -154,13 +160,13 @@
       $("#items").on('click', 'a', function() {
         var x = $("#items a:first-child").text()
         selectedNode = $(this)
-        $("#gen").text($(this).text())
+        $("#summary").val($(this).text())
         $("textarea").val($(this).attr("title"))
         if (x == $(this).text()) {
           var p = confirm("Are you sure?")
           if (p == true) {
             $("#done").prepend($(this))
-						generate();
+            generate();
           }
         } else {
           $("#items").prepend($(this))

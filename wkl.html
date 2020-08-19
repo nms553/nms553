@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 
@@ -53,6 +54,12 @@
       #summary {
         width: 100%;
       }
+			
+			span {
+				display: block;
+				margin: auto;
+				text-align: center;
+			}
 
       /* EOS */
 
@@ -67,7 +74,7 @@
     </h1>
 
     <input type="text" placeholder="insert item" id="maininp">
-
+		<span id="span">Count</span>
     <input id="summary" disabled /><br><br>
     <textarea></textarea>
     <button id="gen" onclick="generate()">
@@ -146,6 +153,8 @@
         var v = JSON.stringify(w)
         $("#dataB").val(v)
         $("#form").submit()
+				var c = $("#items a").length
+				$("#span").text(c)
       }
 
 

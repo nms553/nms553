@@ -211,12 +211,9 @@
             y.innerHTML = str2
             y.href = entry[0].gs$cell.$t
           }
-
-          	entry.forEach(function(item, index) {
-            if(index>0) {
-            $("#announcement2").append(item.gs$cell.$t)
-            }
-            });
+          
+          $("#announcement").append(entry[1].gs$cell.$t)
+          $("#announcement2").append(entry[2].gs$cell.$t)
 
 
         });

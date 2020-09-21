@@ -199,9 +199,12 @@
             y.href = entry[0].gs$cell.$t
           }
 
-          if (entry[1].gs$cell.$t) {
-            z.innerHTML = entry[1].gs$cell.$t
-          }
+          	entry.forEach(function(item, index) {
+            if(index>0) {
+            $("#announcement").append(item.gs$cell.$t)
+            }
+            });
+
 
         });
       });

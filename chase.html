@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -65,7 +66,7 @@ td:nth-child(n+3) {
 
 
 $(document).ready(function(){
-  $.getJSON("https://spreadsheets.google.com/feeds/list/1CAyAdtlGMJVQVzqKae8Qk3kUUT4WsrxoDYLBu3w3GbY/13/public/full?alt=json", function(result){
+  $.getJSON("https://spreadsheets.google.com/feeds/list/1CAyAdtlGMJVQVzqKae8Qk3kUUT4WsrxoDYLBu3w3GbY/14/public/full?alt=json", function(result){
   	console.log(result.feed.entry)
     var data = result.feed.entry
     console.log(data)
@@ -83,8 +84,7 @@ $(document).ready(function(){
 	else {
 	row.insertCell().innerText = item.gsx$jump.$t
 	}
-	
-	    row.insertCell().innerText = item.gsx$weeklywinnings.$t
+
     })
   });
 });

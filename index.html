@@ -190,7 +190,7 @@
         var sheetUrl = 'https://spreadsheets.google.com/feeds/cells/1CAyAdtlGMJVQVzqKae8Qk3kUUT4WsrxoDYLBu3w3GbY/2/public/full?alt=json';
         $.getJSON(sheetUrl, function(data) {
           var entry = data.feed.entry;
-          //console.log(entry[0].gs$cell.$t);
+          console.log(entry);
           if (entry[0].gs$cell.$t !== "void") {
             var str = entry[0].gs$cell.$t
             var str2 = str.replace("https://www.", "")

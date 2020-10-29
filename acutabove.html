@@ -119,6 +119,20 @@ em {
 	display: block;
 
 }
+	  
+input {
+	margin: 30px 20px 30px auto;
+	width: 50%;
+	height: 35px;
+	font-size: 1em;
+	  }
+
+#searchbtn {
+	height: 35px;
+	padding: 0px 20px 0px 20px;
+}
+		
+	
     /* EOS */
   </style>
 
@@ -183,9 +197,9 @@ em {
  })
 
  $("input").change(function() {
- 	var x = $(this).val().toUpperCase()
+ 	var x = $(this).val().toUpperCase().replace(" ", "")
  	$("tr").each(function() {
-		var y = $(this).text().toUpperCase()
+		var y = $(this).text().toUpperCase().replace(" ", "")
 		if (y.includes(x) == true) {
 			$(this).show();
 		}

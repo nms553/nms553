@@ -20,10 +20,17 @@
 
 
   <style id="compiled-css" type="text/css">
-      body {
+      html {
+	background-color: white;
+	padding-top: 0px;
+}
+
+body {
 	width: 300px;
-	margin: auto;
-	border: 1px solid;
+	margin: 0px auto 0px auto;
+	border: 1px solid white;
+	background-color: whitesmoke;
+	
 }
  
  h2 {
@@ -83,9 +90,10 @@
 }
 
 #amount {
-	height: 25px;
+	height: 35px;
 	width: 100px;
 	text-align: center;
+	font-size: 1.25em;
 }
 
 #desc {
@@ -102,9 +110,9 @@
 <body>
     <center>
 
-  <h1>Expenses</h1>
+  <h1>Expenses</h1><br>
 
-  <hr>
+
 
   $&nbsp;<input type="number" id="amount" placeholder="0.00">
 
@@ -119,6 +127,9 @@
   <details>
     <summary>Details</summary>
 		<br>
+		<br>
+		<input type="date" id="date">
+		<br><br>
     <label><input type="checkbox" id="bucket">Deduct from savings instead</label>
     <sup><a href="javascript:">[?]</a></sup>
 		<br>
@@ -143,13 +154,21 @@
     <div id="used"></div>
   </div>
   <span id="amtleft">$</span>
+	<br>
+	<br>
+	<a href="https://docs.google.com/spreadsheets/d/1DvaYXhcpPJvMFNDlDtx9oG-YGKfqtT6ZbPWqZIvaIxw/htmlembed?single=true&gid=1236564365&range=a1:ff66&widget=false&chrome=false">View transactions</a>
+		<br>
+		
   <hr>
+	
   And we have in reserves:
   <br>
   <h3 id="h3">$</h3>
-  <hr>
   <br><br>
-
+	<br><br>
+<sub>
+<a href="https://docs.google.com/spreadsheets/d/1DvaYXhcpPJvMFNDlDtx9oG-YGKfqtT6ZbPWqZIvaIxw/edit#gid=543241343" target="blank">SS</a> - <a href="https://github.com/nms553/nms553.github.io/edit/master/expense.html">GitHub</a>
+</sub>
 
 
 </center>
@@ -167,6 +186,8 @@
     </tr>
 
   </table>
+	
+	
 </center>
 
 <br>
@@ -247,11 +268,15 @@ $("#saveButton").click(function() {
   var mon = parseInt(d.getMonth()) + 1
   var w = d.getFullYear() + "-" + mon + "-" + d.getDate();
   var y = $("#amount").val() * -1
+	if ($("#date").val()) {
+		w = $("#date").val()
+	}
   var x;
-  var person = document.getElementById("nick")
-  if (person.checked == true) {
+  var nick = document.getElementById("nick")
+	var faith = document.getElementById("nick")
+  if (nick.checked == true) {
     x = "Nick"
-  } else {
+  } else if (faith.checked == true) {
     x = "Faith"
   }
   var z = $("#desc").val()

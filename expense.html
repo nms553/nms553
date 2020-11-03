@@ -117,26 +117,26 @@ body {
   $&nbsp;<input type="number" id="amount" placeholder="0.00">
 
   <br>
-	<br>
-	<br>
+  <br>
+  <br>
   <button id="saveButton">Save it</button><br>
   <br>
-	<input type="text" id="desc" placeholder="Optional: i.e. Schnuck's">
-	<br>
-	<br>
+  <input type="text" id="desc" placeholder="Optional: i.e. Schnuck's">
+  <br>
+  <br>
   <details>
     <summary>Details</summary>
-		<br>
-		<br>
-		<input type="date" id="date">
-		<br><br>
+    <br>
+    <br>
+    <input type="date" id="date">
+    <br><br>
     <label><input type="checkbox" id="bucket">Deduct from savings instead</label>
     <sup><a href="javascript:">[?]</a></sup>
-		<br>
-		<br>
-    <input type="radio" id="nick" name="person" value="Nick"><label for="nick">Nick</label>
-    <input type="radio" id="faith" name="person" value="Faith"><label for="faith">Faith</label><br><br>
-    
+    <br>
+    <br>
+    <input type="hidden" id="nick" name="person" value="Nick"><label for="nick">Nick</label>
+    <input type="hidden" id="faith" name="person" value="Faith"><label for="faith">Faith</label><br><br>
+
   </details>
 
 
@@ -154,34 +154,29 @@ body {
     <div id="used"></div>
   </div>
   <span id="amtleft">$</span>
-	<br>
-	<br>
-	<a href="https://docs.google.com/spreadsheets/d/1DvaYXhcpPJvMFNDlDtx9oG-YGKfqtT6ZbPWqZIvaIxw/htmlembed?single=true&gid=1236564365&range=a1:ff66&widget=false&chrome=false">View transactions</a>
-		<br>
-		
+  <br>
+  <br>
+  <a href="https://docs.google.com/spreadsheets/d/1DvaYXhcpPJvMFNDlDtx9oG-YGKfqtT6ZbPWqZIvaIxw/htmlembed?single=true&gid=1236564365&range=a1:ff66&widget=false&chrome=false">View transactions</a>
+  <br>
+
   <hr>
-	
+
   And we have
   <br>
   <h3 id="h3">$</h3>
-	in reserves.
-	<br><br>
-	<hr>
-	<br>
-	
-	In savings we have used
-	<br>
+  in reserves.
+  <br><br>
+  <hr>
+  <br>
+
+  In savings we have used
+  <br>
   <h2 id="savingsused">$</h2>
-	/<span id="maxsavings">$</span>
-	
-	<div id="smeter">
-    <div id="sused"></div>
-  </div>
-	
-	<br><br>
-<sub>
-<a href="https://docs.google.com/spreadsheets/d/1DvaYXhcpPJvMFNDlDtx9oG-YGKfqtT6ZbPWqZIvaIxw/edit#gid=543241343" target="blank">SS</a> - <a href="https://github.com/nms553/nms553.github.io/edit/master/expense.html">GitHub</a>
-</sub>
+
+  <br><br>
+  <sub>
+    <a href="https://docs.google.com/spreadsheets/d/1DvaYXhcpPJvMFNDlDtx9oG-YGKfqtT6ZbPWqZIvaIxw/edit#gid=543241343" target="blank">SS</a> - <a href="https://github.com/nms553/nms553.github.io/edit/master/expense.html">GitHub</a>
+  </sub>
 
 
 </center>
@@ -221,12 +216,10 @@ $(document).ready(function() {
     var xx = data[0].gsx$today.$t * -1
     var yy = data[0].gsx$reserve.$t
 		var zz = data[0].gsx$savingsused.$t
-		var ww = data[0].gsx$maxsavings.$t
 		
 		$("#amtused").append(xx)
 		$("#amtleft").append(90-xx)
 		$("#savingsused").append(zz)
-		$("#maxsavings").append(ww)
 
     var used = xx / 0.9 + "%"
     if (xx > 90) {
@@ -234,18 +227,11 @@ $(document).ready(function() {
       $("#used").css("background-color", "red")
     }
 		
-		var sused = zz / ww*100 + "%"
-    if (zz > ww) {
-      sused = "100%"
-      $("#sused").css("background-color", "red")
-    }
-		
 		if (yy < 0) {
       $("#h3").css("color", "red")
     }
 
     $("#used").css("width", used)
-		$("#sused").css("width", sused)
 
     $("#h2").append(xx)
     $("#h3").append(yy)

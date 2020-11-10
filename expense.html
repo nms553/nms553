@@ -254,12 +254,27 @@ if (p != null) {
 function actionFunction() {
 	$("tr").each(function() {
 		var d = $("<td></td>")
-		var a = $("<a></a>").attr("href", "javascript:").text("[x]").attr("onclick", "deleteItem(this)")
-	$(d).append(a)
+		var b1 = $("<button>↑</button>").attr("onclick", "moveUp(this)")
+		var b2 = $("<button>↓</button>").attr("onclick", "moveDown(this)")
+	$(d).append(b1).append(b2)
 	$(this).append(d)
 	})
 	
 	
+}
+
+function moveUp(that) {
+	var r = $(that).parent().parent()
+	var y = r.prev()
+	$(r).insertBefore(y)
+	transLastNum();
+}
+
+function moveDown(that) {
+	var r = $(that).parent().parent()
+	var y = r.next()
+	$(r).insertAfter(y)
+	transLastNum();
 }
 
 

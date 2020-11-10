@@ -159,6 +159,12 @@ function addNew() {
   r.insertCell().setAttribute("class", "last")
 	var d4 = r.insertCell()
 	$(d4).append(a)
+	
+	var d5 = $("<td></td>")
+		var b1 = $("<button>↑</button>").attr("onclick", "moveUp(this)")
+		var b2 = $("<button>↓</button>").attr("onclick", "moveDown(this)")
+	$(d5).append(b1).append(b2)
+	$(r).append(d5)
 
   $("#desc").val("")
   $("#amt").val("")
@@ -227,6 +233,12 @@ function paddNew() {
   r.insertCell().setAttribute("class", "plast")
 	var d4 = r.insertCell()
 	$(d4).append(a)
+	
+	var d5 = $("<td></td>")
+		var b1 = $("<button>↑</button>").attr("onclick", "moveUp(this)")
+		var b2 = $("<button>↓</button>").attr("onclick", "moveDown(this)")
+	$(d5).append(b1).append(b2)
+	$(r).append(d5)
 
   $("#pdesc").val("")
   $("#pamt").val("")

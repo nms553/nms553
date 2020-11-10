@@ -115,6 +115,11 @@ a {
   <sup><a href="https://docs.google.com/spreadsheets/d/1DvaYXhcpPJvMFNDlDtx9oG-YGKfqtT6ZbPWqZIvaIxw/edit#gid=0" target="blank">Jewpa Google Sheet Database (open new window)</a></sup>
 </details>
 
+<button onclick="actionFunction()">
+Action
+</button>
+<br><button onclick="saveIt()">Save</button><br><br>
+
 
     <script type="text/javascript">//<![CDATA[
 
@@ -147,13 +152,13 @@ function addNew() {
   var x = document.getElementById("maintable")
   var r = x.insertRow()
   r.setAttribute("class", "savingsexp")
-  var d1 = r.insertCell()
-  d1.innerText = $("#desc").val();
-  $(d1).prepend(a)
+  var d1 = r.insertCell().innerText = $("#desc").val();
   var d2 = r.insertCell()
   d2.innerText = $("#amt").val();
   d2.setAttribute("class", "exp")
   r.insertCell().setAttribute("class", "last")
+	var d4 = r.insertCell()
+	$(d4).append(a)
 
   $("#desc").val("")
   $("#amt").val("")
@@ -172,7 +177,7 @@ function calc() {
 
   })
 
-var x = $("#maintable").find("td").last().text()
+var x = $("#maintable").find(".last").last().text()
   $("#ptable").find("#carryover").text(x)
 
     var pc = 0;
@@ -201,7 +206,7 @@ function saveIt() {
   var py = JSON.stringify(px)
   $("#dataB").val(py)
 
-  //$("form").submit();
+  $("form").submit();
 }
 
 function deleteItem(that) {
@@ -216,11 +221,12 @@ function paddNew() {
   r.setAttribute("class", "psavingsexp")
   var d1 = r.insertCell()
   d1.innerText = $("#pdesc").val();
-  $(d1).prepend(a)
   var d2 = r.insertCell()
   d2.innerText = $("#pamt").val();
   d2.setAttribute("class", "pexp")
   r.insertCell().setAttribute("class", "plast")
+	var d4 = r.insertCell()
+	$(d4).append(a)
 
   $("#pdesc").val("")
   $("#pamt").val("")
@@ -245,6 +251,16 @@ if (p != null) {
 
 })
 
+function actionFunction() {
+	$("tr").each(function() {
+		var d = $("<td></td>")
+		var a = $("<a></a>").attr("href", "javascript:").text("[x]").attr("onclick", "deleteItem(this)")
+	$(d).append(a)
+	$(this).append(d)
+	})
+	
+	
+}
 
 
   //]]></script>

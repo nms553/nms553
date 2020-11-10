@@ -21,50 +21,28 @@
 
   <style id="compiled-css" type="text/css">
       body {
-	margin: auto;
-	border: 1px solid;
-	max-width: 550px;
-	padding: 0px;
-	width: 90%;
+	text-align: center;
 }
 
-h1 {
-	text-align: center;
+summary {
+	color: gray;
 }
 
 table {
+	width: 90%;
+	max-width: 500px;
 	margin: auto;
-	width: 100%;
-	max-width: 450px;
 }
 
-th, td {
-	padding: 2px 5px 2px 5px;
-}
-
-#maintable tr:nth-child(2) td:nth-child(2) {
-	color: white;
-}
-
-td:nth-child(2), td:nth-child(3) {
-	text-align: center;
-}
-
-#formdiv {
-	text-align: center;
-	padding: 0px;
-	border: 0px solid;
-	max-width: 550px;
+details {
+	max-width: 500px;
+	width: 90%;
 	display: block;
 	margin: auto;
 }
 
-#formdiv input:nth-child(2) {
-	width: 100px;
-}
-
-#maintable tr:last-child td:nth-child(3) {
-	font-weight: bold;
+a {
+	margin-right: 20px;
 }
     /* EOS */
   </style>
@@ -75,71 +53,197 @@ td:nth-child(2), td:nth-child(3) {
 </head>
 <body>
     <h1>Savings</h1>
-
+<h2>Expenses</h2>
 <br>
-
-<table id="maintable" border="1">
+<table id="maintable" border="1" cellpadding="3">
   <tbody>
     <tr>
       <th>Item</th>
       <th>Expense</th>
-      <th>Remaining</th>
-			<!--
-      <th>colD</th>
-      <th>colE</th> -->
+      <th>Balance</th>
+			<th>X</th>
+    </tr>
+    <tr class="savingsexp">
+      <td></td>
+      <td class="exp">20000</td>
+      <td class="last"></td>
     </tr>
   </tbody>
 </table>
-
-<br><br>
-
-<div id="formdiv">
-	<form id="form" method="post" action="https://script.google.com/a/umsystem.edu/macros/s/AKfycbwFdsqLDH1TCK9FjY_ccJOU9f7IjpXpgCtLwMe9Qw/exec" target="iframe" style="display: initial;" onsubmit="setTimeout(function(){location.reload()},1000);">
-    <!--index: actual row of the gsheet -->
-    <!-- adds a new row to gsheet with the new row of data below -->
-    <input type="text" name="dataA" id="dataA" placeholder="Item description">
-    $<input type="text" name="dataB" id="dataB" placeholder="amount"><br><br>
-		<input type="submit">
-		<input type="hidden" id="inp_row" name="sheetName" value="SavingsExpenses"><br>
-    <input type="hidden" name="dataC" id="dataC" placeholder="cell C info"><br>
-    <input type="hidden" name="dataD" id="dataD" placeholder="cell D info"><br>
-    <input type="hidden" name="dataE" id="dataE" placeholder="cell E info">
-
-    <iframe src="" name="iframe" id="iframe" style="display: none;"></iframe>
-  </form>
-	
-	<sup><a href="https://docs.google.com/spreadsheets/d/1DvaYXhcpPJvMFNDlDtx9oG-YGKfqtT6ZbPWqZIvaIxw/edit#gid=0" target="blank">Jewpa Google Sheet Database (open new window)</a></sup>
-</div>
-  
-  
+<br>
+<input type="text" id="desc">
+<input type="number" id="amt">
+<button onclick="addNew()">Add</button>
 
 <br><br><br>
+<hr>
+<br>
+<h2>Planned Expenses</h2>
+<table id="ptable" border="1" cellpadding="3">
+  <tbody>
+    <tr>
+      <th>Item</th>
+      <th>Expense</th>
+      <th>Balance</th>
+    </tr>
+    <tr class="psavingsexp">
+      <td></td>
+      <td id="carryover" class="pexp">20000</td>
+      <td class="plast"></td>
+    </tr>
+  </tbody>
+</table>
+<br>
+<input type="text" id="pdesc">
+<input type="number" id="pamt">
+<button onclick="paddNew()">Add</button>
+
+<details>
+  <summary>Submit data</summary>
+  <form id="form" method="post" action="https://script.google.com/macros/s/AKfycbzpZHMWb2YiY6-B1llGVlT7dmPAu_Su6wwDLoaUhYOoLbexG7-5/exec" target="iframe" style="display: initial;" onsubmit="resett()">
+    <!--index: actual row of the gsheet -->
+    <input type="hidden" name="row" id="inp_row" value="9"><br>
+    Cell 1 result: <br>
+    <input type="text" name="dataA" id="dataA"><br><br>
+    Cell 2 result: <br>
+    <input type="text" name="dataB" id="dataB"><br><br>
+    Cell 3 result: <br>
+    <input type="text" name="dataC" id="dataC"><br><br>
+    <input type="submit"><br><br>
+    <iframe src="" name="iframe" id="iframe" style="display: none;"></iframe>
+  </form>
+  <sup><a href="https://docs.google.com/spreadsheets/d/1DvaYXhcpPJvMFNDlDtx9oG-YGKfqtT6ZbPWqZIvaIxw/edit#gid=0" target="blank">Jewpa Google Sheet Database (open new window)</a></sup>
+</details>
 
 
     <script type="text/javascript">//<![CDATA[
 
 
 $(document).ready(function() {
-  $.getJSON("https://spreadsheets.google.com/feeds/list/1DvaYXhcpPJvMFNDlDtx9oG-YGKfqtT6ZbPWqZIvaIxw/4/public/full?alt=json", function(result) {
+  $.getJSON("https://spreadsheets.google.com/feeds/list/1DvaYXhcpPJvMFNDlDtx9oG-YGKfqtT6ZbPWqZIvaIxw/1/public/full?alt=json", function(result) {
     var data = result.feed.entry
-    console.log(data)
-    data.forEach(function(item, index) {
-      var a = item.gsx$cola.$t
-      var b = item.gsx$colb.$t
-			var c = item.gsx$colc.$t
+    console.log(data[7])
+    var x = data[7].gsx$cola.$t
+    var y = JSON.parse(x)
 
-      var t = document.getElementById("maintable")
-      var r = t.insertRow()
-      r.insertCell().innerHTML = a
-      r.insertCell().innerHTML = b
-			r.insertCell().innerHTML = c
+    var px = data[7].gsx$colb.$t
+    var py = JSON.parse(px)
 
+    $("#maintable").html(y)
+    $("#ptable").html(py)
 
-    })
+    transLastNum();
   })
 })
 
+function transLastNum() {
+  
 
+  calc();
+}
+
+function addNew() {
+  var a = $("<a></a>").attr("href", "javascript:").text("[x]").attr("onclick", "deleteItem(this)")
+  var x = document.getElementById("maintable")
+  var r = x.insertRow()
+  r.setAttribute("class", "savingsexp")
+  var d1 = r.insertCell()
+  d1.innerText = $("#desc").val();
+  $(d1).prepend(a)
+  var d2 = r.insertCell()
+  d2.innerText = $("#amt").val();
+  d2.setAttribute("class", "exp")
+  r.insertCell().setAttribute("class", "last")
+
+  $("#desc").val("")
+  $("#amt").val("")
+
+  transLastNum();
+
+}
+
+function calc() {
+  var c = 0;
+  var x = $(".savingsexp").each(function(index) {
+    var y = $(this).find(".exp").text()
+    var z = parseInt(y)
+    c = c + z
+    $(this).find('.last').text(c)
+
+  })
+
+var x = $("#maintable").find("td").last().text()
+  $("#ptable").find("#carryover").text(x)
+
+    var pc = 0;
+    var px = $(".psavingsexp").each(function(index) {
+      var py = $(this).find(".pexp").text()
+      var pz = parseInt(py)
+      pc = pc + pz
+      $(this).find('.plast').text(pc)
+
+    })
+
+    saveIt();
+
+
+
+
+}
+
+
+function saveIt() {
+  var x = $("#maintable").html()
+  var y = JSON.stringify(x)
+  $("#dataA").val(y)
+
+  var px = $("#ptable").html()
+  var py = JSON.stringify(px)
+  $("#dataB").val(py)
+
+  //$("form").submit();
+}
+
+function deleteItem(that) {
+  $(that).parent().parent().remove();
+  transLastNum()
+}
+
+function paddNew() {
+  var a = $("<a></a>").attr("href", "javascript:").text("[x]").attr("onclick", "deleteItem(this)")
+  var x = document.getElementById("ptable")
+  var r = x.insertRow()
+  r.setAttribute("class", "psavingsexp")
+  var d1 = r.insertCell()
+  d1.innerText = $("#pdesc").val();
+  $(d1).prepend(a)
+  var d2 = r.insertCell()
+  d2.innerText = $("#pamt").val();
+  d2.setAttribute("class", "pexp")
+  r.insertCell().setAttribute("class", "plast")
+
+  $("#pdesc").val("")
+  $("#pamt").val("")
+
+  transLastNum();
+
+}
+
+function resett() {
+  //location.reload()
+}
+
+$("table").on('dblclick', 'td', function() {
+  var v = this.innerText
+  var p = prompt("Change entry?")
+  
+if (p != null) {
+  this.innerText = p
+	transLastNum();
+}
+  
+
+})
 
 
 
@@ -150,7 +254,7 @@ $(document).ready(function() {
     if (window.parent && window.parent.parent){
       window.parent.parent.postMessage(["resultsFrame", {
         height: document.body.getBoundingClientRect().height,
-        slug: "vt4oqm81"
+        slug: "qxk4au3r"
       }], "*")
     }
 

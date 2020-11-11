@@ -42,7 +42,26 @@ details {
 }
 
 a {
-	margin-right: 20px;
+	margin-right: 0px;
+	text-decoration: initial;
+}
+
+tr:nth-child(odd) {
+	background-color: whitesmoke;
+}
+
+th:nth-child(4) {
+	width: 10px;
+	padding: 0px;
+}
+
+th:nth-child(5) {
+	width: 50px;
+	padding: 0px;
+}
+
+#addbtn {
+	width: 200px;
 }
     /* EOS */
   </style>
@@ -53,15 +72,14 @@ a {
 </head>
 <body>
     <h1>Savings</h1>
-<h2>Expenses</h2>
 <br>
-<table id="maintable" border="1" cellpadding="3">
+<table id="maintable">
   <tbody>
     <tr>
       <th>Item</th>
       <th>Expense</th>
       <th>Balance</th>
-			<th>X</th>
+      <th>X</th>
     </tr>
     <tr class="savingsexp">
       <td></td>
@@ -70,36 +88,18 @@ a {
     </tr>
   </tbody>
 </table>
-<br>
-<input type="text" id="desc">
-<input type="number" id="amt">
-<button onclick="addNew()">Add</button>
+<br><br>
+<button onclick="addNew()" id="addbtn">Add</button>
+<br><br><br><br>
 
-<br><br><br>
-<hr>
-<br>
-<h2>Planned Expenses</h2>
-<table id="ptable" border="1" cellpadding="3">
-  <tbody>
-    <tr>
-      <th>Item</th>
-      <th>Expense</th>
-      <th>Balance</th>
-    </tr>
-    <tr class="psavingsexp">
-      <td></td>
-      <td id="carryover" class="pexp">20000</td>
-      <td class="plast"></td>
-    </tr>
-  </tbody>
-</table>
-<br>
-<input type="text" id="pdesc">
-<input type="number" id="pamt">
-<button onclick="paddNew()">Add</button>
 
 <details>
-  <summary>Submit data</summary>
+  <summary>Form</summary>
+	<br>
+  <button onclick="actionFunction()">
+    Action
+  </button>
+  <button onclick="saveIt()">Sv</button><br>
   <form id="form" method="post" action="https://script.google.com/macros/s/AKfycbzpZHMWb2YiY6-B1llGVlT7dmPAu_Su6wwDLoaUhYOoLbexG7-5/exec" target="iframe" style="display: initial;" onsubmit="resett()">
     <!--index: actual row of the gsheet -->
     <input type="hidden" name="row" id="inp_row" value="9"><br>
@@ -114,11 +114,7 @@ a {
   </form>
   <sup><a href="https://docs.google.com/spreadsheets/d/1DvaYXhcpPJvMFNDlDtx9oG-YGKfqtT6ZbPWqZIvaIxw/edit#gid=0" target="blank">Jewpa Google Sheet Database (open new window)</a></sup>
 </details>
-
-<button onclick="actionFunction()">
-Action
-</button>
-<br><button onclick="saveIt()">Save</button><br><br>
+<br><br>
 
 
     <script type="text/javascript">//<![CDATA[
@@ -131,46 +127,39 @@ $(document).ready(function() {
     var x = data[7].gsx$cola.$t
     var y = JSON.parse(x)
 
-    var px = data[7].gsx$colb.$t
-    var py = JSON.parse(px)
-
     $("#maintable").html(y)
-    $("#ptable").html(py)
 
     transLastNum();
   })
 })
 
 function transLastNum() {
-  
+
 
   calc();
 }
 
 function addNew() {
-  var a = $("<a></a>").attr("href", "javascript:").text("[x]").attr("onclick", "deleteItem(this)")
+  var a = $("<a></a>").attr("href", "javascript:").text("❌").attr("onclick", "deleteItem(this)")
   var x = document.getElementById("maintable")
   var r = x.insertRow()
   r.setAttribute("class", "savingsexp")
-  var d1 = r.insertCell().innerText = $("#desc").val();
+  var d1 = r.insertCell()
   var d2 = r.insertCell()
-  d2.innerText = $("#amt").val();
+  d2.innerText
   d2.setAttribute("class", "exp")
   r.insertCell().setAttribute("class", "last")
-	var d4 = r.insertCell()
-	$(d4).append(a)
-	
-	var d5 = $("<td></td>")
-		var b1 = $("<button>↑</button>").attr("onclick", "moveUp(this)")
-		var b2 = $("<button>↓</button>").attr("onclick", "moveDown(this)")
-	$(d5).append(b1).append(b2)
-	$(r).append(d5)
+  var d4 = r.insertCell()
+  $(d4).append(a)
 
-  $("#desc").val("")
-  $("#amt").val("")
+  var d5 = $("<td></td>")
+  var b1 = $("<button>↑</button>").attr("onclick", "moveUp(this)")
+  var b2 = $("<button>↓</button>").attr("onclick", "moveDown(this)")
+  $(d5).append(b1).append(b2)
+  $(r).append(d5)
+
 
   transLastNum();
-
 }
 
 function calc() {
@@ -182,24 +171,7 @@ function calc() {
     $(this).find('.last').text(c)
 
   })
-
-var x = $("#maintable").find(".last").last().text()
-  $("#ptable").find("#carryover").text(x)
-
-    var pc = 0;
-    var px = $(".psavingsexp").each(function(index) {
-      var py = $(this).find(".pexp").text()
-      var pz = parseInt(py)
-      pc = pc + pz
-      $(this).find('.plast').text(pc)
-
-    })
-
-    saveIt();
-
-
-
-
+  saveIt();
 }
 
 
@@ -207,44 +179,12 @@ function saveIt() {
   var x = $("#maintable").html()
   var y = JSON.stringify(x)
   $("#dataA").val(y)
-
-  var px = $("#ptable").html()
-  var py = JSON.stringify(px)
-  $("#dataB").val(py)
-
   $("form").submit();
 }
 
 function deleteItem(that) {
   $(that).parent().parent().remove();
   transLastNum()
-}
-
-function paddNew() {
-  var a = $("<a></a>").attr("href", "javascript:").text("[x]").attr("onclick", "deleteItem(this)")
-  var x = document.getElementById("ptable")
-  var r = x.insertRow()
-  r.setAttribute("class", "psavingsexp")
-  var d1 = r.insertCell()
-  d1.innerText = $("#pdesc").val();
-  var d2 = r.insertCell()
-  d2.innerText = $("#pamt").val();
-  d2.setAttribute("class", "pexp")
-  r.insertCell().setAttribute("class", "plast")
-	var d4 = r.insertCell()
-	$(d4).append(a)
-	
-	var d5 = $("<td></td>")
-		var b1 = $("<button>↑</button>").attr("onclick", "moveUp(this)")
-		var b2 = $("<button>↓</button>").attr("onclick", "moveDown(this)")
-	$(d5).append(b1).append(b2)
-	$(r).append(d5)
-
-  $("#pdesc").val("")
-  $("#pamt").val("")
-
-  transLastNum();
-
 }
 
 function resett() {
@@ -254,40 +194,37 @@ function resett() {
 $("table").on('dblclick', 'td', function() {
   var v = this.innerText
   var p = prompt("Change entry?")
-  
-if (p != null) {
-  this.innerText = p
-	transLastNum();
-}
-  
 
+  if (p != null) {
+    this.innerText = p
+    transLastNum();
+  }
 })
 
 function actionFunction() {
-	$("tr").each(function() {
-		var d = $("<td></td>")
-		var b1 = $("<button>↑</button>").attr("onclick", "moveUp(this)")
-		var b2 = $("<button>↓</button>").attr("onclick", "moveDown(this)")
-	$(d).append(b1).append(b2)
-	$(this).append(d)
-	})
-	
-	
+  $("tr").each(function() {
+    var d = $("<td></td>")
+    var b1 = $("<button>↑</button>").attr("onclick", "moveUp(this)")
+    var b2 = $("<button>↓</button>").attr("onclick", "moveDown(this)")
+    $(d).append(b1).append(b2)
+    $(this).append(d)
+  })
 }
 
 function moveUp(that) {
-	var r = $(that).parent().parent()
-	var y = r.prev()
-	$(r).insertBefore(y)
-	transLastNum();
+  var r = $(that).parent().parent()
+  var y = r.prev()
+  $(r).insertBefore(y)
+  transLastNum();
 }
 
 function moveDown(that) {
-	var r = $(that).parent().parent()
-	var y = r.next()
-	$(r).insertAfter(y)
-	transLastNum();
+  var r = $(that).parent().parent()
+  var y = r.next()
+  $(r).insertAfter(y)
+  transLastNum();
 }
+
 
 
   //]]></script>

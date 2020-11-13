@@ -196,7 +196,7 @@ input {
    })
  })
 
- $("input").change(function() {
+ $("input").keydown(function() {
  	var x = $(this).val().toUpperCase().replace(" ", "")
  	$("tr").each(function() {
 		var y = $(this).text().toUpperCase().replace(" ", "")

@@ -1,0 +1,114 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <title></title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="googlebot" content="noindex, nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <script
+    type="text/javascript"
+    src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"
+    
+  ></script>
+
+    <link rel="stylesheet" type="text/css" href="/css/result-light.css">
+
+
+  <style id="compiled-css" type="text/css">
+      
+.strikethru {
+	text-decoration: line-through;
+}
+
+#saveall {
+	width: 200px;
+}
+
+p {
+	margin: 5px;
+}
+    /* EOS */
+  </style>
+
+  <script id="insert"></script>
+
+
+</head>
+<body>
+    <table border="1" width="90%">
+	<tr>
+		<td id="col1"></td>
+		<!-- <td id="col2"></td> -->
+	</tr>
+	<tr>
+		<td><input type="text" id="add1"><button onclick="add1()">Submit</button></td>
+		<!-- <td><input type="text" onchange="add2(this.value)" id="add2"></td> -->
+	</tr>
+</table>
+<br>
+<button onclick="saveAll()" id="saveall">Save All</button>
+
+    <script type="text/javascript">//<![CDATA[
+
+
+$(document).ready(function() {
+	var x = localStorage.getItem("alist")
+	var y = JSON.parse(x)
+	$("#col1").html(y)
+})
+
+$("#add1").keydown(function(e) {
+	if (e.which == 13) {
+		add1()
+	}
+})
+
+function add1() {
+	var x = $("#add1").val()
+	var p = $("<p></p>").html(x)
+	$("#col1").append(p)
+	$("#add1").val("")
+	saveAll()
+}
+
+function saveAll() {
+	var html = $("#col1").html()
+	var str = JSON.stringify(html)
+	localStorage.setItem("alist", str)
+	//alert(str)
+}
+
+$("table").on("dblclick", "p", function() {
+	if (this.classList.contains("strikethru")) {
+		this.classList.remove("strikethru")
+	} else {
+		this.classList.add("strikethru")
+	}
+	saveAll()
+	
+})
+
+
+  //]]></script>
+
+  <script>
+    // tell the embed parent frame the height of the content
+    if (window.parent && window.parent.parent){
+      window.parent.parent.postMessage(["resultsFrame", {
+        height: document.body.getBoundingClientRect().height,
+        slug: "ea1h5sp9"
+      }], "*")
+    }
+
+    // always overwrite window.name, in case users try to set it manually
+    window.name = "result"
+  </script>
+
+
+</body>
+</html>

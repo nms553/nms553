@@ -63,8 +63,8 @@ $(document).ready(function() {
       if (item.gsx$cola.$t == "1") {
         var str = item.gsx$colb.$t;
         var parse = JSON.parse(str);
-        //$("#col1").html(parse)
-				$("#col1").html(JSON.parse(localStorage.getItem("alist")))
+        $("#col1").html(parse)
+	//			$("#col1").html(JSON.parse(localStorage.getItem("alist")))
       }
     });
   });

@@ -57,41 +57,60 @@ p {
 
 
 $(document).ready(function() {
-	var x = localStorage.getItem("alist")
-	var y = JSON.parse(x)
-	$("#col1").html(y)
-})
+  $.getJSON("https://spreadsheets.google.com/feeds/list/1DvaYXhcpPJvMFNDlDtx9oG-YGKfqtT6ZbPWqZIvaIxw/1/public/full?alt=json", function(result) {
+    var data = result.feed.entry;
+    data.forEach(function(item, index) {
+      if (item.gsx$cola.$t == "1") {
+        var str = item.gsx$colb.$t;
+        var parse = JSON.parse(str);
+        //$("#col1").html(parse)
+				$("#col1").html(JSON.parse(localStorage.getItem("alist")))
+      }
+    });
+  });
+});
+
+function saveAll() {
+  var html = $("#col1").html();
+  var str = JSON.stringify(html);
+  var iframe = $("<iframe></iframe>").attr("name", "targetiframe").attr("style", "display: none;");
+  var form = document.createElement("FORM");
+  form.action = "https://script.google.com/macros/s/AKfycbwxE5s7hfAtQXZPLKwdNFpT6J2ThVai8fbweqPwh43VQXdSRTkC/exec";
+  form.method = "get";
+  form.target = "targetiframe";
+	form.style = "display: none;";
+  $("body").append(form).append(iframe);
+  var timestamp = $("<INPUT>").val("1").attr("name", "row");
+  var col = $("<INPUT>").val("colB").attr("name", "col");
+  var input = $("<INPUT>").val(str).attr("name", "text");
+  var sheetname = $("<INPUT>").val("Test").attr("name", "sheetName");
+  $(form).append(timestamp).append(col).append(input).append(sheetname).submit();
+}
 
 $("#add1").keydown(function(e) {
-	if (e.which == 13) {
-		add1()
-	}
+  if (e.which == 13) {
+    add1()
+  }
 })
 
 function add1() {
-	var x = $("#add1").val()
-	var p = $("<p></p>").html(x)
-	$("#col1").append(p)
-	$("#add1").val("")
-	saveAll()
-}
-
-function saveAll() {
-	var html = $("#col1").html()
-	var str = JSON.stringify(html)
-	localStorage.setItem("alist", str)
-	//alert(str)
+  var x = $("#add1").val()
+  var p = $("<p></p>").html(x)
+  $("#col1").append(p)
+  $("#add1").val("")
+  saveAll()
 }
 
 $("table").on("dblclick", "p", function() {
-	if (this.classList.contains("strikethru")) {
-		this.classList.remove("strikethru")
-	} else {
-		this.classList.add("strikethru")
-	}
-	saveAll()
-	
+  if (this.classList.contains("strikethru")) {
+    this.classList.remove("strikethru")
+  } else {
+    this.classList.add("strikethru")
+  }
+  saveAll()
+
 })
+
 
 
   //]]></script>
@@ -101,7 +120,7 @@ $("table").on("dblclick", "p", function() {
     if (window.parent && window.parent.parent){
       window.parent.parent.postMessage(["resultsFrame", {
         height: document.body.getBoundingClientRect().height,
-        slug: "ea1h5sp9"
+        slug: "1bynr67m"
       }], "*")
     }
 

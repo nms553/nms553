@@ -32,6 +32,18 @@
 p {
 	margin: 5px;
 }
+
+.yellow {
+	background-color: yellow;
+}
+
+.green {
+	background-color: lime;
+}
+
+.pink {
+	background-color: magenta;
+}
     /* EOS */
   </style>
 
@@ -64,7 +76,6 @@ $(document).ready(function() {
         var str = item.gsx$colb.$t;
         var parse = JSON.parse(str);
         $("#col1").html(parse)
-	//			$("#col1").html(JSON.parse(localStorage.getItem("alist")))
       }
     });
   });
@@ -104,7 +115,18 @@ function add1() {
 $("table").on("dblclick", "p", function() {
   if (this.classList.contains("strikethru")) {
     this.classList.remove("strikethru")
-  } else {
+		this.classList.add("yellow")
+  } else if (this.classList.contains("yellow")) {
+		this.classList.remove("yellow")
+		this.classList.add("green")
+	} else if (this.classList.contains("green")) {
+		this.classList.remove("green")
+		this.classList.add("pink")
+	} else if (this.classList.contains("pink")) {
+		this.classList.remove("pink")
+	}
+	
+	else {
     this.classList.add("strikethru")
   }
   saveAll()

@@ -20,7 +20,14 @@
 
 
   <style id="compiled-css" type="text/css">
-      
+      table {
+	table-layout: fixed;
+}
+
+td {
+	vertical-align: top;
+}
+
 .strikethru {
 	text-decoration: line-through;
 }
@@ -52,16 +59,18 @@ p {
 
 </head>
 <body>
-    <table border="1" width="90%">
+    <div><table border="0" width="90%">
 	<tr>
 		<td id="col1"></td>
-		<!-- <td id="col2"></td> -->
+		<td id="col2" contenteditable><ul><li></li></ul></td>
 	</tr>
 	<tr>
 		<td><input type="text" id="add1"><button onclick="add1()">Submit</button></td>
 		<!-- <td><input type="text" onchange="add2(this.value)" id="add2"></td> -->
 	</tr>
 </table>
+
+</div>
 <br>
 <button onclick="saveAll()" id="saveall">Save All</button>
 
@@ -76,6 +85,10 @@ $(document).ready(function() {
         var str = item.gsx$colb.$t;
         var parse = JSON.parse(str);
         $("#col1").html(parse)
+				
+				var str2 = item.gsx$colc.$t;
+        var parse2 = JSON.parse(str2);
+        $("#col2").html(parse2)
       }
     });
   });
@@ -89,14 +102,34 @@ function saveAll() {
   form.action = "https://script.google.com/macros/s/AKfycbwxE5s7hfAtQXZPLKwdNFpT6J2ThVai8fbweqPwh43VQXdSRTkC/exec";
   form.method = "get";
   form.target = "targetiframe";
-	form.style = "display: none;";
+  form.style = "display: none;";
   $("body").append(form).append(iframe);
   var timestamp = $("<INPUT>").val("1").attr("name", "row");
   var col = $("<INPUT>").val("colB").attr("name", "col");
   var input = $("<INPUT>").val(str).attr("name", "text");
   var sheetname = $("<INPUT>").val("Test").attr("name", "sheetName");
   $(form).append(timestamp).append(col).append(input).append(sheetname).submit();
+saveAll2()
 }
+
+function saveAll2() {
+  var html = $("#col2").html();
+  var str = JSON.stringify(html);
+  var iframe = $("<iframe></iframe>").attr("name", "targetiframe").attr("style", "display: none;");
+  var form = document.createElement("FORM");
+  form.action = "https://script.google.com/macros/s/AKfycbwxE5s7hfAtQXZPLKwdNFpT6J2ThVai8fbweqPwh43VQXdSRTkC/exec";
+  form.method = "get";
+  form.target = "targetiframe";
+  form.style = "display: none;";
+  $("body").append(form).append(iframe);
+  var timestamp = $("<INPUT>").val("1").attr("name", "row");
+  var col = $("<INPUT>").val("colC").attr("name", "col");
+  var input = $("<INPUT>").val(str).attr("name", "text");
+  var sheetname = $("<INPUT>").val("Test").attr("name", "sheetName");
+  $(form).append(timestamp).append(col).append(input).append(sheetname).submit();
+}
+
+
 
 $("#add1").keydown(function(e) {
   if (e.which == 13) {
@@ -115,18 +148,16 @@ function add1() {
 $("table").on("dblclick", "p", function() {
   if (this.classList.contains("strikethru")) {
     this.classList.remove("strikethru")
-		this.classList.add("yellow")
+    this.classList.add("yellow")
   } else if (this.classList.contains("yellow")) {
-		this.classList.remove("yellow")
-		this.classList.add("green")
-	} else if (this.classList.contains("green")) {
-		this.classList.remove("green")
-		this.classList.add("pink")
-	} else if (this.classList.contains("pink")) {
-		this.classList.remove("pink")
-	}
-	
-	else {
+    this.classList.remove("yellow")
+    this.classList.add("green")
+  } else if (this.classList.contains("green")) {
+    this.classList.remove("green")
+    this.classList.add("pink")
+  } else if (this.classList.contains("pink")) {
+    this.classList.remove("pink")
+  } else {
     this.classList.add("strikethru")
   }
   saveAll()

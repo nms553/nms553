@@ -16,8 +16,6 @@
     
   ></script>
 
-    <link rel="stylesheet" type="text/css" href="/css/result-light.css">
-
 
   <style id="compiled-css" type="text/css">
          html,
@@ -268,18 +266,6 @@
 
   //]]></script>
 
-  <script>
-    // tell the embed parent frame the height of the content
-    if (window.parent && window.parent.parent){
-      window.parent.parent.postMessage(["resultsFrame", {
-        height: document.body.getBoundingClientRect().height,
-        slug: "mLvrpfyg"
-      }], "*")
-    }
-
-    // always overwrite window.name, in case users try to set it manually
-    window.name = "result"
-  </script>
 
 
 </body>

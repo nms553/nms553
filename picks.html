@@ -1,4 +1,50 @@
+
 <!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <title></title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="googlebot" content="noindex, nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <script
+    type="text/javascript"
+    src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"
+    
+  ></script>
+
+    <link rel="stylesheet" type="text/css" href="/css/result-light.css">
+
+
+  <style id="compiled-css" type="text/css">
+      td {
+  height: 40px;
+}
+
+a {
+  font-size: 0.75em;
+}
+
+input {
+  width: 135px;
+}
+
+td:first-child {
+  text-align: center;
+}
+
+    /* EOS */
+  </style>
+
+  <script id="insert"></script>
+
+
+</head>
+<body>
+    <!DOCTYPE html>
 <html>
 
   <head>
@@ -14,24 +60,13 @@
 <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
 <meta name="msapplication-TileColor" content="#da532c">
 <meta name="theme-color" content="#ffffff">
-    <style>
-      td {
-        height: 40px;
-      }
-      a {font-size: .75em;}
-      input {width: 135px;}
-      
-      td:first-child {
-      	text-align: center;
-      }
 
-    </style>
   </head>
 
   <body>
   <div align="center">
     <br>
-    <a href="https://www.stupid-fast.com/"><img src="./banner.png"></a><br><br>
+    <a href="https://www.stupid-fast.com/"><img src="https://www.stupid-fast.com/banner.png"></a><br><br>
 
     <form id="form" name="myForm" action="https://script.google.com/macros/s/AKfycbwhlpFw2h-7mKHBabnRfgMf4k0qepj7KgVKyI6dTvsVrwiYbL4/exec" method="get" target="dummyframe">
       <input type="hidden" name="index" value="">
@@ -41,13 +76,26 @@
 
     <table id="table" border="0"></table>
 
-    <script>
-      //variables
+
+    <iframe width="0" height="0" border="0" name="dummyframe" id="dummyframe" style="display:none;"></iframe><br>
+    <a target="_blank" href="https://script.google.com/d/165R7viTBypkyTYNavCDaflQHuV49C6e9lv4RaTODgV2jL3aEwh9bZQsT/edit?usp=sharing">Script</a> - 
+    <a target="_blank" href="https://github.com/nms553/nms553.github.io/edit/master/picks.html">GH</a>  - 
+    <a target="_blank" href="https://docs.google.com/spreadsheets/d/1CAyAdtlGMJVQVzqKae8Qk3kUUT4WsrxoDYLBu3w3GbY/edit#gid=1482388299">Sheets</a>
+</div>
+  </body>
+
+</html>
+
+
+    <script type="text/javascript">//<![CDATA[
+
+
+  //variables
       var form = document.getElementById("form");
       var table = document.getElementById("table");
       var newarray0 = [];
       var toptenarray = [];
-      var players = ["Schriewer", "Mike", "Chris L", "Dave", "Curt", "Tim", "Chris C", "Dean", "Poepsel", "Hannah", "Rachel", "Nick", "Scot", "(test/extra)"];
+      var players = ["Schriewer", "Mike", "Chris L", "Dave", "Curt", "Tim", "Chris C", "Dean", "Poepsel", "Hannah", "Rachel", "Nick", "Scot", "(blank)"];
 
       function validate(playr, indx) {
         document.getElementsByName("index")[0].value = indx;
@@ -95,7 +143,14 @@
           entry.forEach(function(item, index) {
             var row = table.insertRow();
             var cell = row.insertCell(0);
-            cell.innerHTML = '<image height="100%" src="' + item.gsx$image.$t + '"" />';
+            var imgname = JSON.stringify(item.gsx$drivers.$t).replace(".", "").replace(/ /g, "")
+            var imgparse = JSON.parse(imgname)
+            var imgcombo = "https://www.stupid-fast.com/drivers/" + imgparse + ".png"
+            //console.log(imgcombo)
+            var imgtag = document.createElement("IMG")
+            imgtag.setAttribute("src", imgcombo)
+            imgtag.setAttribute("height", "100%")
+            cell.appendChild(imgtag)
             var cell0 = row.insertCell(1);
             var cell1 = row.insertCell(2);
             var cell2 = row.insertCell(3);
@@ -138,16 +193,29 @@
           var tenthrow = document.getElementsByTagName("TR")[13];
           tenthrow.innerHTML = "<td colspan='4'><hr></td>";
 
+$("tr:last-child").find("td").first().find("img").attr("src", "https://www.stupid-fast.com/drivers/DickTrickle.png")
+
         });
+				
       });
 
-    </script>
 
-    <iframe width="0" height="0" border="0" name="dummyframe" id="dummyframe" style="display:none;"></iframe><br>
-    <a target="_blank" href="https://script.google.com/d/165R7viTBypkyTYNavCDaflQHuV49C6e9lv4RaTODgV2jL3aEwh9bZQsT/edit?usp=sharing">Script</a> - 
-    <a target="_blank" href="https://github.com/nms553/nms553.github.io/edit/master/picks.html">GH</a>  - 
-    <a target="_blank" href="https://docs.google.com/spreadsheets/d/1CAyAdtlGMJVQVzqKae8Qk3kUUT4WsrxoDYLBu3w3GbY/edit#gid=1482388299">Sheets</a>
-</div>
-  </body>
 
+  //]]></script>
+
+  <script>
+    // tell the embed parent frame the height of the content
+    if (window.parent && window.parent.parent){
+      window.parent.parent.postMessage(["resultsFrame", {
+        height: document.body.getBoundingClientRect().height,
+        slug: "ykjLb79z"
+      }], "*")
+    }
+
+    // always overwrite window.name, in case users try to set it manually
+    window.name = "result"
+  </script>
+
+
+</body>
 </html>

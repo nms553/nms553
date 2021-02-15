@@ -143,7 +143,7 @@ td:first-child {
           entry.forEach(function(item, index) {
             var row = table.insertRow();
             var cell = row.insertCell(0);
-            var imgname = JSON.stringify(item.gsx$drivers.$t).replace(".", "").replace(/ /g, "")
+            var imgname = JSON.stringify(item.gsx$drivers.$t).replace(".", "").replace(/ /g, "").replace("+1", "").replace("+2", "")
             var imgparse = JSON.parse(imgname)
             var imgcombo = "https://www.stupid-fast.com/drivers/" + imgparse + ".png"
             //console.log(imgcombo)

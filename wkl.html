@@ -1,0 +1,1113 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <title></title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="googlebot" content="noindex, nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <script
+    type="text/javascript"
+    src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"
+    
+  ></script>
+
+    <link rel="stylesheet" type="text/css" href="/css/result-light.css">
+
+
+  <style id="compiled-css" type="text/css">
+      html, body {
+	font-family: Franklin Gothic Book, sans-serif;
+	font-size: 0.9em;
+}
+
+body {
+	padding: 40px;
+	max-width: 1000px;
+	margin: auto;
+}
+
+#tablediv {
+	margin: auto;
+}
+
+h1 {
+	font-size: 1em;
+}
+
+h2 {
+	font-size: 0.8em;
+	margin-left: 30px;
+}
+
+table {
+	margin: auto;
+	width: 80%;
+}
+
+table, th, td {
+	border: 1px solid black;
+	border-collapse: collapse;
+}
+
+td:nth-child(2), td:nth-child(3) {
+	width: 15%;
+	min-width: 75px;
+	
+}
+
+td:nth-child(4) {
+	width: 35%;
+}
+
+td:first-child {
+	word-break: break-word;
+}
+
+input[type=text] {
+	display: inline-block;
+	text-align: center;
+	width: 90%;
+}
+
+.red {
+	background-color: #F55;
+	color: white;
+}
+
+.limegreen {
+	background-color: limegreen;
+	color: black;
+}
+
+.yellow {
+	background-color: yellow;
+	color: black;
+}
+
+.poop {
+	background-color: white;
+	color: black;
+}
+
+.orange {
+	background-color: #FC4;
+	color: black;
+}
+
+.none {
+	background-color: initial;
+	color: initial;
+}
+
+#selectproj {
+	display: block;
+	margin: auto;
+	width: 150px;
+}
+    /* EOS */
+  </style>
+
+  <script id="insert"></script>
+
+
+</head>
+<body>
+    <!--button onclick="doAction()">Do action</button-->
+<center>
+<a href="javascript:" onclick="overDue()">Overdue</a>&nbsp;|&nbsp;<a href="javascript:" onclick="upComing()">Upcoming</a>&nbsp;|&nbsp;
+<a href="javascript:" onclick="showAll()">Show all</a>
+</center><br>
+<select name="" id="selectproj" onchange="get1()">
+	<option value="ir60hz">IR60Hz</option>
+	<option value="tpm">TpM</option>
+	<option value="ir50hz">IR50Hz</option>
+</select>
+
+<br>
+
+<div id="tablediv">
+  <h1>NPI</h1>
+  <h2>NPI</h2>
+  <table id="NPI">
+    <tbody>
+      <tr id="123">
+        <td title="NPI">Forecast from sales</td>
+        <td class="due" data-due="ppl" title="ppl"></td>
+        <td class="status"></td>
+        <td class="notes" contenteditable="true"></td>
+      </tr>
+      <tr id="124">
+        <td title="NPI">Competitive pricing</td>
+        <td class="due" data-due="ppl" title="ppl"></td>
+        <td class="status"></td>
+        <td class="notes"></td>
+      </tr>
+      <tr id="125">
+        <td title="NPI">Cost quote</td>
+        <td class="due" data-due="ppl" title="ppl"></td>
+        <td class="status"></td>
+        <td class="notes"></td>
+      </tr>
+      <tr id="126">
+        <td title="NPI">Sample unit(s) budget</td>
+        <td class="due" data-due="ppl" title="ppl"></td>
+        <td class="status"></td>
+        <td class="notes"></td>
+      </tr>
+    </tbody>
+  </table>
+  <h1>Certs</h1>
+  <h2>NOM</h2>
+  <table id="NOM">
+    <tbody>
+      <tr id="127">
+        <td title="NOM">sample unit budgeted</td>
+        <td class="due" data-due="ppl" title="ppl"></td>
+        <td class="status"></td>
+        <td class="notes"></td>
+      </tr>
+      <tr id="128">
+        <td title="NOM">request/application submitted</td>
+        <td class="due" data-due="phys" title="phys"></td>
+        <td class="status"></td>
+        <td class="notes"></td>
+      </tr>
+      <tr id="129">
+        <td title="NOM">sample unit shipped</td>
+        <td class="due" data-due="agency" title="agency"></td>
+        <td class="status"></td>
+        <td class="notes"></td>
+      </tr>
+      <tr id="130">
+        <td title="NOM">cert received</td>
+        <td class="due" data-due="mktlch" title="mktlch"></td>
+        <td class="status"></td>
+        <td class="notes"></td>
+      </tr>
+    </tbody>
+  </table>
+  <h2>RETIQ</h2>
+  <table id="RETIQ">
+    <tbody>
+      <tr id="131">
+        <td title="RETIQ">request/application submitted</td>
+        <td class="due" data-due="phys" title="phys"></td>
+        <td class="status"></td>
+        <td class="notes"></td>
+      </tr>
+      <tr id="132">
+        <td title="RETIQ">eng docs submitted</td>
+        <td class="due" data-due="agency" title="agency"></td>
+        <td class="status"></td>
+        <td class="notes"></td>
+      </tr>
+      <tr id="133">
+        <td title="RETIQ">cert received</td>
+        <td class="due" data-due="mktlch" title="mktlch"></td>
+        <td class="status"></td>
+        <td class="notes"></td>
+      </tr>
+    </tbody>
+  </table>
+  <h1 id="User Ed">User Ed</h1>
+  <h2>Owner's manual</h2>
+  <table id="Owners manual">
+    <tbody>
+      <tr id="134">
+        <td title="Owner's manual">prelim copy</td>
+        <td class="due" data-due="ppl_phys" title="ppl_phys"></td>
+        <td class="status"></td>
+        <td class="notes"></td>
+      </tr>
+      <tr id="135">
+        <td title="Owner's manual">marcom request</td>
+        <td class="due" data-due="phys" title="phys"></td>
+        <td class="status"></td>
+        <td class="notes"></td>
+      </tr>
+      <tr id="136">
+        <td title="Owner's manual">agency copy</td>
+        <td class="due" data-due="phys" title="phys"></td>
+        <td class="status"></td>
+        <td class="notes"></td>
+      </tr>
+      <tr id="137">
+        <td title="Owner's manual">draft</td>
+        <td class="due" data-due="agency" title="agency"></td>
+        <td class="status"></td>
+        <td class="notes"></td>
+      </tr>
+      <tr id="138">
+        <td title="Owner's manual">final</td>
+        <td class="due" data-due="agency_engrls" title="agency_engrls"></td>
+        <td class="status"></td>
+        <td class="notes"></td>
+      </tr>
+      <tr id="139">
+        <td title="Owner's manual">translated</td>
+        <td class="due" data-due="engrls" title="engrls"></td>
+        <td class="status"></td>
+        <td class="notes"></td>
+      </tr>
+    </tbody>
+  </table>
+  <h2>Service manual</h2>
+  <table id="Service manual">
+    <tbody>
+      <tr id="140">
+        <td title="Service manual">prelim copy</td>
+        <td class="due" data-due="agency" title="agency"></td>
+        <td class="status"></td>
+        <td class="notes"></td>
+      </tr>
+      <tr id="141">
+        <td title="Service manual">marcom request</td>
+        <td class="due" data-due="agency_engrls" title="agency_engrls"></td>
+        <td class="status"></td>
+        <td class="notes"></td>
+      </tr>
+      <tr id="142">
+        <td title="Service manual">p/n request</td>
+        <td class="due" data-due="agency" title="agency"></td>
+        <td class="status"></td>
+        <td class="notes"></td>
+      </tr>
+			<tr id="300">
+        <td title="Service manual">Updated copy to MARCOM</td>
+        <td class="due" data-due="engrls" title="engrls"></td>
+        <td class="status"></td>
+        <td class="notes"></td>
+      </tr>
+      <tr id="143">
+        <td title="Service manual">draft</td>
+        <td class="due" data-due="fai" title="fai"></td>
+        <td class="status"></td>
+        <td class="notes"></td>
+      </tr>
+      <tr id="144">
+        <td title="Service manual">final</td>
+        <td class="due" data-due="mktlch" title="mktlch"></td>
+        <td class="status"></td>
+        <td class="notes"></td>
+      </tr>
+      <tr id="145">
+        <td title="Service manual">translated</td>
+        <td class="due" data-due="inv" title="inv"></td>
+        <td class="status"></td>
+        <td class="notes"></td>
+      </tr>
+    </tbody>
+  </table>
+  <h2>Submittal dwg</h2>
+  <table id="Submittal dwg">
+    <tbody>
+      <tr id="146">
+        <td title="Submittal dwg">prelim dwg's</td>
+        <td class="due" data-due="phys" title="phys"></td>
+        <td class="status"></td>
+        <td class="notes"></td>
+      </tr>
+      <tr id="147">
+        <td title="Submittal dwg">draft</td>
+        <td class="due" data-due="agency" title="agency"></td>
+        <td class="status"></td>
+        <td class="notes"></td>
+      </tr>
+      <tr id="148">
+        <td title="Submittal dwg">marcom request</td>
+        <td class="due" data-due="agency" title="agency"></td>
+        <td class="status"></td>
+        <td class="notes"></td>
+      </tr>
+      <tr id="149">
+        <td title="Submittal dwg">final</td>
+        <td class="due" data-due="fai" title="fai"></td>
+        <td class="status"></td>
+        <td class="notes"></td>
+      </tr>
+    </tbody>
+  </table>
+  <h2>UI</h2>
+  <table id="UI">
+    <tbody>
+      <tr id="150">
+        <td title="UI">prelim trans export</td>
+        <td class="due" data-due="phys_agency" title="phys_agency"></td>
+        <td class="status"></td>
+        <td class="notes"></td>
+      </tr>
+      <tr id="151">
+        <td title="UI">marcom request</td>
+        <td class="due" data-due="phys_agency" title="phys_agency"></td>
+        <td class="status"></td>
+        <td class="notes"></td>
+      </tr>
+      <tr id="152">
+        <td title="UI">final sent back to vendor</td>
+        <td class="due" data-due="engrls" title="engrls"></td>
+        <td class="status"></td>
+        <td class="notes"></td>
+      </tr>
+    </tbody>
+  </table>
+  <h1>Sales tools</h1>
+  <h2>Datasheet</h2>
+  <table id="Datasheet">
+    <tbody>
+      <tr id="153">
+        <td title="Datasheet">prod mgmt draft</td>
+        <td class="due" data-due="phys" title="phys"></td>
+        <td class="status"></td>
+        <td class="notes"></td>
+      </tr>
+      <tr id="154">
+        <td title="Datasheet">marcom request</td>
+        <td class="due" data-due="agency" title="agency"></td>
+        <td class="status"></td>
+        <td class="notes"></td>
+      </tr>
+      <tr id="155">
+        <td title="Datasheet">final</td>
+        <td class="due" data-due="engrls" title="engrls"></td>
+        <td class="status"></td>
+        <td class="notes"></td>
+      </tr>
+      <tr id="156">
+        <td title="Datasheet">translated</td>
+        <td class="due" data-due="mktlch" title="mktlch"></td>
+        <td class="status"></td>
+        <td class="notes"></td>
+      </tr>
+    </tbody>
+  </table>
+  <h2>Brochure</h2>
+  <table id="Brochure">
+    <tbody>
+      <tr id="157">
+        <td title="Brochure">prod mgmt draft</td>
+        <td class="due" data-due="agency" title="agency"></td>
+        <td class="status"></td>
+        <td class="notes"></td>
+      </tr>
+      <tr id="158">
+        <td title="Brochure">marcom request</td>
+        <td class="due" data-due="agency" title="agency"></td>
+        <td class="status"></td>
+        <td class="notes"></td>
+      </tr>
+      <tr id="159">
+        <td title="Brochure">final</td>
+        <td class="due" data-due="mktlch" title="mktlch"></td>
+        <td class="status"></td>
+        <td class="notes"></td>
+      </tr>
+      <tr id="160">
+        <td title="Brochure">translated</td>
+        <td class="due" data-due="inv" title="inv"></td>
+        <td class="status"></td>
+        <td class="notes"></td>
+      </tr>
+    </tbody>
+  </table>
+  <h2>Bid spec</h2>
+  <table id="Bid spec">
+    <tbody>
+      <tr id="161">
+        <td title="Bid spec">draft</td>
+        <td class="due" data-due="engrls" title="engrls"></td>
+        <td class="status"></td>
+        <td class="notes"></td>
+      </tr>
+      <tr id="162">
+        <td title="Bid spec">final</td>
+        <td class="due" data-due="mktlch" title="mktlch"></td>
+        <td class="status"></td>
+        <td class="notes"></td>
+      </tr>
+    </tbody>
+  </table>
+  <h2>Configurator</h2>
+  <table id="Configurator">
+    <tbody>
+      <tr id="163">
+        <td title="Configurator">sample config created</td>
+        <td class="due" data-due="engrls" title="engrls"></td>
+        <td class="status"></td>
+        <td class="notes"></td>
+      </tr>
+      <tr id="164">
+        <td title="Configurator">web request</td>
+        <td class="due" data-due="fai" title="fai"></td>
+        <td class="status"></td>
+        <td class="notes"></td>
+      </tr>
+      <tr id="165">
+        <td title="Configurator">live on web</td>
+        <td class="due" data-due="inv" title="inv"></td>
+        <td class="status"></td>
+        <td class="notes"></td>
+      </tr>
+    </tbody>
+  </table>
+  <h1>Mkt launch</h1>
+  <h2>Mkt launch</h2>
+  <table id="Mkt launch">
+    <tbody>
+      <tr id="166">
+        <td title="Mkt launch">Enter prelim specs and mkt launch date</td>
+        <td class="due" data-due="mktlch_60" title="mktlch_60"></td>
+        <td class="status"></td>
+        <td class="notes"></td>
+      </tr>
+      <tr id="167">
+        <td title="Mkt launch">Final specs</td>
+        <td class="due" data-due="fai" title="fai"></td>
+        <td class="status"></td>
+        <td class="notes"></td>
+      </tr>
+    </tbody>
+  </table>
+  <h1 id="Training">Training</h1>
+  <h2>Technical training</h2>
+  <table id="Technical training">
+    <tbody>
+      <tr id="168">
+        <td title="Technical training">trainees identified</td>
+        <td class="due" data-due="phys" title="phys"></td>
+        <td class="status"></td>
+        <td class="notes"></td>
+      </tr>
+      <tr id="169">
+        <td title="Technical training">training dates set</td>
+        <td class="due" data-due="phys_agency" title="phys_agency"></td>
+        <td class="status"></td>
+        <td class="notes"></td>
+      </tr>
+      <tr id="170">
+        <td title="Technical training">training finished</td>
+        <td class="due" data-due="engrls" title="engrls"></td>
+        <td class="status"></td>
+        <td class="notes"></td>
+      </tr>
+    </tbody>
+  </table>
+  <h2>Pre-sales training</h2>
+  <table id="Pre-sales training">
+    <tbody>
+      <tr id="171">
+        <td title="Pre-sales training">trainees identified</td>
+        <td class="due" data-due="agency" title="agency"></td>
+        <td class="status"></td>
+        <td class="notes"></td>
+      </tr>
+      <tr id="172">
+        <td title="Pre-sales training">training dates set</td>
+        <td class="due" data-due="engrls" title="engrls"></td>
+        <td class="status"></td>
+        <td class="notes"></td>
+      </tr>
+      <tr id="173">
+        <td title="Pre-sales training">training finished</td>
+        <td class="due" data-due="mktlch" title="mktlch"></td>
+        <td class="status"></td>
+        <td class="notes"></td>
+      </tr>
+    </tbody>
+  </table>
+  <h2>Sales training</h2>
+  <table id="Sales training">
+    <tbody>
+      <tr id="174">
+        <td title="Sales training">trainees identified</td>
+        <td class="due" data-due="agency" title="agency"></td>
+        <td class="status"></td>
+        <td class="notes"></td>
+      </tr>
+      <tr id="175">
+        <td title="Sales training">training dates set</td>
+        <td class="due" data-due="engrls" title="engrls"></td>
+        <td class="status"></td>
+        <td class="notes"></td>
+      </tr>
+      <tr id="176">
+        <td title="Sales training">training finished</td>
+        <td class="due" data-due="mktlch" title="mktlch"></td>
+        <td class="status"></td>
+        <td class="notes"></td>
+      </tr>
+    </tbody>
+  </table>
+  <h2>Customer training</h2>
+  <table id="Customer training">
+    <tbody>
+      <tr id="177">
+        <td title="Customer training">trainees identified</td>
+        <td class="due" data-due="engrls_fai" title="engrls_fai"></td>
+        <td class="status"></td>
+        <td class="notes"></td>
+      </tr>
+      <tr id="178">
+        <td title="Customer training">training dates set</td>
+        <td class="due" data-due="fai" title="fai"></td>
+        <td class="status"></td>
+        <td class="notes"></td>
+      </tr>
+      <tr id="179">
+        <td title="Customer training">training finished</td>
+        <td class="due" data-due="inv" title="inv"></td>
+        <td class="status"></td>
+        <td class="notes"></td>
+      </tr>
+    </tbody>
+  </table>
+  <h1 id="Legal">Legal</h1>
+  <h2>Contract</h2>
+  <table id="Contract">
+    <tbody>
+      <tr id="180">
+        <td title="Contract">NDA</td>
+        <td class="due" data-due="ppl" title="ppl"></td>
+        <td class="status"></td>
+        <td class="notes"></td>
+      </tr>
+      <tr id="181">
+        <td title="Contract">draft contract (with commitment to support)</td>
+        <td class="due" data-due="phys_agency" title="phys_agency"></td>
+        <td class="status"></td>
+        <td class="notes"></td>
+      </tr>
+      <tr id="182">
+        <td title="Contract">final contract signed</td>
+        <td class="due" data-due="engrls" title="engrls"></td>
+        <td class="status"></td>
+        <td class="notes"></td>
+      </tr>
+    </tbody>
+  </table>
+  <h1 id="Service">Service</h1>
+  <h2>Spare parts</h2>
+  <table id="Spare parts">
+    <tbody>
+      <tr id="183">
+        <td title="Spare parts">prelim SP list</td>
+        <td class="due" data-due="phys" title="phys"></td>
+        <td class="status"></td>
+        <td class="notes"></td>
+      </tr>
+      <tr id="184">
+        <td title="Spare parts">SP list draft</td>
+        <td class="due" data-due="agency" title="agency"></td>
+        <td class="status"></td>
+        <td class="notes"></td>
+      </tr>
+      <tr id="185">
+        <td title="Spare parts">final SP list (handed over to svc)</td>
+        <td class="due" data-due="engrls" title="engrls"></td>
+        <td class="status"></td>
+        <td class="notes"></td>
+      </tr>
+    </tbody>
+  </table>
+  <h2>Training units</h2>
+  <table id="Training units">
+    <tbody>
+      <tr id="186">
+        <td title="Training units">training units budgeted</td>
+        <td class="due" data-due="ppl" title="ppl"></td>
+        <td class="status"></td>
+        <td class="notes"></td>
+      </tr>
+      <tr id="187">
+        <td title="Training units">training unit PO approval</td>
+        <td class="due" data-due="phys" title="phys"></td>
+        <td class="status"></td>
+        <td class="notes"></td>
+      </tr>
+      <tr id="188">
+        <td title="Training units">countries and locations iden</td>
+        <td class="due" data-due="phys" title="phys"></td>
+        <td class="status"></td>
+        <td class="notes"></td>
+      </tr>
+      <tr id="189">
+        <td title="Training units">training unit PO issued</td>
+        <td class="due" data-due="engrls" title="engrls"></td>
+        <td class="status"></td>
+        <td class="notes"></td>
+      </tr>
+    </tbody>
+  </table>
+  <h2>Service offer</h2>
+  <table id="Service offer">
+    <tbody>
+      <tr id="190">
+        <td title="Service offer">svc req's submitted</td>
+        <td class="due" data-due="ppl" title="ppl"></td>
+        <td class="status"></td>
+        <td class="notes"></td>
+      </tr>
+      <tr id="191">
+        <td title="Service offer">svc providers determined</td>
+        <td class="due" data-due="phys_agency" title="phys_agency"></td>
+        <td class="status"></td>
+        <td class="notes"></td>
+      </tr>
+      <tr id="192">
+        <td title="Service offer">final svc provider p/n and pricing</td>
+        <td class="due" data-due="engrls_fai" title="engrls_fai"></td>
+        <td class="status"></td>
+        <td class="notes"></td>
+      </tr>
+    </tbody>
+  </table>
+  <h2>Service provider training</h2>
+  <table id="Service provider training">
+    <tbody>
+      <tr id="193">
+        <td title="Service provider training">trainees identified</td>
+        <td class="due" data-due="agency" title="agency"></td>
+        <td class="status"></td>
+        <td class="notes"></td>
+      </tr>
+      <tr id="194">
+        <td title="Service provider training">training dates set</td>
+        <td class="due" data-due="engrls" title="engrls"></td>
+        <td class="status"></td>
+        <td class="notes"></td>
+      </tr>
+      <tr id="195">
+        <td title="Service provider training">training finished</td>
+        <td class="due" data-due="mktlch" title="mktlch"></td>
+        <td class="status"></td>
+        <td class="notes"></td>
+      </tr>
+    </tbody>
+  </table>
+  <h1 id="Showcase">Showcase</h1>
+  <h2>Sample unit</h2>
+  <table id="Sample unit">
+    <tbody>
+      <tr id="196">
+        <td title="Sample unit">sample unit(s) budgetted</td>
+        <td class="due" data-due="ppl" title="ppl"></td>
+        <td class="status"></td>
+        <td class="notes"></td>
+      </tr>
+      <tr id="197">
+        <td title="Sample unit">facilities request</td>
+        <td class="due" data-due="phys" title="phys"></td>
+        <td class="status"></td>
+        <td class="notes"></td>
+      </tr>
+      <tr id="198">
+        <td title="Sample unit">installation date set</td>
+        <td class="due" data-due="agency" title="agency"></td>
+        <td class="status"></td>
+        <td class="notes"></td>
+      </tr>
+      <tr id="199">
+        <td title="Sample unit">PO issued</td>
+        <td class="due" data-due="engrls_fai" title="engrls_fai"></td>
+        <td class="status"></td>
+        <td class="notes"></td>
+      </tr>
+      <tr id="200">
+        <td title="Sample unit">installed</td>
+        <td class="due" data-due="inv" title="inv"></td>
+        <td class="status"></td>
+        <td class="notes"></td>
+      </tr>
+    </tbody>
+  </table>
+  <h1>Field test</h1>
+  <h2>Field test</h2>
+  <table id="Field test">
+    <tbody>
+      <tr id="201">
+        <td title="Field test">field test unit(s) budgetted</td>
+        <td class="due" data-due="ppl" title="ppl"></td>
+        <td class="status"></td>
+        <td class="notes"></td>
+      </tr>
+      <tr id="202">
+        <td title="Field test">customers iden</td>
+        <td class="due" data-due="agency" title="agency"></td>
+        <td class="status"></td>
+        <td class="notes"></td>
+      </tr>
+      <tr id="203">
+        <td title="Field test">PO issued</td>
+        <td class="due" data-due="agency_engrls" title="agency_engrls"></td>
+        <td class="status"></td>
+        <td class="notes"></td>
+      </tr>
+      <tr id="204">
+        <td title="Field test">unit(s) installed</td>
+        <td class="due" data-due="fai" title="fai"></td>
+        <td class="status"></td>
+        <td class="notes"></td>
+      </tr>
+    </tbody>
+  </table>
+  <h1>Inventory</h1>
+  <h2>Inventory</h2>
+  <table id="Inventory">
+    <tbody>
+      <tr id="205">
+        <td title="Inventory">GSC ramp up forecast</td>
+        <td class="due" data-due="agency" title="agency"></td>
+        <td class="status"></td>
+        <td class="notes"></td>
+      </tr>
+      <tr id="206">
+        <td title="Inventory">Long lead time parts PO</td>
+        <td class="due" data-due="agency_engrls" title="agency_engrls"></td>
+        <td class="status"></td>
+        <td class="notes"></td>
+      </tr>
+      <tr id="207">
+        <td title="Inventory">Production PO</td>
+        <td class="due" data-due="engrls" title="engrls"></td>
+        <td class="status"></td>
+        <td class="notes"></td>
+      </tr>
+    </tbody>
+  </table>
+
+
+</div>
+
+<br>
+
+  <!--form action="https://script.google.com/macros/s/AKfycbwxE5s7hfAtQXZPLKwdNFpT6J2ThVai8fbweqPwh43VQXdSRTkC/exec" method="post" target="targetiframe">
+    <table>
+      <tr>
+        <th>Timestamp</th>
+        <th>colB</th>
+        <th>colC</th>
+        <th>colD</th>
+        <th>colE</th>
+        <th>Sheet name</th>
+      </tr>
+      <tr>
+        <td><input type="text" disabled value="colA"></td>
+        <td> <input type="text" name="col2" placeholder="colB">
+        </td>
+        <td> <input type="text" name="col3" placeholder="colC">
+        </td>
+        <td> <input type="text" name="col4" placeholder="colD">
+        </td>
+        <td> <input type="text" name="col5" placeholder="colE">
+        </td>
+        <td> <input type="text" name="sheetName" value="Test">
+        </td>
+      </tr>
+    </table>
+    <br>
+    <input type="submit">
+  </form-->
+
+<hr>
+
+  <!--table>
+    <tr>
+      <th>Timestamp</th>
+      <th>colB</th>
+      <th>colC</th>
+      <th>colD</th>
+      <th>colE</th>
+    </tr>
+    <tr>
+      <td><input type="text" id="fetchA" disabled></td>
+      <td><input type="text" id="fetchB" disabled></td>
+      <td><input type="text" id="fetchC" disabled></td>
+      <td><input type="text" id="fetchD" disabled></td>
+      <td><input type="text" id="fetchE" disabled></td>
+    </tr>
+  </table-->
+	
+  <form action="https://script.google.com/macros/s/AKfycbwxE5s7hfAtQXZPLKwdNFpT6J2ThVai8fbweqPwh43VQXdSRTkC/exec" method="get" id="editform" target="targetiframe" style="display: none;">
+    <table border="0">
+      <tr>
+        <th>Timestamp</th>
+        <th>Column</th>
+        <th>Data Value</th>
+        <th>Sheet name</th>
+      </tr>
+      <tr>
+        <td><input type="text" name="row" value="123456"></td>
+        <td> <input type="text" name="col" value="colC">
+        </td>
+        <td> <input type="text" name="text" value="Ruth Bader">
+        </td>
+        <td> <input type="text" name="sheetName" id="sheetName" value="Test">
+        </td>
+      </tr>
+
+    </table>
+    <br>
+    <input type="submit">
+  </form>
+<br>
+
+<sub>
+  <a href="https://docs.google.com/spreadsheets/d/1DvaYXhcpPJvMFNDlDtx9oG-YGKfqtT6ZbPWqZIvaIxw/edit#gid=0" target="blank">https://docs.google.com/spreadsheets/d/1DvaYXhcpPJvMFNDlDtx9oG-YGKfqtT6ZbPWqZIvaIxw/edit#gid=0</a>
+
+  <a href="https://script.google.com/a/umsystem.edu/d/1aCl57zY_pomyMKTK9YUi9P3bgPqONElZGMj7aXLQKbLerKxitaVls8e6/edit" target="blank">https://script.google.com/a/umsystem.edu/d/1aCl57zY_pomyMKTK9YUi9P3bgPqONElZGMj7aXLQKbLerKxitaVls8e6/edit</a>
+</sub>
+<br><br><br>
+
+<iframe src="" name="targetiframe" style="display: none;"></iframe>
+
+
+    <script type="text/javascript">//<![CDATA[
+
+
+var stages = [];
+
+var ir60hz = {
+  ppl: new Date("4/30/2020"),
+  phys: new Date("9/20/2020"),
+  agency: new Date("2/12/2021"),
+  engrls: new Date("3/19/2021"),
+  fai: new Date("4/15/2021"),
+  mktlch: new Date("4/22/2021"),
+  inv: new Date("5/22/2021"),
+}
+
+var tpm = {
+  ppl: new Date("4/30/2020"),
+  phys: new Date("10/15/2020"),
+  agency: new Date("2/25/2021"),
+  engrls: new Date("5/21/2021"),
+  fai: new Date("6/17/2021"),
+  mktlch: new Date("6/24/2021"),
+  inv: new Date("7/25/2021"),
+}
+
+var ir50hz = {
+  ppl: new Date("1/26/2021"),
+  phys: new Date("4/30/2021"),
+  agency: new Date("5/25/2021"),
+  engrls: new Date("6/21/2021"),
+  fai: new Date("7/18/2021"),
+  mktlch: new Date("7/25/2021"),
+  inv: new Date("8/25/2021"),
+}
+
+var objproj = {}
+
+$(document).ready(get1)
+
+function get1() {
+showAll()
+  var prj = $("#selectproj").val()
+  objproj = {
+    ppl: eval(prj).ppl,
+    phys: eval(prj).phys,
+    agency: eval(prj).agency,
+    engrls: eval(prj).engrls,
+    fai: eval(prj).fai,
+    mktlch: eval(prj).mktlch,
+    inv: eval(prj).inv,
+    ppl_phys: new Date((eval(prj).ppl.getTime() + eval(prj).phys.getTime()) / 2),
+    phys_agency: new Date((eval(prj).phys.getTime() + eval(prj).agency.getTime()) / 2),
+    agency_engrls: new Date((eval(prj).agency.getTime() + eval(prj).engrls.getTime()) / 2),
+    engrls_fai: new Date((eval(prj).engrls.getTime() + eval(prj).fai.getTime()) / 2),
+    engrls_mktlch: new Date((eval(prj).engrls.getTime() + eval(prj).mktlch.getTime()) / 2),
+    mktlch_30: new Date((eval(prj).mktlch.getTime() - 30 * 86400000)),
+    mktlch_60: new Date((eval(prj).mktlch.getTime() - 60 * 86400000))
+  }
+  loadDates()
+}
+
+function loadDates() {
+  $("tr").find(".due").each(function() {
+    var data_due = $(this).attr("data-due")
+    var lookupdate = objproj[data_due]
+    var mo = new Date(lookupdate).getMonth() + 1
+    var yr = new Date(lookupdate).getFullYear()
+    var dy = new Date(lookupdate).getDate()
+    $(this).text(mo + "/" + dy + "/" + yr)
+    var tdy = new Date(Date.now())
+    var pplfromthefuture = new Date(Date.now() + 30 * 86400000)
+
+    var dueDate = new Date(lookupdate)
+    if (dueDate < tdy) {
+      $(this).addClass("red")
+      $(this).removeClass("orange").removeClass("none")
+    } else if (dueDate > tdy && dueDate < pplfromthefuture) {
+      $(this).addClass("orange")
+      $(this).removeClass("red").removeClass("none")
+    } else {
+      $(this).addClass("none")
+      $(this).removeClass("orange").removeClass("red")
+    }
+  })
+
+  populate()
+}
+
+function populate() {
+  $.getJSON("https://spreadsheets.google.com/feeds/list/1DvaYXhcpPJvMFNDlDtx9oG-YGKfqtT6ZbPWqZIvaIxw/4/public/full?alt=json", function(result) {
+    var data = result.feed.entry
+    var proj = $("#selectproj").val()
+    var status = "gsx$" + proj + "status"
+    var notes = "gsx$" + proj + "notes"
+    console.log(data)
+    data.forEach(function(item, index) {
+      var w = item.gsx$cola.$t
+
+      var x = document.getElementById(w)
+      var dgg2 = x.getElementsByClassName("notes")[0]
+      var teet = item[notes].$t
+      $(dgg2).text(teet)
+      //good here
+      $(x).find(".status")
+        .removeClass("limegreen")
+        .removeClass("yellow")
+        .removeClass("none")
+        .addClass(item[status].$t)
+			if(item[status].$t == "limegreen") {
+				$(x).find(".due").addClass("none")
+			}
+    })
+
+
+  })
+}
+
+
+
+
+$(".status").dblclick(function() {
+  var row = $(this).parent().attr("id")
+  var col = $("#selectproj").val() + "status"
+  var text;
+  var sheetName = "WKL"
+
+  if ($(this).hasClass("limegreen")) {
+    $(this).removeClass("limegreen")
+		$(this).addClass("none")
+    $(this).parent().find(".due").removeClass("none")
+    text = "none"
+  } else if ($(this).hasClass("yellow")) {
+    $(this).addClass("limegreen")
+    $(this).removeClass("yellow")
+		$(this).removeClass("none")
+    text = "limegreen"
+    $(this).parent().find(".due").addClass("none")
+  } else {
+    $(this).addClass("yellow")
+		$(this).removeClass("none")
+    text = "yellow"
+  }
+
+  document.getElementsByName("row")[0].value = row
+  document.getElementsByName("col")[0].value = col
+  document.getElementsByName("text")[0].value = text
+  document.getElementById("sheetName").value = sheetName
+  $("#editform").submit();
+
+})
+
+$(".due").dblclick(function() {
+  $(this).removeClass("red")
+})
+
+$("td:nth-child(4)").dblclick(function() {
+  var tit = $(this).text()
+  var inp = $("<input>").attr("class", "stupid").val(tit)
+  $(this).text("")
+  $(this).append(inp)
+  $(inp).focus()
+
+})
+
+$("td:nth-child(4)").on("change", "input", function() {
+	var col = $("#selectproj").val() + "notes"
+  var text = $(this).val()
+  var row = $(this).parent().parent().attr("id")
+  document.getElementsByName("row")[0].value = row
+  document.getElementsByName("col")[0].value = col
+  document.getElementsByName("text")[0].value = text
+  document.getElementById("sheetName").value = "WKL"
+  $("#editform").submit();
+  $(this).parent().text(text)
+  $(this).remove();
+
+})
+
+function overDue() {
+  $("tr").show()
+  $("tr").each(function() {
+    var st = $(this).find(".due")
+    var sr = $(this).find(".status")
+    var a = $(st).hasClass("red")
+    var c = $(sr).hasClass("limegreen")
+    if (a == true && c == false) {
+      $(this).show();
+    } else {
+      $(this).hide();
+    }
+  })
+  $("h1").hide();
+  $("h2").hide()
+}
+
+function upComing() {
+  $("tr").show()
+  $("tr").each(function() {
+    var st = $(this).find(".due")
+    var sr = $(this).find(".status")
+    var a = $(st).hasClass("orange")
+    var c = $(sr).hasClass("limegreen")
+    if (a == true && c == false) {
+      $(this).show();
+    } else {
+      $(this).hide();
+    }
+  })
+  $("h1").hide();
+  $("h2").hide()
+}
+
+function showAll() {
+  $("tr").show()
+  $("h1").show();
+  $("h2").show();
+}
+
+
+function doAction() {
+  $(".due").each(function() {
+	var item = $(this).attr("data-due")
+	$(this).attr("title", item)
+	})
+}
+
+
+
+  //]]></script>
+
+  <script>
+    // tell the embed parent frame the height of the content
+    if (window.parent && window.parent.parent){
+      window.parent.parent.postMessage(["resultsFrame", {
+        height: document.body.getBoundingClientRect().height,
+        slug: "dseu1L3q"
+      }], "*")
+    }
+
+    // always overwrite window.name, in case users try to set it manually
+    window.name = "result"
+  </script>
+
+
+</body>
+</html>

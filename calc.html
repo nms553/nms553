@@ -1,0 +1,365 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <title></title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="googlebot" content="noindex, nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <script
+    type="text/javascript"
+    src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"
+    
+  ></script>
+
+    <link rel="stylesheet" type="text/css" href="/css/result-light.css">
+
+
+  <style id="compiled-css" type="text/css">
+      html,
+      body {
+        font-family: serif;
+        font-size: 1.0em;
+      }
+			
+			input {
+				text-align: center;
+				width: 50px;
+			}
+			
+			td:nth-child(3), td:nth-child(6) {
+				text-align: center;
+			}
+			
+			td:first-child {
+				font-weight: bold;
+			}
+			
+			td {
+				padding-left: 8px;
+				padding-right: 8px;
+			}
+			
+			button {
+				width: 30%;
+				display: block;
+				margin: 20px 0px 20px 0px;
+			}
+    /* EOS */
+  </style>
+
+  <script id="insert"></script>
+
+
+</head>
+<body>
+    <button onclick="saveAll()">Save results</button>
+
+<table id="table" border="0">
+  <tbody>
+    <tr>
+      <th>Player</th>
+      <th>Driver #1</th>
+      <th>Finishing pos.</th>
+      <th>Pts</th>
+      <th>Driver #2</th>
+      <th>Finishing pos.</th>
+      <th>Pts</th>
+      <th>Bonus</th>
+      <th>Total</th>
+    </tr>
+    <tr id="0">
+      <td class="player"></td>
+      <td class="driver"></td>
+      <td class="p"><input type="number" min="0" max="40" data-dr="" onchange="roundEmUp()"></td>
+      <td><input type="number" class="dr" disabled=""></td>
+      <td class="driver"></td>
+      <td class="p"><input type="number" min="0" max="40" data-dr="" onchange="roundEmUp()"></td>
+      <td><input type="number" class="dr" disabled=""></td>
+      <td><input type="number" class="dr" onchange="roundEmUp()"></td>
+      <td><input type="number" class="total" disabled=""></td>
+    </tr>
+    <tr id="1">
+      <td class="player"></td>
+      <td class="driver"></td>
+      <td class="p"><input type="number" min="0" max="40" data-dr="" onchange="roundEmUp()"></td>
+      <td><input type="number" class="dr" disabled=""></td>
+      <td class="driver"></td>
+      <td class="p"><input type="number" min="0" max="40" data-dr="" onchange="roundEmUp()"></td>
+      <td><input type="number" class="dr" disabled=""></td>
+      <td><input type="number" class="dr" onchange="roundEmUp()"></td>
+      <td><input type="number" class="total" disabled=""></td>
+    </tr>
+    <tr id="2">
+      <td class="player"></td>
+      <td class="driver"></td>
+      <td class="p"><input type="number" min="0" max="40" data-dr="" onchange="roundEmUp()"></td>
+      <td><input type="number" class="dr" disabled=""></td>
+      <td class="driver"></td>
+      <td class="p"><input type="number" min="0" max="40" data-dr="" onchange="roundEmUp()"></td>
+      <td><input type="number" class="dr" disabled=""></td>
+      <td><input type="number" class="dr" onchange="roundEmUp()"></td>
+      <td><input type="number" class="total" disabled=""></td>
+    </tr>
+    <tr id="3">
+      <td class="player"></td>
+      <td class="driver"></td>
+      <td class="p"><input type="number" min="0" max="40" data-dr="" onchange="roundEmUp()"></td>
+      <td><input type="number" class="dr" disabled=""></td>
+      <td class="driver"></td>
+      <td class="p"><input type="number" min="0" max="40" data-dr="" onchange="roundEmUp()"></td>
+      <td><input type="number" class="dr" disabled=""></td>
+      <td><input type="number" class="dr" onchange="roundEmUp()"></td>
+      <td><input type="number" class="total" disabled=""></td>
+    </tr>
+    <tr id="4">
+      <td class="player"></td>
+      <td class="driver"></td>
+      <td class="p"><input type="number" min="0" max="40" data-dr="" onchange="roundEmUp()"></td>
+      <td><input type="number" class="dr" disabled=""></td>
+      <td class="driver"></td>
+      <td class="p"><input type="number" min="0" max="40" data-dr="" onchange="roundEmUp()"></td>
+      <td><input type="number" class="dr" disabled=""></td>
+      <td><input type="number" class="dr" onchange="roundEmUp()"></td>
+      <td><input type="number" class="total" disabled=""></td>
+    </tr>
+    <tr id="5">
+      <td class="player"></td>
+      <td class="driver"></td>
+      <td class="p"><input type="number" min="0" max="40" data-dr="" onchange="roundEmUp()"></td>
+      <td><input type="number" class="dr" disabled=""></td>
+      <td class="driver"></td>
+      <td class="p"><input type="number" min="0" max="40" data-dr="" onchange="roundEmUp()"></td>
+      <td><input type="number" class="dr" disabled=""></td>
+      <td><input type="number" class="dr" onchange="roundEmUp()"></td>
+      <td><input type="number" class="total" disabled=""></td>
+    </tr>
+    <tr id="6">
+      <td class="player"></td>
+      <td class="driver"></td>
+      <td class="p"><input type="number" min="0" max="40" data-dr="" onchange="roundEmUp()"></td>
+      <td><input type="number" class="dr" disabled=""></td>
+      <td class="driver"></td>
+      <td class="p"><input type="number" min="0" max="40" data-dr="" onchange="roundEmUp()"></td>
+      <td><input type="number" class="dr" disabled=""></td>
+      <td><input type="number" class="dr" onchange="roundEmUp()"></td>
+      <td><input type="number" class="total" disabled=""></td>
+    </tr>
+    <tr id="7">
+      <td class="player"></td>
+      <td class="driver"></td>
+      <td class="p"><input type="number" min="0" max="40" data-dr="" onchange="roundEmUp()"></td>
+      <td><input type="number" class="dr" disabled=""></td>
+      <td class="driver"></td>
+      <td class="p"><input type="number" min="0" max="40" data-dr="" onchange="roundEmUp()"></td>
+      <td><input type="number" class="dr" disabled=""></td>
+      <td><input type="number" class="dr" onchange="roundEmUp()"></td>
+      <td><input type="number" class="total" disabled=""></td>
+    </tr>
+    <tr id="8">
+      <td class="player"></td>
+      <td class="driver"></td>
+      <td class="p"><input type="number" min="0" max="40" data-dr="" onchange="roundEmUp()"></td>
+      <td><input type="number" class="dr" disabled=""></td>
+      <td class="driver"></td>
+      <td class="p"><input type="number" min="0" max="40" data-dr="" onchange="roundEmUp()"></td>
+      <td><input type="number" class="dr" disabled=""></td>
+      <td><input type="number" class="dr" onchange="roundEmUp()"></td>
+      <td><input type="number" class="total" disabled=""></td>
+    </tr>
+    <tr id="9">
+      <td class="player"></td>
+      <td class="driver"></td>
+      <td class="p"><input type="number" min="0" max="40" data-dr="" onchange="roundEmUp()"></td>
+      <td><input type="number" class="dr" disabled=""></td>
+      <td class="driver"></td>
+      <td class="p"><input type="number" min="0" max="40" data-dr="" onchange="roundEmUp()"></td>
+      <td><input type="number" class="dr" disabled=""></td>
+      <td><input type="number" class="dr" onchange="roundEmUp()"></td>
+      <td><input type="number" class="total" disabled=""></td>
+    </tr>
+    <tr id="10">
+      <td class="player"></td>
+      <td class="driver"></td>
+      <td class="p"><input type="number" min="0" max="40" data-dr="" onchange="roundEmUp()"></td>
+      <td><input type="number" class="dr" disabled=""></td>
+      <td class="driver"></td>
+      <td class="p"><input type="number" min="0" max="40" data-dr="" onchange="roundEmUp()"></td>
+      <td><input type="number" class="dr" disabled=""></td>
+      <td><input type="number" class="dr" onchange="roundEmUp()"></td>
+      <td><input type="number" class="total" disabled=""></td>
+    </tr>
+    <tr id="11">
+      <td class="player"></td>
+      <td class="driver"></td>
+      <td class="p"><input type="number" min="0" max="40" data-dr="" onchange="roundEmUp()"></td>
+      <td><input type="number" class="dr" disabled=""></td>
+      <td class="driver"></td>
+      <td class="p"><input type="number" min="0" max="40" data-dr="" onchange="roundEmUp()"></td>
+      <td><input type="number" class="dr" disabled=""></td>
+      <td><input type="number" class="dr" onchange="roundEmUp()"></td>
+      <td><input type="number" class="total" disabled=""></td>
+    </tr>
+    <tr id="12">
+      <td class="player"></td>
+      <td class="driver"></td>
+      <td class="p"><input type="number" min="0" max="40" data-dr="" onchange="roundEmUp()"></td>
+      <td><input type="number" class="dr" disabled=""></td>
+      <td class="driver"></td>
+      <td class="p"><input type="number" min="0" max="40" data-dr="" onchange="roundEmUp()"></td>
+      <td><input type="number" class="dr" disabled=""></td>
+      <td><input type="number" class="dr" onchange="roundEmUp()"></td>
+      <td><input type="number" class="total" disabled=""></td>
+    </tr>
+  </tbody>
+</table>
+<button onclick="saveAll()">Save results</button>
+
+<a target="_blank" href="https://script.google.com/d/165R7viTBypkyTYNavCDaflQHuV49C6e9lv4RaTODgV2jL3aEwh9bZQsT/edit?usp=sharing">Script</a> -
+<a target="_blank" href="https://github.com/nms553/nms553.github.io/edit/master/picks.html">GH</a> -
+<a target="_blank" href="https://docs.google.com/spreadsheets/d/1CAyAdtlGMJVQVzqKae8Qk3kUUT4WsrxoDYLBu3w3GbY/edit#gid=1482388299">Sheets</a>
+
+
+    <script type="text/javascript">//<![CDATA[
+
+
+$(document).ready(function() {
+  $.getJSON("https://spreadsheets.google.com/feeds/list/1DvaYXhcpPJvMFNDlDtx9oG-YGKfqtT6ZbPWqZIvaIxw/1/public/full?alt=json", function(res) {
+    var datas = res.feed.entry;
+		var arr1 = datas[2].gsx$colb.$t
+		
+		var parse = JSON.parse(arr1)
+		console.log(parse)
+		$("input").each(function(i) {
+			$(this).val(parse[i])
+		})
+		loadIt()
+})
+})
+
+var entry;
+			var d_s = [];
+      function loadIt() {
+        var sheetUrl = 'https://spreadsheets.google.com/feeds/list/1CAyAdtlGMJVQVzqKae8Qk3kUUT4WsrxoDYLBu3w3GbY/1/public/full?alt=json';
+        $.getJSON(sheetUrl, function(data) {
+          entry = data.feed.entry;
+					console.log(entry)
+          var t = document.getElementById("table")
+          entry.forEach(function(item, index) {
+            var r = document.getElementById(index)
+            var td = r.getElementsByClassName('player')[0]
+						td.textContent = item.gsx$player.$t
+            var d1 = r.getElementsByClassName('driver')[0]
+						d1.textContent = item.gsx$d1.$t
+            var d2 = r.getElementsByClassName('driver')[1]
+						d2.textContent = item.gsx$d2.$t
+						var p1 = r.getElementsByClassName('p')[0]
+						$(p1).find("input").attr("data-dr", item.gsx$d1.$t)
+						var p2 = r.getElementsByClassName('p')[1]
+						$(p2).find("input").attr("data-dr", item.gsx$d2.$t)
+						var pts1 = r.getElementsByClassName('dr')[0]
+						pts1.id = item.gsx$d1.$t
+						var pts2 = r.getElementsByClassName('dr')[1]
+						pts2.id = item.gsx$d2.$t
+          })
+        })
+      }
+var arr = [,,,,,,,,,,,,,,,,,,,,,,,,,];
+
+function roundEmUp() {
+	arr = [,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,];
+	$(".p input").each(function(index) {
+		var v = $(this).val() - 1
+		var itm = $(this).attr("data-dr")
+			arr[v] = itm
+	})
+			
+
+	var filtered = arr.filter(function(el) {
+		return el != null
+	})
+	
+	//console.log(filtered)
+	
+	var rev = filtered.reverse()
+	//console.log(filtered)
+	$(".dr").each(function() {
+	//console.log(this.id)
+		var pts = rev.indexOf(this.id) + 1
+		if (pts > 0) {
+			this.value = pts
+		}
+		
+	})
+	
+	
+	$("tr").each(function() {
+	var c = 0;
+		$(this).find(".dr").each(function() {
+		var val = $(this).val()
+		if (!val) {
+			val = 0;
+		}
+		c = parseInt(c) + parseInt(val)
+			
+			//console.log(c)
+		})
+
+	var total = $(this).find(".total")
+	$(total).val(c)
+	})
+}
+
+$("#table").on('keydown', 'input', function(e) {
+	if(e.which == 13) {
+	}
+})
+
+function saveAll() {
+	var html = [];
+	$("input").each(function() {
+		html.push(this.value)
+	})
+  var str = JSON.stringify(html);
+  var iframe = $("<iframe></iframe>").attr("name", "targetiframe").attr("style", "display: none;");
+  var form = document.createElement("FORM");
+  form.action = "https://script.google.com/macros/s/AKfycbwxE5s7hfAtQXZPLKwdNFpT6J2ThVai8fbweqPwh43VQXdSRTkC/exec";
+  form.method = "get";
+  form.target = "targetiframe";
+  form.style = "display: none;";
+  $("body").append(form).append(iframe);
+  var timestamp = $("<INPUT>").val("98765").attr("name", "row");
+  var col = $("<INPUT>").val("colB").attr("name", "col");
+  var input = $("<INPUT>").val(str).attr("name", "text");
+  var sheetname = $("<INPUT>").val("Test").attr("name", "sheetName");
+  $(form).append(timestamp).append(col).append(input).append(sheetname).submit();
+	re_load()
+	}
+	
+	function re_load() {
+		setTimeout(function(){ location.reload() }, 3000);
+	}
+
+
+  //]]></script>
+
+  <script>
+    // tell the embed parent frame the height of the content
+    if (window.parent && window.parent.parent){
+      window.parent.parent.postMessage(["resultsFrame", {
+        height: document.body.getBoundingClientRect().height,
+        slug: "ct1fz7pn"
+      }], "*")
+    }
+
+    // always overwrite window.name, in case users try to set it manually
+    window.name = "result"
+  </script>
+
+
+</body>
+</html>

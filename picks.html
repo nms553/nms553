@@ -34,11 +34,16 @@ a {
 }
 
 input {
-  width: 135px;
+  width: 90%;
 }
 
 td:first-child {
   text-align: center;
+}
+
+.separ {
+  border-top: 1px solid gray;
+	padding-top: 45px;
 }
 
     /* EOS */
@@ -128,7 +133,7 @@ td:first-child {
 
           //add other to array entry
           var addother = {
-            gsx$drivers: {
+            gsx$driver: {
               $t: "\u003cinput id\u003d\"other\" onchange\u003d\"dickTrickle(this.value)\" placeholder\u003d\"type other driver\" /\u003e"
             },
             "gsx$players": {
@@ -142,9 +147,15 @@ td:first-child {
 
           entry.forEach(function(item, index) {
             var row = table.insertRow();
+						var row2 = table.insertRow()
+						row2.style.display = "none"
             var cell = row.insertCell(0);
-            var imgname = JSON.stringify(item.gsx$drivers.$t).replace(".", "").replace(/ /g, "").replace("+1", "").replace("+2", "")
-            var imgparse = JSON.parse(imgname)
+            var imgparse = ""
+            try {
+            var imgname = JSON.stringify(item.gsx$driver.$t).replace(".", "").replace(/ /g, "").replace("+1", "").replace("+2", "")
+            imgparse = JSON.parse(imgname)
+            } catch(e) {}
+            
             var imgcombo = "https://www.stupid-fast.com/drivers/" + imgparse + ".png"
             //console.log(imgcombo)
             var imgtag = document.createElement("IMG")
@@ -154,7 +165,7 @@ td:first-child {
             var cell0 = row.insertCell(1);
             var cell1 = row.insertCell(2);
             var cell2 = row.insertCell(3);
-            cell0.innerHTML = item.gsx$drivers.$t;
+            cell0.innerHTML = item.gsx$driver.$t;
 
             //add to main array
             newarray0[index] = item.gsx$players.$t;
@@ -182,24 +193,34 @@ td:first-child {
             //add dropdown to second column
             cell1.appendChild(select);
             //create Trashtalk inpuit field
-            var trashtalk = document.createElement("INPUT");
-            trashtalk.style.display = "none";
+            
+          
+					
+          var cell2 = row2.insertCell()
+					cell2.setAttribute("colspan", 3)
+          
+          var trashtalk = document.createElement("INPUT");
             trashtalk.className = index + 2;
             trashtalk.placeholder = "trashtalk";
             trashtalk.setAttribute("onchange", "trashtalk(this.className, this.value)")
-            cell2.appendChild(trashtalk);
+            cell2.appendChild(trashtalk)
           });
 
-          var tenthrow = document.getElementsByTagName("TR")[13];
-          tenthrow.innerHTML = "<td colspan='4'><hr></td>";
-
+          var sep1 = document.getElementsByTagName("TR")[25];
+					$(sep1).show()
+          $(sep1).css("visibility", "hidden")
+          var sep2 = document.getElementsByTagName("TR")[26];
+          $(sep2).find("td").addClass("separ")
 $("tr:last-child").find("td").first().find("img").attr("src", "https://www.stupid-fast.com/drivers/DickTrickle.png")
 
         });
 				
       });
 
-
+$("table").on('change', 'select', function() {
+	$(this).parent().parent().next("tr").show()
+	$(this).parent().parent().next().css("visibility", "visible")
+})
 
   //]]></script>
 

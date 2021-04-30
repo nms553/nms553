@@ -1,0 +1,136 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <title></title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="googlebot" content="noindex, nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <script
+    type="text/javascript"
+    src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"
+    
+  ></script>
+
+    <link rel="stylesheet" type="text/css" href="/css/result-light.css">
+
+
+  <style id="compiled-css" type="text/css">
+      body {
+	background-color: #EEE;
+	padding: 15px;
+	font-family: sans-serif;
+}
+
+#divspace {
+	margin-top: 20px;
+	border: 0px dashed;
+	padding: 15px;
+	background-color: white;
+}
+
+iframe, form {
+	display: none;
+}
+    /* EOS */
+  </style>
+
+  <script id="insert"></script>
+
+
+</head>
+<body>
+    
+<p id="saved">...</p>
+<button onclick="saveAll()">-- Save all --</button>
+<button onclick="orderedList()">OL</button>
+<button onclick="unorderedList()">UL</button>
+
+<h1>Apple Notes</h1>
+<div id="divspace" contenteditable>
+  <br>
+</div>
+
+<iframe src="" name="iframe"></iframe>
+<form action="https://script.google.com/macros/s/AKfycbz_43TAqQRi0aUM15UCEZrpgXtjHEYh1RhliJQl3u9l/dev" target="iframe" method="post">
+  <input type="text" name="cell" value="A3">
+  <input type="text" name="text" value="church biscuit">
+</form>
+
+
+    <script type="text/javascript">//<![CDATA[
+
+
+/*$("#divspace").click(function(e) {
+	console.log(e.target.nodeName)
+	var inp = document.createElement("input")
+	$(inp).insertAfter(e.target)
+	$(inp).focus()
+})*/
+
+//https://docs.google.com/spreadsheets/d/e/2PACX-1vTBe79PSHq3A0Oi98PNnEWAjrt2-2hCQjX5IgMdSZWMsW-k80_3BbhUHnQGhfUW683tr8o_V3zOQ-XT/pubhtml
+
+$(document).ready(function() {
+  $.getJSON("https://spreadsheets.google.com/feeds/list/1F2j-CZ7ZY-awxmdMRLF_229vqSV7imfMKW-glKiNc78/1/public/full?alt=json", function(data) {
+    var entry = data.feed.entry;
+    console.log(entry[1])
+    var html = entry[1].gsx$cola.$t
+    var parse = JSON.parse(html)
+    $("#divspace").html(parse)
+  })
+
+})
+
+
+function orderedList() {
+  document.execCommand("insertOrderedList")
+}
+
+function unorderedList() {
+  document.execCommand("insertUnorderedList")
+}
+
+function saveAll() {
+  var html = $("#divspace").html()
+  var str = JSON.stringify(html)
+  document.getElementsByName("text")[0].value = str
+  $("form").submit()
+}
+
+var timeoutId;
+$("#divspace").keydown(function(e) {
+	console.log('texting started');
+	var sp = "..."
+$("#saved").text(sp)
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(function() {
+        $("#saved").text("saved")
+        console.log("saved")
+				saveAll()
+    }, 3000);
+
+})
+
+
+  //]]></script>
+
+  <script>
+    // tell the embed parent frame the height of the content
+    if (window.parent && window.parent.parent){
+      window.parent.parent.postMessage(["resultsFrame", {
+        height: document.body.getBoundingClientRect().height,
+        slug: "eywk0qmr"
+      }], "*")
+    }
+
+    // always overwrite window.name, in case users try to set it manually
+    window.name = "result"
+  </script>
+
+
+</body>
+</html>

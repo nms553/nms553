@@ -16,88 +16,108 @@
     
   ></script>
 
- 
+    <link rel="stylesheet" type="text/css" href="/css/result-light.css">
+
 
   <style id="compiled-css" type="text/css">
       body {
-	padding-left: 30px;
+	font-family: sans-serif;
+	font-size: 0.9em;
 }
 
-a {
-	margin-top: 30px;
-	display: block;
+table {
+	border-collapse: collapse;
 }
-	  
-	  table {
-	margin-top: 40px;
-		  border-collapse: collapse;
+
+tr:nth-child(even) {
+	background-color: #EEE;
 }
-	  td:first-child, td:nth-child(2) {
-	border: 1px solid;
-}
-td {
+
+th, td {
 	text-align: center;
-	padding: 3px 15px 3px 15px;
+	padding: 7px 30px 7px 5px;
 }
 
-td:first-child {
+td:nth-child(2), td:nth-child(8), th:nth-child(8) {
 	text-align: left;
 }
 
-td:nth-child(n+3) {
-	color: gray;
+td:nth-child(2), td:nth-child(3) {
+	font-weight: bold;
 }
     /* EOS */
   </style>
 
+  <script id="insert"></script>
 
 
 </head>
 <body>
-	<h1>Regular Seasons Standings</h1>
-    <table id="table">
-
-</table>
-
-<a href="https://docs.google.com/spreadsheets/d/1CAyAdtlGMJVQVzqKae8Qk3kUUT4WsrxoDYLBu3w3GbY/htmlembed?single=true&gid=1785362971&range=A23:O82&widget=false&chrome=false" target="_self">Detailed Breakdown</a>
+    <div id=divspace>
+	<table id="tablespace" border="0">
+		<th></th>
+		<th></th>
+		<th>Total</th>
+		<th>Weekly<br>Winnings</th>
+		<th></th>
+		<th></th>
+		<th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+		<th>Last Week</th>
+		<th>Pts</th>
+		<th></th>
+	</table>
+	
+	
+</div>
 
     <script type="text/javascript">//<![CDATA[
 
 
-$(document).ready(function(){
-  $.getJSON("https://spreadsheets.google.com/feeds/list/1CAyAdtlGMJVQVzqKae8Qk3kUUT4WsrxoDYLBu3w3GbY/7/public/full?alt=json", function(result){
-  	console.log(result.feed.entry)
-    var data = result.feed.entry
-    console.log(data)
-    var table = document.getElementById("table")
-    data.forEach(function(item, index) {
-    	var row = table.insertRow()
-      row.insertCell().innerText = item.gsx$player.$t
-      row.insertCell().innerText = item.gsx$newtotal.$t
-	row.insertCell().innerText = item.gsx$behind.$t
-	if(item.gsx$jump.$t == "0") {
-	row.insertCell()
-	} else if (item.gsx$jump.$t > 0) {
-	row.insertCell().innerText = "+" + item.gsx$jump.$t
-	}
-	else {
-	row.insertCell().innerText = item.gsx$jump.$t
-	}
-	
-	    row.insertCell().innerText = item.gsx$weeklywinnings.$t
+$(function() {
+  var sheetUrl = 'https://spreadsheets.google.com/feeds/list/1CAyAdtlGMJVQVzqKae8Qk3kUUT4WsrxoDYLBu3w3GbY/6/public/full?alt=json';
+  $.getJSON(sheetUrl, function(data) {
+    var entry = data.feed.entry;
+    console.log(entry)
+    var table = document.getElementById("tablespace")
+    entry.forEach(function(item, index) {
+      var r = table.insertRow()
+      r.insertCell().innerText = item.gsx$no.$t
+      r.insertCell().innerText = item.gsx$name.$t
+      r.insertCell().innerText = item.gsx$total.$t
+      r.insertCell().innerText = item.gsx$weeklywinnings.$t
+      r.insertCell().innerText = item.gsx$behind.$t
+      r.insertCell().innerText = item.gsx$delta.$t
+      r.insertCell().innerText = item.gsx$blank.$t
+			r.insertCell().innerText = item.gsx$lastweek.$t
+			r.insertCell().innerText = item.gsx$pts.$t
+			r.insertCell().innerText = item.gsx$behind2.$t
     })
-  });
-});
+$("table").find("tr:nth-child(2)").remove()
+$("td:nth-child(6)").each(function() {
+	if (this.innerText == "0") {
+		this.innerText = ""
+	}
+})
+  })
+	
+})
 
-/*
-
-<a href="https://docs.google.com/spreadsheets/d/1CAyAdtlGMJVQVzqKae8Qk3kUUT4WsrxoDYLBu3w3GbY/htmlembed?single=true&gid=1785362971&range=A23:O82&widget=false&chrome=false" target="_blank">Detailed Breakdown</a>
-*/
 
 
   //]]></script>
 
+  <script>
+    // tell the embed parent frame the height of the content
+    if (window.parent && window.parent.parent){
+      window.parent.parent.postMessage(["resultsFrame", {
+        height: document.body.getBoundingClientRect().height,
+        slug: "ea1h5sp9"
+      }], "*")
+    }
 
+    // always overwrite window.name, in case users try to set it manually
+    window.name = "result"
+  </script>
 
 
 </body>

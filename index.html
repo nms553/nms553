@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -206,7 +207,7 @@
 
       var x = document.getElementById("table");
       $(function() {
-        var sheetUrl = 'https://spreadsheets.google.com/feeds/list/1CAyAdtlGMJVQVzqKae8Qk3kUUT4WsrxoDYLBu3w3GbY/1/public/full?alt=json';
+        var sheetUrl = 'https://spreadsheets.google.com/feeds/list/1O0TjN3lFCFmuVFmLja_BEfjohMiBJmku_f71ElVffOM/1/public/full?alt=json';
         $.getJSON(sheetUrl, function(data) {
           var entry = data.feed.entry;
           console.log(entry);
@@ -233,7 +234,7 @@
       var y = document.getElementById("annc");
       var z = document.getElementById("announcement");
       $(function() {
-        var sheetUrl = 'https://spreadsheets.google.com/feeds/cells/1CAyAdtlGMJVQVzqKae8Qk3kUUT4WsrxoDYLBu3w3GbY/2/public/full?alt=json';
+        var sheetUrl = 'https://spreadsheets.google.com/feeds/cells/1O0TjN3lFCFmuVFmLja_BEfjohMiBJmku_f71ElVffOM/2/public/full?alt=json';
         $.getJSON(sheetUrl, function(data) {
           var entry = data.feed.entry;
           console.log(entry);

@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 
@@ -19,7 +20,7 @@
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
 
 
-    <style id="compiled-css" type="text/css">
+    <style>
       html,
       body {
         margin: auto;
@@ -73,6 +74,8 @@
         border: 1px solid;
         border-collapse: collapse;
         white-space: nowrap;
+        font-family: sans-serif;
+        font-size: 0.85em;
       }
 
       td {
@@ -147,8 +150,6 @@
 
     </style>
 
-    <script id="insert"></script>
-
 
   </head>
 
@@ -156,7 +157,9 @@
 
 
 
-    <a href="http://stupid-fast.com" id="banner"><img src="https://www.stupid-fast.com/banner.png" /></a>
+    <a href="http://stupid-fast.com" id="banner">
+    <img src="https://www.stupid-fast.com/banner.png" />
+    </a>
 
     <div class="div">
 
@@ -246,9 +249,9 @@
           console.log(entry);
           if (entry[0].gs$cell.$t !== "void") {
             var str = entry[0].gs$cell.$t
-            var str2 = str.replace("https://www.", "")
+            var str2 = str.split("averages+")[1]
             $(".dashes").show();
-            y.innerHTML = str2
+            y.innerHTML = "MRN Driver Averages - " + str2
             y.href = entry[0].gs$cell.$t
           }
 

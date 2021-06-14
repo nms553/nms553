@@ -1,24 +1,20 @@
   <!DOCTYPE html>
   <html>
   <head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
   <style>
-  div {
-    display: inline-block;
-  }
 
   table {
     table-layout: fixed;
     width: 1500px;
-  }
-
-  table table {
-    table-layout: fixed;
-    width: 100%;
+    margin-top 40px;
+    border-collapse: collapse;
   }
 
   td, th {
     vertical-align: top;
+    border: 1px solid;
   }
 
   td:first-child, th:first-child {
@@ -42,7 +38,7 @@
   <button onclick="togglePost()">Show After</button>
   <button onclick="ul()">UL</button>
 
-  <table border="1">
+  <table border="0">
     <tr id="hrow"></tr>
     <tr id="row" contenteditable></tr>
   </table>
@@ -86,7 +82,7 @@
       }
     })
 
-
+$('tr').find('td:visible:first').css('background','#EEE').css('color','gray');
 
   })
 
@@ -123,6 +119,8 @@
     $("#inp").val(str)
     $("form").submit()
   }
+  
+  
   </script>
 
   </body>

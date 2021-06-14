@@ -1,0 +1,129 @@
+  <!DOCTYPE html>
+  <html>
+  <head>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+  <style>
+  div {
+    display: inline-block;
+  }
+
+  table {
+    table-layout: fixed;
+    width: 1500px;
+  }
+
+  table table {
+    table-layout: fixed;
+    width: 100%;
+  }
+
+  td, th {
+    vertical-align: top;
+  }
+
+  td:first-child, th:first-child {
+    color: gray;
+  }
+
+  tr:nth-child(2) {
+    height: 300px;
+  }
+  
+  form {
+  	display: none;
+  }
+  
+  </style>
+  </head>
+  <body>
+
+  <button onclick="saveAll()">💾</button>
+  <button onclick="togglePre()">Show Before</button>
+  <button onclick="togglePost()">Show After</button>
+  <button onclick="ul()">UL</button>
+
+  <table border="1">
+    <tr id="hrow"></tr>
+    <tr id="row" contenteditable></tr>
+  </table>
+
+  
+  <form action="https://script.google.com/macros/s/AKfycbzuIDdNScXuIH76WKKIUhTD2ekI7QolzpUamP_nqWnY/dev" method="post" target="iframe">
+  <iframe name="iframe" frameborder="0"></iframe>
+    <input type="text" id="inp" name="val">
+    <input type="submit">
+  </form>
+
+  <script>
+  var today = Date.now()
+
+  $.getJSON("https://spreadsheets.google.com/feeds/list/1mwpBWaI32F8DxgJom-uZ3vUHa22Obxnl95QeDasGTew/1/public/full?alt=json", function(data) {
+    var entry = data.feed.entry;
+    console.log(entry)
+    var indx;
+    var hrow = document.getElementById("hrow")
+    var row = document.getElementById("row")
+    entry.forEach(function(item, index) {
+      var hc = hrow.insertCell()
+      var dt = new Date(item.gsx$date.$t*86400000)
+      var dtstr = dt.toDateString()
+      var milli_dt = dt.getTime()
+      //console.log(milli_dt)
+      hc.innerHTML = dtstr
+      hc.className = milli_dt
+      var c = row.insertCell()
+      c.innerHTML = item.gsx$stuff.$t
+      c.className = milli_dt
+      c.id = index + 2
+    })
+
+    $("td").each(function() {
+      var cl = $(this).attr("class")
+      if (cl < today - 86400000) {
+          $(this).hide()
+      } else if (cl > today + 86400000*7) {
+          $(this).hide()
+      }
+    })
+
+
+
+  })
+
+  function togglePre() {
+      $("td").each(function() {
+      var cl = $(this).attr("class")
+      if (cl < today) {
+          $(this).toggle()
+      }
+    })
+   }
+
+   function togglePost() {
+      $("td").each(function() {
+      var cl = $(this).attr("class")
+      if (cl > today + 86400000*7 && cl < today + 86400000*30) {
+          $(this).toggle()
+      }
+    })
+   }
+
+  function ul() {
+      document.execCommand("insertunorderedlist")
+  }
+
+  function saveAll() {
+      var arr = [];
+      $("tr:nth-child(2) td").each(function() {
+      var txt = $(this).html()
+      arr.push(txt)
+    })
+    var str = JSON.stringify(arr)
+    console.log(str)
+    $("#inp").val(str)
+    $("form").submit()
+  }
+  </script>
+
+  </body>
+  </html>

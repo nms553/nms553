@@ -147,6 +147,10 @@
       form {
         display: none;
       }
+			
+			#table tr:first-child {
+				display: none;
+			}
 
     </style>
 
@@ -187,10 +191,7 @@
     </div>
 
 
-    <!--table id="table"></table-->
-
-<iframe src="https://script.google.com/macros/s/AKfycbxRfqoWY30rRJp-JLv2EccCfPojfVptXdtJH9VcxXjmm4nz5vlbt9sqlno6yBZSdbIA/exec" width="100%" height="600" frameborder="0">
-</iframe>
+    <table id="table"></table>
 
 
     <a href="https://docs.google.com/spreadsheets/d/1a7qPZf1j_ySwD2rra2t6eIub6t78r0eZYO-ZcJ9y_d8/edit?usp=sharing">2020 Stupid Fast Database</a>
@@ -216,11 +217,18 @@
     <script type="text/javascript">
       var x = document.getElementById("table");
       $(function() {
-        var sheetUrl = 'https://spreadsheets.google.com/feeds/list/1O0TjN3lFCFmuVFmLja_BEfjohMiBJmku_f71ElVffOM/1/public/full?alt=json';
-        $.getJSON(sheetUrl, function(data) {
-          var entry = data.feed.entry;
-          console.log(entry);
-          entry.forEach(function(item, index) {
+        var sf = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQL85HtnJxL_xjgd_BlxAv-FYkQDbpOxfDYNlBX7kRDEuUwyuYzcuhB5aoAgaOiDuX8Rqm2voWvcnSj/pub?gid=1325894882&single=true&output=tsv";
+$.ajax({url: sf, type: 'GET', dataType: 'text'})
+.done(function(data) {
+  var nsplit = data.split(/\n/g)
+		var tsplit = []
+		nsplit.forEach(function(item, index) {
+			var tab = item.split(/\t/g)
+			tsplit.push(tab)
+		})
+		
+			console.log(tsplit)
+          tsplit.forEach(function(item, index) {
             var tr = x.insertRow()
             var td1 = tr.insertCell()
             var td2 = tr.insertCell()
@@ -228,14 +236,14 @@
             var td4 = tr.insertCell()
             var a1 = document.createElement("A")
             a1.href = "javascript:"
-            a1.innerHTML = item.gsx$player.$t
+            a1.innerHTML = item[0]
             var span = document.createElement("SPAN")
-            span.innerHTML = '  <sup>(' + item.gsx$pts.$t + ')</sup>'
+            span.innerHTML = '  <sup>(' + item[1] + ')</sup>'
             td1.appendChild(a1)
             td1.appendChild(span)
-            td2.innerText = item.gsx$d1.$t
-            td3.innerText = item.gsx$d2.$t
-            td4.innerHTML = item.gsx$comment.$t
+            td2.innerText = item[2]
+            td3.innerText = item[3]
+            td4.innerHTML = item[4]
           })
         });
       });

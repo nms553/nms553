@@ -259,24 +259,22 @@ $.ajax({url: sf, type: 'GET', dataType: 'text'})
       var y = document.getElementById("annc");
       var z = document.getElementById("announcement");
       $(function() {
-        var sheetUrl = 'https://spreadsheets.google.com/feeds/cells/1O0TjN3lFCFmuVFmLja_BEfjohMiBJmku_f71ElVffOM/2/public/full?alt=json';
-        $.getJSON(sheetUrl, function(data) {
-          var entry = data.feed.entry;
-          console.log(entry);
-          if (entry[0].gs$cell.$t !== "void") {
-            var str = entry[0].gs$cell.$t
-            var str2 = str.split("averages+")[1]
-            $(".dashes").show();
-            y.innerHTML = "MRN Driver Averages - " + str2
-            y.href = entry[0].gs$cell.$t
-          }
-
-          $("#announcement").append(entry[1].gs$cell.$t)
-          $("#announcement2").append(entry[2].gs$cell.$t)
-
-          phoneNum()
+        var sf = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQL85HtnJxL_xjgd_BlxAv-FYkQDbpOxfDYNlBX7kRDEuUwyuYzcuhB5aoAgaOiDuX8Rqm2voWvcnSj/pub?gid=1176689019&single=true&output=tsv";
+$.ajax({url: sf, type: 'GET', dataType: 'text'})
+.done(function(data) {
+  var rows = data.split(/\n/g)
+		var cells = []
+		rows.forEach(function(item, index) {
+			var tab = item.split(/\t/g)
+			cells.push(tab)
+		})
+	console.log(cells)
+	var mrn = document.getElementById("annc")
+	mrn.href = "https://www.google.com/search?q=mrn+driver+averages+" + cells[0]
+	mrn.innerText = "MRN.com/" + cells[0]
         });
       });
+
 
       /*$("#table").on('click', 'a', function() {
 				var txt = this.innerText + " is up to pick!  Type them a message:"

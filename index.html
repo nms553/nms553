@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html>
 
@@ -194,7 +195,14 @@
     </div>
 
 
-    <table id="table"></table>
+    <table id="table">
+    	<tr>
+
+    	</tr>
+			<tr>
+				<td>LOADING...</td>
+			</tr>
+    </table>
 
 
     <a href="https://docs.google.com/spreadsheets/d/1a7qPZf1j_ySwD2rra2t6eIub6t78r0eZYO-ZcJ9y_d8/edit?usp=sharing">2020 Stupid Fast Database</a>
@@ -229,7 +237,7 @@ $.ajax({url: sf, type: 'GET', dataType: 'text'})
 			var tab = item.split(/\t/g)
 			tsplit.push(tab)
 		})
-		
+			x.innerHTML = ""
 			console.log(tsplit)
           tsplit.forEach(function(item, index) {
             var tr = x.insertRow()

@@ -227,19 +227,15 @@
 
     <script type="text/javascript">
       var x = document.getElementById("table");
-      $(function() {
-        var sf = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQL85HtnJxL_xjgd_BlxAv-FYkQDbpOxfDYNlBX7kRDEuUwyuYzcuhB5aoAgaOiDuX8Rqm2voWvcnSj/pub?gid=1325894882&single=true&output=tsv";
-$.ajax({url: sf, type: 'GET', dataType: 'text'})
-.done(function(data) {
-  var nsplit = data.split(/\n/g)
-		var tsplit = []
-		nsplit.forEach(function(item, index) {
-			var tab = item.split(/\t/g)
-			tsplit.push(tab)
-		})
+      
+
+      $(document).ready(function() {
+
+$.get("https://script.google.com/macros/s/AKfycbxPuLx5GMs85jW5-k3tHBi6r18aJLQ6QDZBP2NIceo6p2iQCepojzhuGOKzahUoROWZ/exec", function(data, status){
+//console.log(data)
+data = JSON.parse(data)
 			x.innerHTML = ""
-			console.log(tsplit)
-          tsplit.forEach(function(item, index) {
+          data.forEach(function(item, index) {
             var tr = x.insertRow()
             var td1 = tr.insertCell()
             var td2 = tr.insertCell()
@@ -276,7 +272,7 @@ $.ajax({url: sf, type: 'GET', dataType: 'text'})
 			var tab = item.split(/\t/g)
 			cells.push(tab)
 		})
-	console.log(cells)
+	//console.log(cells)
 	var mrn = document.getElementById("annc")
 	mrn.href = "https://www.google.com/search?q=mrn+driver+averages+" + cells[0]
 	mrn.innerText = "MRN.com/" + cells[0]

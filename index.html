@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html>
 
@@ -10,9 +8,9 @@
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
     <link rel="manifest" href="/site.webmanifest">
     <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
-	  <link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400&display=swap" rel="stylesheet">
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="theme-color" content="#ffffff">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -43,7 +41,8 @@
         margin-left: 15px;
       }
 
-      div a, body > a {
+      div a,
+      body>a {
         display: block;
       }
 
@@ -151,10 +150,10 @@
       form {
         display: none;
       }
-			
-			#table tr:first-child {
-				display: none;
-			}
+
+      #table tr:first-child {
+        display: none;
+      }
 
     </style>
 
@@ -166,7 +165,7 @@
 
 
     <a href="http://stupid-fast.com" id="banner">
-    <img src="https://www.stupid-fast.com/banner.png" />
+      <img src="https://www.stupid-fast.com/banner.png" />
     </a>
 
     <div class="div">
@@ -196,12 +195,12 @@
 
 
     <table id="table">
-    	<tr>
+      <tr>
 
-    	</tr>
-			<tr>
-				<td>LOADING...</td>
-			</tr>
+      </tr>
+      <tr>
+        <td>LOADING...</td>
+      </tr>
     </table>
 
 
@@ -227,14 +226,16 @@
 
     <script type="text/javascript">
       var x = document.getElementById("table");
-      
+      var z = document.getElementById("announcement");
+      var mrn = document.getElementById("annc")
 
       $(document).ready(function() {
 
-$.get("https://script.google.com/macros/s/AKfycbxPuLx5GMs85jW5-k3tHBi6r18aJLQ6QDZBP2NIceo6p2iQCepojzhuGOKzahUoROWZ/exec", function(data, status){
-//console.log(data)
-data = JSON.parse(data)
-			x.innerHTML = ""
+// Main table data import
+        $.get("https://script.google.com/macros/s/AKfycbxPuLx5GMs85jW5-k3tHBi6r18aJLQ6QDZBP2NIceo6p2iQCepojzhuGOKzahUoROWZ/exec", function(data, status) {
+          //console.log(data)
+          data = JSON.parse(data)
+          x.innerHTML = ""
           data.forEach(function(item, index) {
             var tr = x.insertRow()
             var td1 = tr.insertCell()
@@ -253,45 +254,18 @@ data = JSON.parse(data)
             td4.innerHTML = item[4]
           })
         });
-      });
 
-      $("summary a").click(function() {
-        $("details:first-child").attr("open", true)
-      })
+// MRN and Annoucements
+        $.get("https://script.google.com/macros/s/AKfycbwYua1Zw2NhUJfRi-MKfb9WnYzDF53lClFBkIfNmbys7jnWGM601BX1gLocq9oXODDU/exec", function(data, status) {
+          data = JSON.parse(data)
+          mrn.href = "https://www.google.com/search?q=mrn+driver+averages+" + data[0][1]
+          mrn.innerText = "MRN.com/" + data[0][1]
 
-
-      var y = document.getElementById("annc");
-      var z = document.getElementById("announcement");
-      $(function() {
-        var sf = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQL85HtnJxL_xjgd_BlxAv-FYkQDbpOxfDYNlBX7kRDEuUwyuYzcuhB5aoAgaOiDuX8Rqm2voWvcnSj/pub?gid=1176689019&single=true&output=tsv";
-$.ajax({url: sf, type: 'GET', dataType: 'text'})
-.done(function(data) {
-  var rows = data.split(/\n/g)
-		var cells = []
-		rows.forEach(function(item, index) {
-			var tab = item.split(/\t/g)
-			cells.push(tab)
-		})
-	//console.log(cells)
-	var mrn = document.getElementById("annc")
-	mrn.href = "https://www.google.com/search?q=mrn+driver+averages+" + cells[0]
-	mrn.innerText = "MRN.com/" + cells[0]
+          z.innerHTML = data[1][1]
         });
+
+
       });
-
-
-      /*$("#table").on('click', 'a', function() {
-				var txt = this.innerText + " is up to pick!  Type them a message:"
-        var p = prompt(txt, "You're up!")
-        if (p !== null) {
-          var name = document.getElementsByName("name")[0]
-          var message = document.getElementsByName("message")[0]
-          name.value = this.innerText
-          message.value = p
-          $("form").submit()
-        }
-
-      })*/
 
     </script>
 

@@ -1,12 +1,308 @@
-<!DOCTYPE html>
-<html style="height: 100%; margin: 0px;">
-  <head>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  </head>
-<body style="height: 100%; margin: 0px;">
 
-<iframe src="https://script.google.com/macros/s/AKfycbzj7_Rls2fhKtarj09kDzKvnohcftQ2OdUlSsGlDFsc_P-EdPkhWe2RTchOOkVrh_YEwQ/exec" width="100%" height="100%" frameborder="0">
-</iframe>
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <title></title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="googlebot" content="noindex, nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <script
+    type="text/javascript"
+    src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"
+    
+  ></script>
+
+    <link rel="stylesheet" type="text/css" href="/css/result-light.css">
+
+
+  <style id="compiled-css" type="text/css">
+      * {
+  //outline: 1px solid white;
+  font-family: 'Lato', sans-serif;
+  color: white;
+}
+
+div, center, h1, footer, p, button, input[type=submit], input[type=text] {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+body {
+  margin: 20px auto 20px auto;
+  text-align: center;
+  background-color: #222;
+  width: 100%;
+  max-width: 300px;
+  font-size: 1em;
+}
+
+select {
+  background-color: #222;
+}
+
+label {
+  display: block;
+  padding: 0px 0px 5px 0px;
+  background-color: #444;
+  vertical-align: middle;
+  width: 100%;
+  margin: 10px 0px 10px 0px;
+  height: 40px;
+}
+
+label span {
+  vertical-align: middle;
+  display: inline-block;
+  margin-top: auto;
+  margin-bottom: auto;
+  width: 150px;
+}
+
+img {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+#maindiv {
+  display: inline-block;
+  margin: auto;
+  text-align: left;
+}
+
+.strike {
+  text-decoration: line-through;
+  color: #555;
+}
+
+input[type=checkbox] {
+  width: 15px;
+  height: 15px;
+  vertical-align: middle;
+}
+
+input[type=submit], input[type=text] {
+  color: black;
+}
+
+mark {
+  margin-left: 5px;
+  padding: 2px 2px 2px 2px;
+  font-size: 0.7em;
+  color: black;
+  vertical-align: middle;
+  //float: right;
+  opacity: 75%;
+}
+
+#banner {
+  opacity: 85%;
+}
+
+label:nth-child(12) {
+  margin-bottom: 100px;
+}
+    /* EOS */
+  </style>
+
+  <script id="insert"></script>
+
+
+</head>
+<body>
+    <!DOCTYPE html>
+<html>
+
+  <head>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400&display=swap" rel="stylesheet">
+    <script src=""></script>
+
+  </head>
+
+  <body>
+  
+  <a href="https://www.stupid-fast.com/"><img src="https://www.stupid-fast.com/banner.png" id="banner" width="300"></a>
+
+
+    <form method="post" action="https://script.google.com/macros/s/AKfycbzFxazXqTRgfA0z4iMM4ckDKPY3vDewKU556Sl0EphwZ2m6FAtwVELJO776omPrXValZg/exec" target="iframe" onsubmit="refreshPage()">
+      <center>Current player:&nbsp;
+        <select name="player" id="select" onchange="changePlayer(this.value)">
+        </select>
+
+      </center>
+      <div id="maindiv">
+
+      </div>
+      <br>
+      <input type="text" name="trashtalk" placeholder="trashtalk">
+      <br>
+      <input type="submit">
+    </form>
+
+    <iframe name="iframe" style="display:none;">
+
+    </iframe>
+
+
+
+
+  </body>
+
+</html>
+
+
+    <script type="text/javascript">//<![CDATA[
+
+
+var playerlist = [""]
+var tbody = document.getElementById("tbody")
+var select = document.getElementById("select")
+var playerspan = document.getElementById("playerspan")
+
+
+$(document).ready(getPlayers)
+
+function getPlayers() {
+  $.get("https://script.google.com/macros/s/AKfycbzFxazXqTRgfA0z4iMM4ckDKPY3vDewKU556Sl0EphwZ2m6FAtwVELJO776omPrXValZg/exec", {
+    sheet: "Players"
+  }, function(result, status) {
+    //console.log(result)
+    var data = JSON.parse(result)
+    console.log(data)
+
+    data.forEach(function(item, index) {
+      var opt = document.createElement("OPTION")
+      opt.id = item.player
+      opt.innerText = item.player
+      select.add(opt)
+      //console.log(item.player)
+    })
+    //console.log(playerlist)
+    getURL()
+  });
+  //return playerlist
+}
+
+function getURL() {
+  console.log("getURL")
+  var url = window.location.search
+  console.log(url)
+  var param = new URLSearchParams();
+  var player = param.get("player")
+  if (!player) {
+    player = "Nick"
+  }
+
+  document.getElementById(player).selected = true
+
+  getDrivers()
+}
+
+
+function getDrivers() {
+  console.log("getDrivers")
+  $.get("https://script.google.com/macros/s/AKfycbzFxazXqTRgfA0z4iMM4ckDKPY3vDewKU556Sl0EphwZ2m6FAtwVELJO776omPrXValZg/exec", {
+    sheet: "Drivers"
+  }, function(result, status) {
+    //console.log(result)
+    var data = JSON.parse(result)
+    //console.log(data)
+    //document.write(data)
+
+    data.forEach(function(item, index) {
+      var label = document.createElement("LABEL")
+      var cb = document.createElement("INPUT")
+      var span = document.createElement("SPAN")
+      var img = document.createElement("IMG")
+      label.id = item.di
+      span.innerText = item.driver
+      cb.type = "checkbox"
+      cb.name = item.di
+      img.src = "https://stupid-fast.com/d/" + item.di + ".png"
+      img.alt = ""
+      img.width = "50"
+      label.appendChild(cb)
+      label.appendChild(img)
+      label.appendChild(span)
+      maindiv.appendChild(label)
+
+    })
+    getPicks()
+  });
+
+}
+
+function getPicks() {
+  $.get("https://script.google.com/macros/s/AKfycbzFxazXqTRgfA0z4iMM4ckDKPY3vDewKU556Sl0EphwZ2m6FAtwVELJO776omPrXValZg/exec", {
+    sheet: "Picks"
+  }, function(result, status) {
+    //console.log(result)
+    var data = JSON.parse(result)
+    //console.log(data)
+    //document.write(data)
+    var selectvalue = select.value
+    data.forEach(function(item, index) {
+    var arr = [item.driver1, item.driver2]
+    arr.forEach(function(jtem, jndex) {
+    try {
+    var label1 = document.getElementById(jtem)
+      var span1 = label1.getElementsByTagName("span")[0]
+      var cb1 = label1.getElementsByTagName("input")[0]
+      var mark1 = document.createElement("mark")
+      mark1.innerText = item.player
+      label1.appendChild(mark1)
+      //span1.classList.add("strike")
+      if (item.player !== selectvalue) {
+        cb1.disabled = true
+      }
+      cb1.checked = true
+    } catch(e) {
+    
+    }
+    })
+    
+      
+
+    })
+  });
+
+}
+
+function changePlayer(value) {
+	var url = "https://jsfiddle.net/schweissguth/t27sax3d?player="
+  url = url + value
+	window.open(url);
+}
+
+function refreshPage(value) {
+	var value = select.value
+  setTimeout(function() {
+    changePlayer(value)
+  }, 1000);
+}
+
+
+
+  //]]></script>
+
+  <script>
+    // tell the embed parent frame the height of the content
+    if (window.parent && window.parent.parent){
+      window.parent.parent.postMessage(["resultsFrame", {
+        height: document.body.getBoundingClientRect().height,
+        slug: "t27sax3d"
+      }], "*")
+    }
+
+    // always overwrite window.name, in case users try to set it manually
+    window.name = "result"
+  </script>
+
 
 </body>
 </html>

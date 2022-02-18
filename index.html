@@ -1,277 +1,53 @@
-<!DOCTYPE html>
+
+<!DOCTYPE HTML>
 <html>
-
   <head>
-    <title>Now that's stupid fast!</title>
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-    <link rel="manifest" href="/site.webmanifest">
-    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400&display=swap" rel="stylesheet">
-    <meta name="msapplication-TileColor" content="#da532c">
-    <meta name="theme-color" content="#ffffff">
+    <meta charset="utf-8">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta http-equiv="edit-Type" edit="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>JSFiddle</title>
 
+      <meta name="robots" content="index, follow">
+      <meta name="googlebot" content="index, follow">
 
+      <script type="text/javascript">
+        var height
+        var force_height = null
+        var slug = "vu3scf67"
+        var show_src = "//fiddle.jshell.net/schweissguth/vu3scf67/show/light/"
+        var resize_element_counter = 0
+        var shell_edit_url = "/schweissguth/vu3scf67/light/"
+      </script>
 
-
-
-    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
-
-
-    <style>
-      html,
-      body {
-        margin: auto;
-        text-align: center;
-        width: 100%;
-        max-width: 500px;
-        font-family: "Lato", serif, sans-serif;
-        font-size: 0.975em;
-      }
-
-      #banner {
-        margin-top: 45px;
-      }
-
-      .ind {
-        margin-left: 15px;
-      }
-
-      div a,
-      body>a {
-        display: block;
-      }
-
-      .div {
-        text-align: left;
-        margin-left: auto;
-        margin-right: auto;
-        margin-top: 0px;
-        display: inline-block;
-        max-width: 225px;
-      }
-
-      h3 a {
-        font-weight: normal;
-        color: Sienna;
-      }
-
-
-      footer {
-        margin-top: 20px;
-        font-size: 0.7em;
-      }
-
-
-
-      table {
-        margin-left: auto;
-        margin-right: auto;
-        margin-top: 20px;
-        margin-bottom: 30px;
-        text-align: left;
-        border: 1px solid;
-        border-collapse: collapse;
-        white-space: nowrap;
-        font-family: sans-serif;
-        font-size: 0.85em;
-      }
-
-      td {
-        padding-left: 5px;
-        padding-right: 5px;
-        border: 1px solid;
-        min-width: 50px;
-        height: 25px;
-      }
-
-      img {
-        display: block;
-        margin: auto;
-      }
-
-      div a {
-        display: block;
-        margin-top: 20px;
-        margin-bottom: 20px;
-      }
-
-      details {
-        margin-top: 30px;
-        margin-bottom: 10px;
-      }
-
-      summary {
-        color: blue;
-        text-decoration: underline;
-      }
-
-      tr:nth-child(even) {
-        background-color: #EFD;
-      }
-
-      td:nth-child(4) {
-        font-size: 0.7em;
-      }
-
-      sup {
-        vertical-align: top;
-      }
-
-      #announcement {
-        display: block;
-        margin-left: auto;
-        margin-right: auto;
-        margin-top: 40px;
-        text-align: left;
-        font-style: italic;
-      }
-
-      #announcement2 {
-        display: block;
-        margin-left: auto;
-        margin-right: auto;
-        margin-top: 40px;
-        margin-bottom: 40px;
-        text-align: left;
-        font-style: italic;
-        font-size: 0.82em;
-      }
-
-      #resz {
-        max-width: 300px;
-        width: 100%;
-      }
-
-      form {
-        display: none;
-      }
-
-      #table tr:first-child {
-        display: none;
-      }
-
-    </style>
-
-
+      <script src="/js/embed/embed.js"></script>
+      <link rel="stylesheet" media="screen" href="/css/embed/embed-light.css" />
+      <link rel="icon" href="/img/favicon.png">
   </head>
-
-  <body>
-
-
-
-    <a href="http://stupid-fast.com" id="banner">
-      <img src="https://www.stupid-fast.com/banner.png" />
+  <body id="sylvester-standalone">
+    <a class="toEditor" href="//jsfiddle.net/schweissguth/vu3scf67/" target="_blank">
+      <svg width='34' height='40'>
+      <use xlink:href='//jsfiddle.net/sprite.svg#logo'></use>
+    </svg>Edit in JSFiddle
     </a>
-    <br>
-<center>
-      <img src="https://www.stupid-fast.com/winners2021.jpeg" width="500" />
-      </center>
 
-    <div class="div">
-
-      <div id="announcement2">
+    <div id="result">
+      <div id="click-to-run">
+        <div class="ctrCont">
+          <svg width='70' height='70'>
+      <use xlink:href='//jsfiddle.net/sprite.svg#embed-run'></use>
+    </svg>
+          <section>
+            <strong>Run this fiddle</strong>
+            <span>
+              Run code only from a trusted source.<br>
+              Don't fall for scams (crypto, Bitcoin, ETH, etc).
+            </span>
+          </section>
+        </div>
       </div>
-
-
-
-      <h3><a href="https://www.stupid-fast.com/player">Click HERE to Make Picks!</a></h3>
-      <a id="annc" href="https://www.google.com/search?q=mrn+driver+averages" class="ind">MRN Averages</a>
-      <a href="https://www.racing-reference.info/fantasy.jsp" target="_blank" class="ind">Racing-Reference Fantasy Averages</a>
-
-      <a href="https://www.driveraverages.com/" class="ind">DriverAverages.com</a>
-      <a href="https://www.nascar.com/standings/monster-energy-nascar-cup-series/" class="ind">Official NASCAR Top 10</a>
-      <a href="https://docs.google.com/spreadsheets/d/1O0TjN3lFCFmuVFmLja_BEfjohMiBJmku_f71ElVffOM/htmlembed?single=true&gid=319949568&range=a1:b36&widget=false&chrome=false" class="ind">Schedule</a>
-      <a href="https://docs.google.com/spreadsheets/d/1O0TjN3lFCFmuVFmLja_BEfjohMiBJmku_f71ElVffOM/htmlembed?single=true&gid=1463692304&range=a1:ff66&widget=false&chrome=false" class="ind">Rules</a>
-      <a href="https://docs.google.com/spreadsheets/d/1O0TjN3lFCFmuVFmLja_BEfjohMiBJmku_f71ElVffOM/htmlembed?single=true&gid=597671230&range=a1:ff66&widget=false&chrome=false" target="_blank" class="ind">Player info</a>
-      <h3><a href="https://www.stupid-fast.com/races.html">View points by race</a></h3>
-      <h3><a href="https://www.stupid-fast.com/standings">View standings</a></h3>
-      <!-- <h3><a href="./chase.html">Chase standings</a></h3> -->
-
     </div>
 
-
-    <table id="table">
-      <tr>
-
-      </tr>
-      <tr>
-        <td>LOADING...</td>
-      </tr>
-    </table>
-
-
-    <a href="https://docs.google.com/spreadsheets/d/1a7qPZf1j_ySwD2rra2t6eIub6t78r0eZYO-ZcJ9y_d8/edit?usp=sharing">2020 Stupid Fast Database</a>
-
-    <a href="https://docs.google.com/spreadsheets/d/1az3BVfSb1OMr6f8HXC_tUiXx1AZ5WZwqvCVK7J7eSzc/edit?usp=sharing">2019 Stupid Fast Database</a>
-
-    <a href="https://docs.google.com/spreadsheets/d/15wQwmD8pa9U3E8CbB4vQIcvFbFx1eSXVlmIE9Rvlm7g/edit#gid=371696352">2018 Stupid Fast Database</a>
-    <a href="https://docs.google.com/spreadsheets/d/1SFVIas6kaneRhranvFD-TqVsgEXJoSxiBmpmx1VRSBs/edit#gid=1656042318">2017 Stupid Fast Database</a>
-
-    <form action="https://script.google.com/macros/s/AKfycbyFoZqy278YZ-B_zdqGEE7RJ7uQ4m8nvv9PoOnOh-reCbELTJgmHlQm5ZTFGhB_rPqY/exec" id="nextupform" target="iframe">
-      <iframe src="" name="iframe" frameborder="0"></iframe>
-      <input type="text" name="name">
-      <input type="text" name="message">
-    </form>
-
-    <footer>
-      <a href="https://www.stupid-fast.com/calc" target="_blank">Calc</a> -
-      <a href="https://github.com/nms553/nms553.github.io/edit/master/index.html" target="_blank">ghadmin</a> -
-      <a href="https://docs.google.com/spreadsheets/d/1O0TjN3lFCFmuVFmLja_BEfjohMiBJmku_f71ElVffOM/edit#gid=1329429225" target="_blank">GSheet</a>
-    </footer>
-
-
-    <script type="text/javascript">
-      var x = document.getElementById("table");
-      var z = document.getElementById("announcement");
-      var mrn = document.getElementById("annc")
-
-      $(document).ready(function() {
-
-// Main table data import
-        $.get("https://script.google.com/macros/s/AKfycbxPuLx5GMs85jW5-k3tHBi6r18aJLQ6QDZBP2NIceo6p2iQCepojzhuGOKzahUoROWZ/exec", function(data, status) {
-          //console.log(data)
-          data = JSON.parse(data)
-          x.innerHTML = ""
-          data.forEach(function(item, index) {
-            var tr = x.insertRow()
-            var td1 = tr.insertCell()
-            var td2 = tr.insertCell()
-            var td3 = tr.insertCell()
-            var td4 = tr.insertCell()
-            var a1 = document.createElement("A")
-            a1.href = "javascript:"
-            a1.innerHTML = item[0]
-            var span = document.createElement("SPAN")
-            span.innerHTML = '  <sup>(' + item[1] + ')</sup>'
-            td1.innerText = item[0]
-            td1.appendChild(span)
-            td2.innerText = item[2]
-            td3.innerText = item[3]
-            td4.innerHTML = item[4]
-          })
-        });
-/*
-// MRN and Annoucements
-        $.get("https://script.google.com/macros/s/AKfycbwYua1Zw2NhUJfRi-MKfb9WnYzDF53lClFBkIfNmbys7jnWGM601BX1gLocq9oXODDU/exec", function(data, status) {
-          data = JSON.parse(data)
-          mrn.href = "https://www.google.com/search?q=mrn+driver+averages+" + data[0][1]
-          mrn.innerText = "MRN.com/" + data[0][1]
-
-          z.innerHTML = data[1][1]
-        });
-
-*/
-      });
-
-    </script>
-
-
-
+    
   </body>
-
 </html>

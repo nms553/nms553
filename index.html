@@ -1,53 +1,198 @@
 
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-    <meta http-equiv="edit-Type" edit="text/html; charset=utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>JSFiddle</title>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <title></title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="googlebot" content="noindex, nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-      <meta name="robots" content="index, follow">
-      <meta name="googlebot" content="index, follow">
 
-      <script type="text/javascript">
-        var height
-        var force_height = null
-        var slug = "vu3scf67"
-        var show_src = "//fiddle.jshell.net/schweissguth/vu3scf67/show/light/"
-        var resize_element_counter = 0
-        var shell_edit_url = "/schweissguth/vu3scf67/light/"
-      </script>
-
-      <script src="/js/embed/embed.js"></script>
-      <link rel="stylesheet" media="screen" href="/css/embed/embed-light.css" />
-      <link rel="icon" href="/img/favicon.png">
-  </head>
-  <body id="sylvester-standalone">
-    <a class="toEditor" href="//jsfiddle.net/schweissguth/vu3scf67/" target="_blank">
-      <svg width='34' height='40'>
-      <use xlink:href='//jsfiddle.net/sprite.svg#logo'></use>
-    </svg>Edit in JSFiddle
-    </a>
-
-    <div id="result">
-      <div id="click-to-run">
-        <div class="ctrCont">
-          <svg width='70' height='70'>
-      <use xlink:href='//jsfiddle.net/sprite.svg#embed-run'></use>
-    </svg>
-          <section>
-            <strong>Run this fiddle</strong>
-            <span>
-              Run code only from a trusted source.<br>
-              Don't fall for scams (crypto, Bitcoin, ETH, etc).
-            </span>
-          </section>
-        </div>
-      </div>
-    </div>
-
+  <script
+    type="text/javascript"
+    src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"
     
+  ></script>
+
+    <link rel="stylesheet" type="text/css" href="/css/result-light.css">
+
+
+  <style id="compiled-css" type="text/css">
+      
+body {
+  margin: 20px auto 20px auto;
+  text-align: center;
+  //background-color: #222;
+  width: 100%;
+  font-size: 1em;
+  font-family: 'Lato', sans-serif;
+}
+
+
+
+table {
+  margin: auto;
+  border: 1px solid;
+}
+
+td {
+  border: 1px solid;
+}
+
+a {
+  display: block;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+    /* EOS */
+  </style>
+
+  <script id="insert"></script>
+
+
+</head>
+<body>
+    <!DOCTYPE html>
+<html>
+
+  <head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400&display=swap" rel="stylesheet">
+    <script src=""></script>
+
+  </head>
+
+  <body>
+
+    <a href="https://www.stupid-fast.com/"><img src="https://www.stupid-fast.com/banner.png" id="banner" width="300"></a>
+
+
+    <div class="div">
+
+      <div id="announcement2">
+      </div>
+
+
+
+      <h3><a href="https://www.stupid-fast.com/player">Click HERE to Make Picks!</a></h3>
+      <a id="annc" href="https://www.google.com/search?q=mrn+driver+averages" class="ind">MRN Averages</a>
+      <a href="https://www.racing-reference.info/fantasy.jsp" target="_blank" class="ind">Racing-Reference Fantasy Averages</a>
+
+      <a href="https://www.driveraverages.com/" class="ind">DriverAverages.com</a>
+      <a href="https://www.nascar.com/standings/monster-energy-nascar-cup-series/" class="ind">Official NASCAR Top 10</a>
+      <a href="https://docs.google.com/spreadsheets/d/1O0TjN3lFCFmuVFmLja_BEfjohMiBJmku_f71ElVffOM/htmlembed?single=true&gid=319949568&range=a1:b36&widget=false&chrome=false" class="ind">Schedule</a>
+      <a href="https://docs.google.com/spreadsheets/d/1O0TjN3lFCFmuVFmLja_BEfjohMiBJmku_f71ElVffOM/htmlembed?single=true&gid=1463692304&range=a1:ff66&widget=false&chrome=false" class="ind">Rules</a>
+      <a href="https://docs.google.com/spreadsheets/d/1O0TjN3lFCFmuVFmLja_BEfjohMiBJmku_f71ElVffOM/htmlembed?single=true&gid=597671230&range=a1:ff66&widget=false&chrome=false" target="_blank" class="ind">Player info</a>
+      <h3><a href="https://www.stupid-fast.com/races.html">View points by race</a></h3>
+      <h3><a href="https://www.stupid-fast.com/standings">View standings</a></h3>
+      <!-- <h3><a href="./chase.html">Chase standings</a></h3> -->
+
+    </div>
+    
+    <table>
+      <thead>
+        
+      </thead>
+      <tbody id="tbody">
+        
+      </tbody>
+    </table>
+
+
+
   </body>
+
+</html>
+
+
+    <script type="text/javascript">//<![CDATA[
+
+
+$(document).ready(getPickOrder)
+
+function getPickOrder() {
+  $.get("https://script.google.com/macros/s/AKfycbzFxazXqTRgfA0z4iMM4ckDKPY3vDewKU556Sl0EphwZ2m6FAtwVELJO776omPrXValZg/exec", {
+    sheet: "Pick order"
+  }, function(result, status) {
+    //console.log(result)
+    var data = JSON.parse(result)
+    //console.log(data)
+
+    data.forEach(function(item, index) {
+      var tr = tbody.insertRow()
+      tr.id = item.player
+      var td1 = tr.insertCell()
+      var td2 = tr.insertCell()
+      var td3 = tr.insertCell()
+      var td4 = tr.insertCell()
+      td1.innerText = item.player
+    })
+    getPicks()
+  });
+  //return playerlist
+}
+
+function getDrivers() {
+$.get("https://script.google.com/macros/s/AKfycbzFxazXqTRgfA0z4iMM4ckDKPY3vDewKU556Sl0EphwZ2m6FAtwVELJO776omPrXValZg/exec", {
+    sheet: "Drivers"
+  }, function(result, status) {
+    //console.log(result)
+    var data = JSON.parse(result)
+    //console.log(data)
+    data.forEach(function(item, index) {
+    try {
+    var td = document.getElementById(item.di)
+      td.innerText = item.driver
+    } catch(e) {
+    
+    }
+    	
+    })
+    //console.log(data)
+  });
+}
+
+function getPicks() {
+	$.get("https://script.google.com/macros/s/AKfycbzFxazXqTRgfA0z4iMM4ckDKPY3vDewKU556Sl0EphwZ2m6FAtwVELJO776omPrXValZg/exec", {
+    sheet: "Picks"
+  }, function(result, status) {
+    //console.log(result)
+    var data = JSON.parse(result)
+    console.log(data)
+
+    data.forEach(function(item, index) {
+      var tr = document.getElementById(item.player)
+      var td1 = tr.getElementsByTagName("TD")[1]
+      var td2 = tr.getElementsByTagName("TD")[2]
+      var td3 = tr.getElementsByTagName("TD")[3]
+      td1.id = item.driver1
+      td2.id = item.driver2
+      td3.innerText = item.trashtalk
+    })
+    getDrivers()
+  })
+  
+}
+
+
+  //]]></script>
+
+  <script>
+    // tell the embed parent frame the height of the content
+    if (window.parent && window.parent.parent){
+      window.parent.parent.postMessage(["resultsFrame", {
+        height: document.body.getBoundingClientRect().height,
+        slug: "vu3scf67"
+      }], "*")
+    }
+
+    // always overwrite window.name, in case users try to set it manually
+    window.name = "result"
+  </script>
+
+
+</body>
 </html>

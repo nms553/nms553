@@ -23,7 +23,7 @@
       * {
   //outline: 1px solid white;
   font-family: 'Lato', sans-serif;
-  color: white;
+  //color: white;
 }
 
 div, center, h1, footer, p, button, input[type=submit], input[type=text] {
@@ -34,20 +34,20 @@ div, center, h1, footer, p, button, input[type=submit], input[type=text] {
 body {
   margin: 20px auto 20px auto;
   text-align: center;
-  background-color: #222;
+  //background-color: #222;
   width: 100%;
   max-width: 300px;
   font-size: 1em;
 }
 
 select {
-  background-color: #222;
+  //background-color: #222;
 }
 
 label {
   display: block;
   padding: 0px 0px 5px 0px;
-  background-color: #444;
+  //background-color: #444;
   vertical-align: middle;
   width: 100%;
   margin: 10px 0px 10px 0px;
@@ -60,6 +60,9 @@ label span {
   margin-top: auto;
   margin-bottom: auto;
   width: 150px;
+  text-decoration: underline;
+  color: blue;
+  cursor: pointer;
 }
 
 img {
@@ -75,7 +78,7 @@ img {
 
 .strike {
   text-decoration: line-through;
-  color: #555;
+  //color: #555;
 }
 
 input[type=checkbox] {
@@ -85,14 +88,14 @@ input[type=checkbox] {
 }
 
 input[type=submit], input[type=text] {
-  color: black;
+  //color: black;
 }
 
 mark {
   margin-left: 5px;
   padding: 2px 2px 2px 2px;
   font-size: 0.7em;
-  color: black;
+  //color: black;
   vertical-align: middle;
   //float: right;
   opacity: 75%;
@@ -103,7 +106,12 @@ mark {
 }
 
 label:nth-child(12) {
-  margin-bottom: 100px;
+  padding-bottom: 50px;
+  border-bottom: 1px solid;
+}
+
+label:nth-child(13) {
+  margin-top: 50px;
 }
     /* EOS */
   </style>
@@ -296,7 +304,7 @@ function refreshPage(value) {
     if (window.parent && window.parent.parent){
       window.parent.parent.postMessage(["resultsFrame", {
         height: document.body.getBoundingClientRect().height,
-        slug: "t27sax3d"
+        slug: "u9v0p6bc"
       }], "*")
     }
 

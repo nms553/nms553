@@ -139,7 +139,7 @@ label:nth-child(13) {
     <a href="https://www.stupid-fast.com/"><img src="https://www.stupid-fast.com/banner.png" id="banner" width="300"></a>
 
 
-    <form method="post" action="https://script.google.com/macros/s/AKfycbzFxazXqTRgfA0z4iMM4ckDKPY3vDewKU556Sl0EphwZ2m6FAtwVELJO776omPrXValZg/exec" target="iframe" onsubmit="refreshPage()">
+    <form method="post" action="https://script.google.com/macros/s/AKfycbwXYbBKugPmShETIoIuwKNOlKDQZ8Sw0ErMG-ZcqD61Q-VrMhzteTr880zWF4R7NBMV5w/exec" target="iframe" onsubmit="refreshPage()">
       <center>Current player:&nbsp;
         <select name="player" id="select" onchange="changePlayer(this.value)">
         </select>
@@ -178,64 +178,41 @@ var playerspan = document.getElementById("playerspan")
 $(document).ready(getPlayers)
 
 function getPlayers() {
-  $.get("https://script.google.com/macros/s/AKfycbzFxazXqTRgfA0z4iMM4ckDKPY3vDewKU556Sl0EphwZ2m6FAtwVELJO776omPrXValZg/exec", {
-    sheet: "Players"
-  }, function(result, status) {
-    //console.log(result)
+  $.get("https://script.google.com/macros/s/AKfycbwXYbBKugPmShETIoIuwKNOlKDQZ8Sw0ErMG-ZcqD61Q-VrMhzteTr880zWF4R7NBMV5w/exec", function(result, status) {
     var data = JSON.parse(result)
     console.log(data)
 
-    data.forEach(function(item, index) {
+    data.pickorder.forEach(function(item, index) {
       var opt = document.createElement("OPTION")
       opt.id = item.player
       opt.innerText = item.player
       select.add(opt)
-      //console.log(item.player)
     })
-    //console.log(playerlist)
     getURL()
-  });
-  //return playerlist
-}
-
-function getURL() {
-  //console.log("getURL")
+    
+    function getURL() {
   var url = window.location.search
   console.log(url)
   var param = new URLSearchParams(url);
   var player = param.get("player")
-  //console.log(player)
   if (!player) {
     player = "Nick"
   }
-
   document.getElementById(player).selected = true
-
   getDrivers()
 }
 
-
-
 function getDrivers() {
-  console.log("getDrivers")
-  $.get("https://script.google.com/macros/s/AKfycbzFxazXqTRgfA0z4iMM4ckDKPY3vDewKU556Sl0EphwZ2m6FAtwVELJO776omPrXValZg/exec", {
-    sheet: "Drivers"
-  }, function(result, status) {
-    //console.log(result)
-    var data = JSON.parse(result)
-    //console.log(data)
-    //document.write(data)
-
-    data.forEach(function(item, index) {
+    data.driverstart.forEach(function(item, index) {
       var label = document.createElement("LABEL")
       var cb = document.createElement("INPUT")
       var span = document.createElement("SPAN")
       var img = document.createElement("IMG")
-      label.id = item.di
-      span.innerText = item.driver
+      label.id = item.driverid
+      span.innerText = item.name
       cb.type = "checkbox"
-      cb.name = item.di
-      img.src = "https://stupid-fast.com/d/" + item.di + ".png"
+      cb.name = item.driverid
+      img.src = "https://stupid-fast.com/d/" + "d" + item.number + ".png"
       img.alt = ""
       img.width = "50"
       label.appendChild(cb)
@@ -245,20 +222,11 @@ function getDrivers() {
 
     })
     getPicks()
-  });
-
 }
 
 function getPicks() {
-  $.get("https://script.google.com/macros/s/AKfycbzFxazXqTRgfA0z4iMM4ckDKPY3vDewKU556Sl0EphwZ2m6FAtwVELJO776omPrXValZg/exec", {
-    sheet: "Picks"
-  }, function(result, status) {
-    //console.log(result)
-    var data = JSON.parse(result)
-    //console.log(data)
-    //document.write(data)
     var selectvalue = select.value
-    data.forEach(function(item, index) {
+    data.picks.forEach(function(item, index) {
     var arr = [item.driver1, item.driver2]
     arr.forEach(function(jtem, jndex) {
     try {
@@ -268,7 +236,6 @@ function getPicks() {
       var mark1 = document.createElement("mark")
       mark1.innerText = item.player
       label1.appendChild(mark1)
-      //span1.classList.add("strike")
       if (item.player !== selectvalue) {
         cb1.disabled = true
       }
@@ -277,13 +244,27 @@ function getPicks() {
     
     }
     })
-    
-      
-
     })
-  });
-
 }
+
+
+
+
+
+
+
+
+  });
+  //return playerlist
+}
+
+
+
+
+
+
+
+
 
 function changePlayer(value) {
 	var url = "https://www.stupid-fast.com/picks?player="

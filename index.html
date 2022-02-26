@@ -30,8 +30,9 @@ body {
   font-family: 'Lato', sans-serif;
 }
 
-h3 a {
+.h3 {
   color: DarkGoldenRod;
+  font-size: 1.15em;
 }
 
 
@@ -60,6 +61,10 @@ a {
   margin-top: 10px;
   margin-bottom: 10px;
 }
+
+#links {
+  margin: 20px auto 25px auto;
+}
     /* EOS */
   </style>
 
@@ -86,30 +91,16 @@ a {
 
     <div class="div">
 
-      <div id="announcement2">
+      <div id="links">
+      
       </div>
 
-
-
-      <h3><a href="https://www.stupid-fast.com/player">Click HERE to Make Picks!</a></h3>
-      <a id="annc" href="https://www.google.com/search?q=mrn+driver+averages" class="ind">MRN Averages</a>
-      <a href="https://www.racing-reference.info/fantasy.jsp" target="_blank" class="ind">Racing-Reference Fantasy Averages</a>
-
-      <a href="https://www.driveraverages.com/" class="ind">DriverAverages.com</a>
-      <a href="https://www.nascar.com/standings/monster-energy-nascar-cup-series/" class="ind">Official NASCAR Top 10</a>
-      <a href="https://docs.google.com/spreadsheets/d/1O0TjN3lFCFmuVFmLja_BEfjohMiBJmku_f71ElVffOM/htmlembed?single=true&gid=319949568&range=a1:b36&widget=false&chrome=false" class="ind">Schedule</a>
-      <a href="https://docs.google.com/spreadsheets/d/1O0TjN3lFCFmuVFmLja_BEfjohMiBJmku_f71ElVffOM/htmlembed?single=true&gid=1463692304&range=a1:ff66&widget=false&chrome=false" class="ind">Rules</a>
-      <a href="https://docs.google.com/spreadsheets/d/1O0TjN3lFCFmuVFmLja_BEfjohMiBJmku_f71ElVffOM/htmlembed?single=true&gid=597671230&range=a1:ff66&widget=false&chrome=false" target="_blank" class="ind">Player info</a>
-      <!--h3><a href="https://www.stupid-fast.com/races.html">View points by race</a></h3>
-      <h3><a href="https://www.stupid-fast.com/standings">View standings</a></h3-->
       <!-- <h3><a href="./chase.html">Chase standings</a></h3> -->
 
     </div>
     
     <table>
-      <thead>
-        
-      </thead>
+
       <tbody id="tbody">
         
       </tbody>
@@ -125,71 +116,42 @@ a {
     <script type="text/javascript">//<![CDATA[
 
 
+var links = document.getElementById("links")
+
 $(document).ready(getPickOrder)
 
 function getPickOrder() {
-  $.get("https://script.google.com/macros/s/AKfycbzFxazXqTRgfA0z4iMM4ckDKPY3vDewKU556Sl0EphwZ2m6FAtwVELJO776omPrXValZg/exec", {
-    sheet: "Pick order2"
-  }, function(result, status) {
-    //console.log(result)
-    var data = JSON.parse(result)
-    //console.log(data)
-
-    data.forEach(function(item, index) {
-      var tr = tbody.insertRow()
-      tr.id = item.player
-      var td1 = tr.insertCell()
-      var td2 = tr.insertCell()
-      var td3 = tr.insertCell()
-      var td4 = tr.insertCell()
-      td1.innerText = item.player
-    })
-    getPicks()
-  });
-  //return playerlist
-}
-
-function getDrivers() {
-$.get("https://script.google.com/macros/s/AKfycbzFxazXqTRgfA0z4iMM4ckDKPY3vDewKU556Sl0EphwZ2m6FAtwVELJO776omPrXValZg/exec", {
-    sheet: "Drivers"
-  }, function(result, status) {
-    //console.log(result)
-    var data = JSON.parse(result)
-    //console.log(data)
-    data.forEach(function(item, index) {
-    try {
-    var td = document.getElementById(item.di)
-      td.innerText = item.driver
-    } catch(e) {
-    
-    }
-    	
-    })
-    //console.log(data)
-  });
-}
-
-function getPicks() {
-	$.get("https://script.google.com/macros/s/AKfycbzFxazXqTRgfA0z4iMM4ckDKPY3vDewKU556Sl0EphwZ2m6FAtwVELJO776omPrXValZg/exec", {
-    sheet: "Picks"
+  $.get("https://script.google.com/macros/s/AKfycbwXYbBKugPmShETIoIuwKNOlKDQZ8Sw0ErMG-ZcqD61Q-VrMhzteTr880zWF4R7NBMV5w/exec", {
+    sheet: "Pick order"
   }, function(result, status) {
     //console.log(result)
     var data = JSON.parse(result)
     console.log(data)
 
-    data.forEach(function(item, index) {
-      var tr = document.getElementById(item.player)
-      var td1 = tr.getElementsByTagName("TD")[1]
-      var td2 = tr.getElementsByTagName("TD")[2]
-      var td3 = tr.getElementsByTagName("TD")[3]
-      td1.id = item.driver1
-      td2.id = item.driver2
-      td3.innerText = item.trashtalk
+    data.summary.forEach(function(item, index) {
+      var tr = tbody.insertRow()
+      tr.id = item.Player
+      tr.insertCell().innerText = item.Player
+      tr.insertCell().innerText = item.Points
+      tr.insertCell().innerText = item.Driver1
+      tr.insertCell().innerText = item.Driver2
+      tr.insertCell().innerText = item.Trashtalk
     })
-    getDrivers()
-  })
-  
+    
+    data.links.forEach(function(item, index) {
+    	var a = document.createElement("A")
+      a.href = item.href
+      a.innerText = item.a
+      a.classList.add(item.class)
+      a.target = item.target
+      a.style.display = item.display
+      links.appendChild(a)
+    })
+
+  });
+  //return playerlist
 }
+
 
 
   //]]></script>

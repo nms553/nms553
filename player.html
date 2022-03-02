@@ -126,22 +126,34 @@ a {
 <html>
 
   <head>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400&display=swap" rel="stylesheet">
     <script src=""></script>
 
   </head>
 
   <body>
-  
-  <a href="https://www.stupid-fast.com/"><img src="https://www.stupid-fast.com/banner.png" id="banner" width="300"></a>
-Click on your name:
-  <br>
 
-      <center id="center">
+    <a href="https://www.stupid-fast.com/"><img src="https://www.stupid-fast.com/banner.png" id="banner" width="300"></a>
+    Click on your name:
+    <br>
 
-      </center>
+    <center id="center">
+
+      <a href="https://www.stupid-fast.com/picks?player=ChrisC">ChrisC</a>
+      <a href="https://www.stupid-fast.com/picks?player=Mike">Mike</a>
+      <a href="https://www.stupid-fast.com/picks?player=Dave">Dave</a>
+      <a href="https://www.stupid-fast.com/picks?player=Hannah">Hannah</a>
+      <a href="https://www.stupid-fast.com/picks?player=Poepsel">Poepsel</a>
+      <a href="https://www.stupid-fast.com/picks?player=ChrisL">ChrisL</a>
+      <a href="https://www.stupid-fast.com/picks?player=Schriewer">Schriewer</a>
+      <a href="https://www.stupid-fast.com/picks?player=Katie">Katie</a>
+      <a href="https://www.stupid-fast.com/picks?player=Scot">Scot</a>
+      <a href="https://www.stupid-fast.com/picks?player=Nick">Nick</a>
+      <a href="https://www.stupid-fast.com/picks?player=Faith">Faith</a>
+      <a href="https://www.stupid-fast.com/picks?player=Curt">Curt</a>
+    </center>
 
 
 
@@ -156,22 +168,6 @@ Click on your name:
     <script type="text/javascript">//<![CDATA[
 
 
-$(document).ready(getPlayers)
-
-function getPlayers() {
-  $.get("https://script.google.com/macros/s/AKfycbwXYbBKugPmShETIoIuwKNOlKDQZ8Sw0ErMG-ZcqD61Q-VrMhzteTr880zWF4R7NBMV5w/exec", function(result, status) {
-    var data = JSON.parse(result)
-    console.log(data)
-
-    data.pickorder.forEach(function(item, index) {
-      var a = document.createElement("A")
-      a.href = "https://www.stupid-fast.com/picks?player=" + item.player
-      a.innerText = item.player
-      center.appendChild(a)
-    })
-
-  });
-}
 
 
 

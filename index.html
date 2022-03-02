@@ -20,8 +20,7 @@
 
 
   <style id="compiled-css" type="text/css">
-      
-body {
+      body {
   margin: 20px auto 20px auto;
   text-align: center;
   //background-color: #222;
@@ -37,18 +36,20 @@ body {
 
 
 table {
-  margin: auto;
+  margin: 0px auto 0px auto;
   border: 0px solid;
   border-collapse: collapse;
+  max-width: 500px;
   font-size: 0.85em;
+
 }
+
 
 tr:nth-child(even) {
   background: #D5F7D5;
 }
 
-tr:nth-child(odd) {
-}
+tr:nth-child(odd) {}
 
 td {
   border: 0px solid;
@@ -65,6 +66,7 @@ a {
 #links {
   margin: 20px auto 25px auto;
 }
+
     /* EOS */
   </style>
 
@@ -92,17 +94,19 @@ a {
     <div class="div">
 
       <div id="links">
-      
+
       </div>
 
       <!-- <h3><a href="./chase.html">Chase standings</a></h3> -->
 
     </div>
-    
+
+    <select id="select"></select>
+
     <table>
 
       <tbody id="tbody">
-        
+
       </tbody>
     </table>
 
@@ -117,39 +121,78 @@ a {
 
 
 var links = document.getElementById("links")
+var select = document.getElementById("select")
+var data = []
 
-$(document).ready(getPickOrder)
+$(document).ready(function() {
 
-function getPickOrder() {
-  $.get("https://script.google.com/macros/s/AKfycbwXYbBKugPmShETIoIuwKNOlKDQZ8Sw0ErMG-ZcqD61Q-VrMhzteTr880zWF4R7NBMV5w/exec", {
-    sheet: "Pick order"
-  }, function(result, status) {
-    //console.log(result)
-    var data = JSON.parse(result)
-    console.log(data)
-
-    data.summary.forEach(function(item, index) {
-      var tr = tbody.insertRow()
-      tr.id = item.Player
-      tr.insertCell().innerText = item.Player
-      tr.insertCell().innerText = item.Points
-      tr.insertCell().innerText = item.Driver1
-      tr.insertCell().innerText = item.Driver2
-      tr.insertCell().innerText = item.Trashtalk
-    })
-    
-    data.links.forEach(function(item, index) {
-    	var a = document.createElement("A")
-      a.href = item.href
-      a.innerText = item.a
-      a.classList.add(item.class)
-      a.target = item.target
-      a.style.display = item.display
+  $.get("https://script.google.com/macros/s/AKfycbzGvt4ZYQ_N_qKsn5ULfGuanIJLVh6fvLTRM6wE0hsX3a2aWRwP7wuTLXpFQUq_lGDUhw/exec", function(result) {
+    result = JSON.parse(result)
+    result.forEach(function(item, index) {
+      var a = document.createElement("A")
+      a.href = item[1]
+      a.innerText = item[0]
+      a.classList.add(item[4])
+      a.target = item[2]
+      a.style.display = item[3]
       links.appendChild(a)
     })
+  })
+
+  $.get("https://script.google.com/macros/s/AKfycbwCY0Y3ltu7lo3UYaSyb4QuqQxZF_fiS4-6bYJbl0BBL904FxYUiPeMoY3DElI71Naw/exec", function(result, status) {
+    //console.log(result)
+    data = JSON.parse(result)
+    //console.log(data)
+
+    var unique = []
+    data.filter(function(value, index, self) {
+      if (unique.indexOf(value[0]) < 0) {
+        var opt = document.createElement("OPTION")
+        opt.innerText = value[0]
+        opt.value = value[0].replace(/ /g, "")
+        select.add(opt)
+        select.onchange = function() {
+          showTable()
+        }
+        opt.selected = true
+        unique.push(value[0])
+      }
+    })
+    //console.log(unique)
+
+    console.log(select.value)
+    var filtered = data.filter(function(item, index) {
+      return item[0].replace(/ /g, "") == select.value
+    })
+
+    console.log(filtered)
+
+    data.forEach(function(item, index) {
+      var tr = tbody.insertRow()
+      tr.classList.add(item[0].replace(/ /g, ""))
+      tr.insertCell().innerHTML = item[2] + " <sup>(" + item[1] + ")</sup>"
+      //tr.insertCell().innerText = item[1]
+      tr.insertCell().innerText = item[3]
+      tr.insertCell().innerText = item[4]
+      tr.insertCell().innerText = item[12]
+    })
+
+
+    showTable()
+
 
   });
   //return playerlist
+
+
+})
+
+function showTable() {
+  console.log(select.value)
+  $("tr").hide()
+  console.log("select value:" + select.value)
+  var trshow = document.getElementsByClassName(select.value)
+  $(trshow).show()
 }
 
 

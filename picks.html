@@ -40,6 +40,19 @@ body {
   font-size: 1em;
 }
 
+table {
+  border-collapse: collapse;
+}
+
+tr:nth-child(13) td {
+  padding-bottom: 25px;
+  border-bottom: 1px solid;
+}
+
+tr:nth-child(14) td {
+  padding-top: 25px;
+}
+
 select {
   //background-color: #222;
 }
@@ -137,19 +150,21 @@ label:nth-child(14) {
   <body>
 
     <a href="https://www.stupid-fast.com/"><img src="https://www.stupid-fast.com/banner.png" id="banner" width="300"></a>
+<center>
+      
+      <table>
+        <tbody id="tbody">
+        </tbody>
+      </table>
+        
+      
 
+    <form method="post" action="https://script.google.com/macros/s/AKfycbypsLtjVRCBtbKCH5Sh4cS6AtqYHjO9JjlRJeB9p0tLMgFB7L881_SVR8hNsndyX_JP/exec" target="iframe" onsubmit="refreshPage()">
+      
 
-    <form method="post" action="https://script.google.com/macros/s/AKfycbwXYbBKugPmShETIoIuwKNOlKDQZ8Sw0ErMG-ZcqD61Q-VrMhzteTr880zWF4R7NBMV5w/exec" target="iframe" onsubmit="refreshPage()">
-      <center>Current player:&nbsp;
-        <select name="player" id="select" onchange="changePlayer(this.value)">
-        </select>
-
-      </center>
-      <div id="maindiv">
-
-      </div>
       <br>
-      <input type="text" name="trashtalk" style="width: 90%;" placeholder="trashtalk">
+      <input type="text" name="trashtalk" style="width: 90%;" placeholder="trashtalk or other driver">
+      <input type="text" name="player" value="">
       <br>
       <input type="submit">
     </form>
@@ -158,7 +173,7 @@ label:nth-child(14) {
 
     </iframe>
 
-
+</center>
 
 
   </body>
@@ -171,80 +186,123 @@ label:nth-child(14) {
 
 var playerlist = [""]
 var tbody = document.getElementById("tbody")
-var select = document.getElementById("select")
-var playerspan = document.getElementById("playerspan")
+var players = [
+"",
+"ChrisC",
+"Mike",
+"Dave",
+"Hannah",
+"Poepsel",
+"ChrisL",
+"Schriewer",
+"Katie",
+"Scot",
+"Nick",
+"Faith",
+"Curt"
+]
 
 
-$(document).ready(getPlayers)
+$(document).ready(function() {
 
-function getPlayers() {
-  $.get("https://script.google.com/macros/s/AKfycbwXYbBKugPmShETIoIuwKNOlKDQZ8Sw0ErMG-ZcqD61Q-VrMhzteTr880zWF4R7NBMV5w/exec", function(result, status) {
-    var data = JSON.parse(result)
-    console.log(data)
 
-    data.pickorder.forEach(function(item, index) {
-      var opt = document.createElement("OPTION")
-      opt.id = item.player
-      opt.innerText = item.player
-      select.add(opt)
-    })
-    getURL()
+
+  $.get("https://script.google.com/macros/s/AKfycbw7AdLhX_Eu8djjg4F36qhuabEso5mHdjXbwz8CVjzkgwMSZB0Dh3-qcPnNedQ96XwqIA/exec", function(result) {
+    result = JSON.parse(result)
+    //console.log(result)
+
+
+    result.forEach(function(item, index) {
+    var tr = tbody.insertRow()
+    	var td1 = tr.insertCell()
+      tr.insertCell().innerText = item[0]
+      
+      var img = document.createElement("IMG")
+      img.src = "https://stupid-fast.com/d/" + "d" + item[1] + ".png"
+      img.alt = ""
+      img.width = "60"
+      td1.appendChild(img)
+      var td2 = tr.insertCell()
+      var select = document.createElement("SELECT")
+      players.forEach(function(jtem, jndex) {
+      	var opt = document.createElement("OPTION")
+        opt.innerText = jtem
+      	select.add(opt)
+        select.id = item[0].replace(/\ /g,"").replace(/\./g,"")
+        select.name = item[0]
+        select.onchange = function() {submitPicks(this.value, this.name)}
+      })
+      td2.appendChild(select)
     
-    function getURL() {
-  var url = window.location.search
-  console.log(url)
-  var param = new URLSearchParams(url);
-  var player = param.get("player")
-  if (!player) {
-    player = "Nick"
-  }
-  document.getElementById(player).selected = true
-  getDrivers()
+    })
+    
+    $.get("https://script.google.com/macros/s/AKfycbwCY0Y3ltu7lo3UYaSyb4QuqQxZF_fiS4-6bYJbl0BBL904FxYUiPeMoY3DElI71Naw/exec", function(values) {
+    values = JSON.parse(values)
+    //console.log(values)
+    var track = values[values.length - 1][0]
+    //console.log(track)
+    
+    var filtered = values.filter(function(item, index) {
+    return item[0] == track
+    })
+    
+    filtered.forEach(function(item, index) {
+    	var driver1 = item[3].replace(/\ /g,"").replace(/\./g,"")
+      var driver2 = item[4].replace(/\ /g,"").replace(/\./g,"")
+      try {
+document.getElementById(driver1).value = item[2]
+      } catch(e) {
+      
+      } try {
+document.getElementById(driver2).value = item[2]
+      } catch(e) {
+      
+      }
+    })
+    
+    
+    })
+    
+    
+  })
+
+
+
+
+
+
+
+
+
+
+})
+
+
+
+function submitPicks(value, name) {
+document.getElementsByName("player")[0].value = value
+  $.post("https://script.google.com/macros/s/AKfycbwXYbBKugPmShETIoIuwKNOlKDQZ8Sw0ErMG-ZcqD61Q-VrMhzteTr880zWF4R7NBMV5w/exec", {player: value, driver: name}, function(result){
+  
+  });
+
 }
 
-function getDrivers() {
-    data.driverstart.forEach(function(item, index) {
-      var label = document.createElement("LABEL")
-      var cb = document.createElement("INPUT")
-      var span = document.createElement("SPAN")
-      var img = document.createElement("IMG")
-      label.id = item.driverid
-      span.innerText = item.name
-      cb.type = "checkbox"
-      cb.name = item.driverid
-      img.src = "https://stupid-fast.com/d/" + "d" + item.number + ".png"
-      img.alt = ""
-      img.width = "50"
-      label.appendChild(cb)
-      label.appendChild(img)
-      label.appendChild(span)
-      maindiv.appendChild(label)
 
-    })
-    getPicks()
+function refreshPage() {
+	setTimeout(function() {
+  	window.open("https://stupid-fast.com")
+  }, 3000);
+}
+
+/*
+
+function getDrivers() {
+  
+  getPicks()
 }
 
 function getPicks() {
-    var selectvalue = select.value
-    data.picks.forEach(function(item, index) {
-    var arr = [item.driver1, item.driver2]
-    arr.forEach(function(jtem, jndex) {
-    try {
-    var label1 = document.getElementById(jtem)
-      var span1 = label1.getElementsByTagName("span")[0]
-      var cb1 = label1.getElementsByTagName("input")[0]
-      var mark1 = document.createElement("mark")
-      mark1.innerText = item.player
-      label1.appendChild(mark1)
-      if (item.player !== selectvalue) {
-        cb1.disabled = true
-      }
-      cb1.checked = true
-    } catch(e) {
-    
-    }
-    })
-    })
+  
 }
 
 
@@ -254,8 +312,8 @@ function getPicks() {
 
 
 
-  });
-  //return playerlist
+});
+//return playerlist
 }
 
 
@@ -267,17 +325,20 @@ function getPicks() {
 
 
 function changePlayer(value) {
-	var url = "https://www.stupid-fast.com/picks?player="
+  var url = "https://www.stupid-fast.com/picks?player="
   url = url + value
-	window.open(url, "_self");
+  window.open(url, "_self");
 }
 
 function refreshPage(value) {
-	var value = select.value
+  var value = select.value
   setTimeout(function() {
     changePlayer(value)
   }, 1000);
 }
+
+*/
+
 
 
   //]]></script>

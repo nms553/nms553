@@ -1,32 +1,26 @@
-
-<!DOCTYPE html>
+<body translate="no" >
+  <!DOCTYPE html>
 <html>
+
 <head>
-  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-  <title></title>
-  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-  <meta name="robots" content="noindex, nofollow">
-  <meta name="googlebot" content="noindex, nofollow">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-
-  <script
-    type="text/javascript"
-    src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"
-    
-  ></script>
-
-    <link rel="stylesheet" type="text/css" href="/css/result-light.css">
-
-
-  <style id="compiled-css" type="text/css">
-      * {
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400&display=swap" rel="stylesheet">
+  <style>
+* {
   //outline: 1px solid white;
-  font-family: 'Lato', sans-serif;
+  font-family: "Lato", sans-serif;
   //color: white;
 }
 
-div, center, h1, footer, p, button, input[type=submit], input[type=text] {
+div,
+center,
+h1,
+footer,
+p,
+button,
+input[type="submit"],
+input[type="text"] {
   margin-top: 20px;
   margin-bottom: 20px;
 }
@@ -94,13 +88,14 @@ img {
   //color: #555;
 }
 
-input[type=checkbox] {
+input[type="checkbox"] {
   width: 15px;
   height: 15px;
   vertical-align: middle;
 }
 
-input[type=submit], input[type=text] {
+input[type="submit"],
+input[type="text"] {
   //color: black;
 }
 
@@ -126,45 +121,26 @@ label:nth-child(13) {
 label:nth-child(14) {
   margin-top: 50px;
 }
-
-
-    /* EOS */
-  </style>
-
-  <script id="insert"></script>
-
+</style>
 
 </head>
+
 <body>
-    <!DOCTYPE html>
-<html>
 
-  <head>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400&display=swap" rel="stylesheet">
-    <script src=""></script>
+  <a href="https://www.stupid-fast.com/"><img src="https://www.stupid-fast.com/banner.png" id="banner" width="300"></a>
+  <center>
 
-  </head>
+    <table>
+      <tbody id="tbody">
+      </tbody>
+    </table>
 
-  <body>
-
-    <a href="https://www.stupid-fast.com/"><img src="https://www.stupid-fast.com/banner.png" id="banner" width="300"></a>
-<center>
-      
-      <table>
-        <tbody id="tbody">
-        </tbody>
-      </table>
-        
-      
-
-    <form method="post" action="https://script.google.com/macros/s/AKfycbypsLtjVRCBtbKCH5Sh4cS6AtqYHjO9JjlRJeB9p0tLMgFB7L881_SVR8hNsndyX_JP/exec" target="iframe" onsubmit="refreshPage()">
-      
+    <form method="post" action="https://script.google.com/macros/s/AKfycbxWY4yfPYawPQlV60bP6pMoZbvW124OZSMf_ftGk3QkUUyuFoDvnClgScK3JXHyu--w/exec" target="iframe" onsubmit="refreshPage()">
 
       <br>
       <input type="text" name="trashtalk" style="width: 90%;" placeholder="trashtalk or other driver">
       <input type="hidden" name="player" value="">
+      <input type="hidden" name="driver" value="">
       <br>
       <input type="submit">
     </form>
@@ -173,19 +149,17 @@ label:nth-child(14) {
 
     </iframe>
 
-</center>
+  </center>
 
-
-  </body>
+</body>
 
 </html>
+    <script src="https://cpwebassets.codepen.io/assets/common/stopExecutionOnTimeout-1b93190375e9ccc259df3a57c1abc0e64599724ae30d7ea4c6877eb615f89387.js"></script>
 
-
-    <script type="text/javascript">//<![CDATA[
-
-
-var playerlist = [""]
-var tbody = document.getElementById("tbody")
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js'></script>
+      <script id="rendered-js" >
+var playerlist = [""];
+var tbody = document.getElementById("tbody");
 var players = [
 "",
 "ChrisC",
@@ -199,163 +173,64 @@ var players = [
 "Scot",
 "Nick",
 "Faith",
-"Curt"
-]
+"Curt"];
 
 
-$(document).ready(function() {
+$(document).ready(function () {
+  $.get(
+  "https://script.google.com/macros/s/AKfycbxWY4yfPYawPQlV60bP6pMoZbvW124OZSMf_ftGk3QkUUyuFoDvnClgScK3JXHyu--w/exec",
+  function (result) {
+    result = JSON.parse(result);
+    console.log(result);
 
+    result.forEach(function (item, index) {
+      var tr = tbody.insertRow();
+      var td1 = tr.insertCell();
+      tr.insertCell().innerText = item.Driver;
 
+      var img = document.createElement("IMG");
+      img.src = "https://stupid-fast.com/d/" + "d" + item.No + ".png";
+      img.alt = "";
+      img.width = "60";
+      td1.appendChild(img);
+      var td2 = tr.insertCell();
+      var select = document.createElement("SELECT");
+      players.forEach(function (jtem, jndex) {
+        var opt = document.createElement("OPTION");
+        opt.innerText = jtem;
+        select.add(opt);
+        select.name = item.Driver;
+        select.onchange = function () {
+          submitPicks(this.value, this.name);
+        };
+      });
+      td2.appendChild(select);
+      select.value = item.Player;
+    });
+  });
 
-  $.get("https://script.google.com/macros/s/AKfycbw7AdLhX_Eu8djjg4F36qhuabEso5mHdjXbwz8CVjzkgwMSZB0Dh3-qcPnNedQ96XwqIA/exec", function(result) {
-    result = JSON.parse(result)
-    //console.log(result)
-
-
-    result.forEach(function(item, index) {
-    var tr = tbody.insertRow()
-    	var td1 = tr.insertCell()
-      tr.insertCell().innerText = item[0]
-      
-      var img = document.createElement("IMG")
-      img.src = "https://stupid-fast.com/d/" + "d" + item[1] + ".png"
-      img.alt = ""
-      img.width = "60"
-      td1.appendChild(img)
-      var td2 = tr.insertCell()
-      var select = document.createElement("SELECT")
-      players.forEach(function(jtem, jndex) {
-      	var opt = document.createElement("OPTION")
-        opt.innerText = jtem
-      	select.add(opt)
-        select.id = item[0].replace(/\ /g,"").replace(/\./g,"")
-        select.name = item[0]
-        select.onchange = function() {submitPicks(this.value, this.name)}
-      })
-      td2.appendChild(select)
-    
-    })
-    
-    $.get("https://script.google.com/macros/s/AKfycbwCY0Y3ltu7lo3UYaSyb4QuqQxZF_fiS4-6bYJbl0BBL904FxYUiPeMoY3DElI71Naw/exec", function(values) {
-    values = JSON.parse(values)
-    //console.log(values)
-    var track = values[values.length - 1][0]
-    //console.log(track)
-    
-    var filtered = values.filter(function(item, index) {
-    return item[0] == track
-    })
-    
-    filtered.forEach(function(item, index) {
-    	var driver1 = item[3].replace(/\ /g,"").replace(/\./g,"")
-      var driver2 = item[4].replace(/\ /g,"").replace(/\./g,"")
-      try {
-document.getElementById(driver1).value = item[2]
-      } catch(e) {
-      
-      } try {
-document.getElementById(driver2).value = item[2]
-      } catch(e) {
-      
-      }
-    })
-    
-    
-    })
-    
-    
-  })
-
-
-
-
-
-
-
-
-
-
-})
-
-
+});
 
 function submitPicks(value, name) {
-document.getElementsByName("player")[0].value = value
-  $.post("https://script.google.com/macros/s/AKfycbwXYbBKugPmShETIoIuwKNOlKDQZ8Sw0ErMG-ZcqD61Q-VrMhzteTr880zWF4R7NBMV5w/exec", {player: value, driver: name}, function(result){
-  
+  document.getElementsByName("player")[0].value = value;
+  $.post(
+  "https://script.google.com/macros/s/AKfycbxWY4yfPYawPQlV60bP6pMoZbvW124OZSMf_ftGk3QkUUyuFoDvnClgScK3JXHyu--w/exec",
+  { player: value, driver: name },
+  function (result) {
+    console.log(value, name);
   });
 
 }
 
-
 function refreshPage() {
-	setTimeout(function() {
-  	window.open("https://stupid-fast.com")
+  setTimeout(function () {
+    window.open("https://stupid-fast.com");
   }, 3000);
 }
 
-/*
 
-function getDrivers() {
+    </script>
+
   
-  getPicks()
-}
-
-function getPicks() {
-  
-}
-
-
-
-
-
-
-
-
-});
-//return playerlist
-}
-
-
-
-
-
-
-
-
-
-function changePlayer(value) {
-  var url = "https://www.stupid-fast.com/picks?player="
-  url = url + value
-  window.open(url, "_self");
-}
-
-function refreshPage(value) {
-  var value = select.value
-  setTimeout(function() {
-    changePlayer(value)
-  }, 1000);
-}
-
-*/
-
-
-
-  //]]></script>
-
-  <script>
-    // tell the embed parent frame the height of the content
-    if (window.parent && window.parent.parent){
-      window.parent.parent.postMessage(["resultsFrame", {
-        height: document.body.getBoundingClientRect().height,
-        slug: "u9v0p6bc"
-      }], "*")
-    }
-
-    // always overwrite window.name, in case users try to set it manually
-    window.name = "result"
-  </script>
-
 
 </body>
-</html>

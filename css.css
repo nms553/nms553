@@ -23,6 +23,7 @@ body {
 
 a {
  display: table; 
+  margin-bottom: 20px;
 }
 
 table {

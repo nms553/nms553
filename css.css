@@ -1,5 +1,12 @@
+html {
+  text-align: center;
+}
+
 body {
   font-family: "Lato";
+  min-width: 300px;
+  max-width: 500px;
+  margin: auto;
 }
 
 table {

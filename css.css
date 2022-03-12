@@ -21,6 +21,10 @@ body {
   color: DarkGoldenRod;
 }
 
+a {
+ display: table; 
+}
+
 table {
   margin: auto;
  border-collapse: collapse; 

@@ -6,13 +6,14 @@ body {
   font-family: "Lato";
   //text-align: left;
   width: 300px;
-  max-width: 500px;
+  max-width: 300px;
   margin: auto;
+  padding: 0px;
 }
 
 .banner {
   display: block;
- width: 300px;
+ width: 100%;
   margin: 30px auto 30px auto;
 }
 
@@ -20,6 +21,7 @@ table {
   margin: auto;
  border-collapse: collapse; 
   border: 0px solid;
+  width: 100%;
 }
 
 td {

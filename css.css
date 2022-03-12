@@ -4,7 +4,8 @@ html {
 
 body {
   font-family: "Lato";
-  min-width: 300px;
+  
+  width: 300px;
   max-width: 500px;
   margin: auto;
 }

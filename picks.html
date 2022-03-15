@@ -7,38 +7,10 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400&display=swap" rel="stylesheet">
+  <link href="https://stupid-fast.com/css.css" rel="stylesheet">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  
   <style>
-* {
-  //outline: 1px solid white;
-  font-family: "Lato", sans-serif;
-  //color: white;
-}
-
-div,
-center,
-h1,
-footer,
-p,
-button,
-input[type="submit"],
-input[type="text"] {
-  margin-top: 20px;
-  margin-bottom: 20px;
-}
-
-body {
-  margin: 20px auto 20px auto;
-  text-align: center;
-  //background-color: #222;
-  width: 100%;
-  max-width: 300px;
-  font-size: 1em;
-}
-
-table {
-  border-collapse: collapse;
-}
-
 tr:nth-child(13) td {
   padding-bottom: 25px;
   border-bottom: 1px solid;
@@ -48,190 +20,108 @@ tr:nth-child(14) td {
   padding-top: 25px;
 }
 
-select {
-  //background-color: #222;
+input[name="trashtalk"] {
+  width: 170px;
 }
 
-label {
-  display: block;
-  padding: 0px 0px 5px 0px;
-  //background-color: #444;
-  vertical-align: middle;
-  width: 100%;
-  margin: 10px 0px 10px 0px;
-  height: 40px;
-}
-
-label span {
-  vertical-align: middle;
-  display: inline-block;
-  margin-top: auto;
-  margin-bottom: auto;
-  width: 150px;
-  text-decoration: underline;
-  color: blue;
-  cursor: pointer;
-}
-
-img {
-  display: inline-block;
-  vertical-align: middle;
-}
-
-#maindiv {
-  display: inline-block;
-  margin: auto;
-  text-align: left;
-}
-
-.strike {
-  text-decoration: line-through;
-  //color: #555;
-}
-
-input[type="checkbox"] {
-  width: 15px;
-  height: 15px;
-  vertical-align: middle;
-}
-
-input[type="submit"],
-input[type="text"] {
-  //color: black;
-}
-
-mark {
-  margin-left: 5px;
-  padding: 2px 2px 2px 2px;
-  font-size: 0.7em;
-  //color: black;
-  vertical-align: middle;
-  //float: right;
-  opacity: 75%;
-}
-
-#banner {
-  opacity: 85%;
-}
-
-label:nth-child(13) {
-  padding-bottom: 50px;
-  border-bottom: 1px solid;
-}
-
-label:nth-child(14) {
-  margin-top: 50px;
-}
 </style>
 
 </head>
 
 <body>
 
-  <a href="https://www.stupid-fast.com/"><img src="https://www.stupid-fast.com/banner.png" id="banner" width="300"></a>
-  <center>
+  <a href="https://www.stupid-fast.com/" class="banner">
+  <img src="https://www.stupid-fast.com/banner.png"></a>
 
-    <table>
-      <tbody id="tbody">
-      </tbody>
-    </table>
+<table id="table" border="1">
+  <tr>
+    <td>LOADING...</td>
+  </tr>
+</table>
 
-    <form method="post" action="https://script.google.com/macros/s/AKfycbxWY4yfPYawPQlV60bP6pMoZbvW124OZSMf_ftGk3QkUUyuFoDvnClgScK3JXHyu--w/exec" target="iframe" onsubmit="refreshPage()">
+<form action="https://script.google.com/macros/s/AKfycbxRJrxGeKwbSUxf3aFIinfquZJPucJf2Mhc61GDuEzVFsNbOWnS98dGH3KbiHkWU_Un_A/exec" method="post" target="iframe">
+  <iframe name="iframe" style="display: none;"></iframe>
+  <br>
+  <input type="text" name="trashtalk" placeholder="trashtalk...">
+  <input type="hidden" name="player" value="">
+  <input type="submit" value="Submit trashtalk">
+</form>
+  
+  <script>
+    document.addEventListener("DOMContentLoaded", loadXMLDoc);
 
-      <br>
-      <input type="text" name="trashtalk" style="width: 90%;" placeholder="trashtalk or other driver">
-      <input type="hidden" name="player" value="">
-      <input type="hidden" name="driver" value="">
-      <br>
-      <input type="submit">
-    </form>
+function loadXMLDoc() {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function () {
+    if (this.readyState == 4 && this.status == 200) {
+      var obj = JSON.parse(this.responseText);
+      //console.log(obj);
+      table.innerHTML = "";
 
-    <iframe name="iframe" style="display:none;">
+      obj.Driver.forEach(function (item, index) {
+        var tr = table.insertRow();
+        var img = document.createElement("IMG");
+        img.src = "https://stupid-fast.com/d/d" + item.number + ".png";
+        img.width = "50";
+        tr.insertCell().appendChild(img);
+        tr.insertCell().innerText = item.driver;
 
-    </iframe>
+        var select = document.createElement("SELECT");
+        select.id = item.driverid;
+        select.onchange = function () {
+          submitPick(this.id, this.value);
+        };
+        var option = document.createElement("OPTION");
+        option.value = "";
+        option.value = "d000";
+        select.add(option);
 
-  </center>
+        obj.Player.forEach(function (item, index) {
+          if (item.active == true) {
+            var opt = document.createElement("OPTION");
+            opt.innerText = item.player;
+            opt.value = item.playerid;
+            select.add(opt);
+          }
+        });
+
+        tr.insertCell().appendChild(select);
+      });
+
+      obj.Driver.forEach(function (item, index) {
+
+          var menu = document.getElementById(item.driverid);
+          menu.value = item.playerid;
+
+      });
+    }
+  };
+  xhttp.open(
+    "GET",
+    "https://script.google.com/macros/s/AKfycbz_PEI5t1zS2X1K2fjO1Gi4LSTuaohYHv_Flxxt5DYhnN6d3v4YNxjOrnOiwwLglh5L/exec",
+    true
+  );
+  xhttp.send();
+}
+
+function submitPick(id, value) {
+  if (value !== "d000") {
+    document.getElementsByName("player")[0].value = value;
+  }
+
+  var http = new XMLHttpRequest();
+  http.open(
+    "POST",
+    "https://script.google.com/macros/s/AKfycbz_PEI5t1zS2X1K2fjO1Gi4LSTuaohYHv_Flxxt5DYhnN6d3v4YNxjOrnOiwwLglh5L/exec",
+    true
+  );
+  http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  http.send("driver=" + id + "&player=" + value);
+}
+
+  </script>
 
 </body>
 
 </html>
-    <script src="https://cpwebassets.codepen.io/assets/common/stopExecutionOnTimeout-1b93190375e9ccc259df3a57c1abc0e64599724ae30d7ea4c6877eb615f89387.js"></script>
 
-  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js'></script>
-      <script id="rendered-js" >
-var playerlist = [""];
-var tbody = document.getElementById("tbody");
-var players = [
-"",
-"ChrisC",
-"Mike",
-"Dave",
-"Hannah",
-"Poepsel",
-"ChrisL",
-"Schriewer",
-"Katie",
-"Scot",
-"Nick",
-"Faith",
-"Curt"];
-
-
-$(document).ready(function () {
-  $.get(
-  "https://script.google.com/macros/s/AKfycbxWY4yfPYawPQlV60bP6pMoZbvW124OZSMf_ftGk3QkUUyuFoDvnClgScK3JXHyu--w/exec",
-  function (result) {
-    result = JSON.parse(result);
-    console.log(result);
-
-    result.forEach(function (item, index) {
-      var tr = tbody.insertRow();
-      var td1 = tr.insertCell();
-      tr.insertCell().innerText = item.Driver;
-
-      var img = document.createElement("IMG");
-      img.src = "https://stupid-fast.com/d/" + "d" + item.No + ".png";
-      img.alt = "";
-      img.width = "60";
-      td1.appendChild(img);
-      var td2 = tr.insertCell();
-      var select = document.createElement("SELECT");
-      players.forEach(function (jtem, jndex) {
-        var opt = document.createElement("OPTION");
-        opt.innerText = jtem;
-        select.add(opt);
-        select.name = item.Driver;
-        select.onchange = function () {
-          submitPicks(this.value, this.name);
-        };
-      });
-      td2.appendChild(select);
-      select.value = item.Player;
-    });
-  });
-
-});
-
-function submitPicks(value, name) {
-  document.getElementsByName("player")[0].value = value;
-  $.post(
-  "https://script.google.com/macros/s/AKfycbxWY4yfPYawPQlV60bP6pMoZbvW124OZSMf_ftGk3QkUUyuFoDvnClgScK3JXHyu--w/exec",
-  { player: value, driver: name },
-  function (result) {
-    console.log(value, name);
-  });
-
-}
-
-function refreshPage() {
-  setTimeout(function () {
-    window.open("https://stupid-fast.com");
-  }, 3000);
-}
-
-
-    </script>
-
-  
-
-</body>

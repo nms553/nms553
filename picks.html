@@ -38,12 +38,12 @@ input[name="trashtalk"] {
   </tr>
 </table>
 
-<form action="https://script.google.com/macros/s/AKfycbxRJrxGeKwbSUxf3aFIinfquZJPucJf2Mhc61GDuEzVFsNbOWnS98dGH3KbiHkWU_Un_A/exec" method="post" target="iframe">
+<form action="https://script.google.com/macros/s/AKfycbxRJrxGeKwbSUxf3aFIinfquZJPucJf2Mhc61GDuEzVFsNbOWnS98dGH3KbiHkWU_Un_A/exec" method="post" target="iframe" onsubmit="delayFunc()">
   <iframe name="iframe" style="display: none;"></iframe>
   <br>
   <input type="text" name="trashtalk" placeholder="trashtalk...">
   <input type="hidden" name="player" value="">
-  <input type="submit" value="Submit trashtalk">
+  <input type="submit" id="submitbutton" value="Submit trashtalk" >
 </form>
   
   <script>
@@ -54,7 +54,7 @@ function loadXMLDoc() {
   xhttp.onreadystatechange = function () {
     if (this.readyState == 4 && this.status == 200) {
       var obj = JSON.parse(this.responseText);
-      //console.log(obj);
+      console.log(obj);
       table.innerHTML = "";
 
       obj.Driver.forEach(function (item, index) {
@@ -71,17 +71,17 @@ function loadXMLDoc() {
           submitPick(this.id, this.value);
         };
         var option = document.createElement("OPTION");
-        option.value = "";
+        //option.value = "";
         option.value = "d000";
         select.add(option);
 
         obj.Player.forEach(function (item, index) {
-          if (item.active == true) {
+        	if (item.active == true) {
             var opt = document.createElement("OPTION");
             opt.innerText = item.player;
             opt.value = item.playerid;
             select.add(opt);
-          }
+            }
         });
 
         tr.insertCell().appendChild(select);
@@ -97,7 +97,7 @@ function loadXMLDoc() {
   };
   xhttp.open(
     "GET",
-    "https://script.google.com/macros/s/AKfycbz_PEI5t1zS2X1K2fjO1Gi4LSTuaohYHv_Flxxt5DYhnN6d3v4YNxjOrnOiwwLglh5L/exec",
+    "https://script.google.com/macros/s/AKfycbxWY4yfPYawPQlV60bP6pMoZbvW124OZSMf_ftGk3QkUUyuFoDvnClgScK3JXHyu--w/exec",
     true
   );
   xhttp.send();
@@ -107,16 +107,30 @@ function submitPick(id, value) {
   if (value !== "d000") {
     document.getElementsByName("player")[0].value = value;
   }
+  
+  
 
   var http = new XMLHttpRequest();
   http.open(
     "POST",
-    "https://script.google.com/macros/s/AKfycbz_PEI5t1zS2X1K2fjO1Gi4LSTuaohYHv_Flxxt5DYhnN6d3v4YNxjOrnOiwwLglh5L/exec",
+    "https://script.google.com/macros/s/AKfycbxWY4yfPYawPQlV60bP6pMoZbvW124OZSMf_ftGk3QkUUyuFoDvnClgScK3JXHyu--w/exec",
     true
   );
   http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
   http.send("driver=" + id + "&player=" + value);
 }
+
+function delayFunc() {
+  console.log("submitted")
+  	var b = document.getElementById("submitbutton")
+    var inp = document.getElementsByName("trashtalk")[0]
+    b.disabled = true
+    //inp.disabled = true
+    setTimeout(function() {
+    	b.disabled = false
+        //inp.disabled = false
+    }, 5000);
+  }
 
   </script>
 

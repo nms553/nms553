@@ -28,7 +28,7 @@ a {
 }
 
 table {
-  margin: auto;
+  margin: 5px auto 10px auto;
  border-collapse: collapse; 
   border: 0px solid;
   width: 100%;

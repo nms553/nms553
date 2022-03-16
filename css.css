@@ -34,6 +34,15 @@ table {
   width: 100%;
 }
 
+.smalltable {
+  background: #D5F7D5;
+  font-size: 0.9em;
+}
+
 td {
  border: 0px solid; 
+}
+
+blockquote {
+  margin-top: 3px;
 }

@@ -6,123 +6,99 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400&display=swap" rel="stylesheet">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link href="https://stupid-fast.com/css.css" rel="stylesheet">
+
     <style>
-      body {
-  margin: 20px auto 20px auto;
-  text-align: center;
-  //background-color: #222;
-  width: 100%;
-  font-size: 1em;
-  font-family: 'Lato', sans-serif;
-}
-
-.h3 {
-  color: DarkGoldenRod;
-  font-size: 1.15em;
-}
-
-
-table {
-  margin: 0px auto 0px auto;
-  border: 0px solid;
-  border-collapse: collapse;
-  max-width: 500px;
-  font-size: 0.85em;
-
-}
-
-
-tr:nth-child(even) {
-  background: #D5F7D5;
-}
-
-tr:nth-child(odd) {}
-
-td {
-  border: 0px solid;
-  padding: 3px 3px 3px 6px;
-  text-align: left;
-}
-
-a {
-  display: block;
-  margin-top: 10px;
-  margin-bottom: 10px;
-}
-
-#links {
-  margin: 20px auto 25px auto;
-}
-      
-      .annc {
-      color: black;
-        text-decoration: initial;
+      p {
+        font-size: 0.83em;
       }
 
     </style>
+
   </head>
 
-  <body>
+  <body id="body">
 
-    <a href="https://www.stupid-fast.com/"><img src="https://www.stupid-fast.com/banner.png" id="banner" width="300"></a>
+    <a href="https://www.stupid-fast.com/" class="banner">
+      <img src="https://www.stupid-fast.com/banner.png"></a>
 
+    <center id="links"></center>
 
-    <div class="div">
-
-      <div id="links">
-
-      </div>
-
-      <!-- <h3><a href="./chase.html">Chase standings</a></h3> -->
-
-    </div>
-
-    <table>
-
+    <table class="smalltable">
       <tbody id="tbody">
-
       </tbody>
     </table>
-<script>
-  var links = document.getElementById("links")
-var select = document.getElementById("select")
 
-$(document).ready(function() {
 
-  $.get("https://script.google.com/macros/s/AKfycbzGvt4ZYQ_N_qKsn5ULfGuanIJLVh6fvLTRM6wE0hsX3a2aWRwP7wuTLXpFQUq_lGDUhw/exec", function(result) {
-    result = JSON.parse(result)
-    console.log(result)
-    result.forEach(function(item, index) {
-    if(item.Type == "link") {
-    var a = document.createElement("A")
-      a.href = item.Value
-      a.innerText = item.Label
-      a.classList.add(item.Class)
-      a.target = item.Target
-      a.style = item.Display
-      links.appendChild(a)
-    }
-      
-    })
-  })
+    <script>
+      document.addEventListener("DOMContentLoaded", loadXMLDoc);
 
-  $.get("https://script.google.com/macros/s/AKfycbwCY0Y3ltu7lo3UYaSyb4QuqQxZF_fiS4-6bYJbl0BBL904FxYUiPeMoY3DElI71Naw/exec", function(result, status) {
-    var data = JSON.parse(result)
-    //console.log(data)
+      function loadXMLDoc() {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+          if (this.readyState == 4 && this.status == 200) {
+            var result = JSON.parse(this.responseText);
+            //console.log(result);
+            result.forEach(function(item, index) {
+              var el = document.createElement(item.tag)
+              el.href = item.href
+              el.innerText = item.text
+              el.className = item.class
+              el.target = item.target
+              el.style = item.style
+              links.appendChild(el)
+            })
 
-    data.forEach(function(item, index) {
-      var tr = tbody.insertRow()
-      tr.id = item.Player
-      tr.insertCell().innerHTML = item.Player + " <sup>(" + item.Pts + ")</sup>"
-      tr.insertCell().innerText = item.Driver1
-      tr.insertCell().innerText = item.Driver2
-      tr.insertCell().innerText = item.Trashtalk
-    })
-  });
+          };
+        }
+        xhttp.open(
+          "GET",
+          "https://script.google.com/macros/s/AKfycbzGvt4ZYQ_N_qKsn5ULfGuanIJLVh6fvLTRM6wE0hsX3a2aWRwP7wuTLXpFQUq_lGDUhw/exec",
+          true
+        );
+        xhttp.send();
 
-})
+        getSummary()
+      }
 
+      function getSummary() {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+          if (this.readyState == 4 && this.status == 200) {
+            var result = JSON.parse(this.responseText);
+            console.log(result);
+            var sorted = result.Player.sort(function(a, b) {
+              return a.lastweek - b.lastweek
+            })
+            sorted.forEach(function(item, index) {
+              if (item.active !== false) {
+                var tr = tbody.insertRow()
+                var td1 = tr.insertCell()
+                td1.innerHTML = item.player + "&nbsp;<sup>(" + item.lastweek + ")</sup>"
+                var td2 = tr.insertCell()
+                td2.innerText = item.driver1
+                var td3 = tr.insertCell()
+                td3.innerText = item.driver2
+              }
+
+              if (item.trashtalk) {
+                var p = document.createElement("P")
+                p.innerHTML = "<i><b>" + item.player + " says</b>—<br><blockquote>" + item.trashtalk + "</blockquote>"
+                body.appendChild(p) + "</i>"
+              }
+
+            })
+
+          };
+        }
+        xhttp.open(
+          "GET",
+          "https://script.google.com/macros/s/AKfycbxWY4yfPYawPQlV60bP6pMoZbvW124OZSMf_ftGk3QkUUyuFoDvnClgScK3JXHyu--w/exec",
+          true
+        );
+        xhttp.send();
+
+      }
 
     </script>
 

@@ -20,7 +20,7 @@ tr:nth-child(14) td {
 }
 
 input[name="trashtalk"] {
-  width: 170px;
+  width: 150px;
 }
 
 </style>
@@ -125,10 +125,8 @@ function delayFunc() {
   	var b = document.getElementById("submitbutton")
     var inp = document.getElementsByName("trashtalk")[0]
     b.disabled = true
-    //inp.disabled = true
     setTimeout(function() {
     	b.disabled = false
-        //inp.disabled = false
     }, 5000);
   }
 

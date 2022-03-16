@@ -35,8 +35,12 @@ table {
 }
 
 .smalltable {
-  background: #D5F7D5;
+  
   font-size: 0.9em;
+}
+
+.smalltable tr:nth-child(even) {
+background: #D5F7D5;
 }
 
 td {

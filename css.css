@@ -46,3 +46,7 @@ td {
 blockquote {
   margin-top: 3px;
 }
+
+sup, sub {
+ font-size: 0.8em; 
+}

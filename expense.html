@@ -20,49 +20,7 @@
 
 
   <style id="compiled-css" type="text/css">
-      body {
-	text-align: center;
-}
-
-summary {
-	color: gray;
-}
-
-table {
-	width: 90%;
-	max-width: 500px;
-	margin: auto;
-}
-
-details {
-	max-width: 500px;
-	width: 90%;
-	display: block;
-	margin: auto;
-}
-
-a {
-	margin-right: 0px;
-	text-decoration: initial;
-}
-
-tr:nth-child(odd) {
-	background-color: whitesmoke;
-}
-
-th:nth-child(4) {
-	width: 10px;
-	padding: 0px;
-}
-
-th:nth-child(5) {
-	width: 50px;
-	padding: 0px;
-}
-
-#addbtn {
-	width: 200px;
-}
+      
     /* EOS */
   </style>
 
@@ -71,159 +29,44 @@ th:nth-child(5) {
 
 </head>
 <body>
-    <h1>Savings</h1>
-<br>
-<table id="maintable">
-  <tbody>
-    <tr>
-      <th>Item</th>
-      <th>Expense</th>
-      <th>Balance</th>
-      <th>X</th>
-    </tr>
-    <tr class="savingsexp">
-      <td></td>
-      <td class="exp">20000</td>
-      <td class="last"></td>
-    </tr>
-  </tbody>
-</table>
-<br><br>
-<button onclick="addNew()" id="addbtn">Add</button>
-<br><br><br><br>
-
-
-<details>
-  <summary>Form</summary>
-	<br>
-  <button onclick="actionFunction()">
-    Action
-  </button>
-  <button onclick="saveIt()">Sv</button><br>
-  <form id="form" method="post" action="https://script.google.com/macros/s/AKfycbzpZHMWb2YiY6-B1llGVlT7dmPAu_Su6wwDLoaUhYOoLbexG7-5/exec" target="iframe" style="display: initial;" onsubmit="resett()">
-    <!--index: actual row of the gsheet -->
-    <input type="hidden" name="row" id="inp_row" value="9"><br>
-    Cell 1 result: <br>
-    <input type="text" name="dataA" id="dataA"><br><br>
-    Cell 2 result: <br>
-    <input type="text" name="dataB" id="dataB"><br><br>
-    Cell 3 result: <br>
-    <input type="text" name="dataC" id="dataC"><br><br>
-    <input type="submit"><br><br>
-    <iframe src="" name="iframe" id="iframe" style="display: none;"></iframe>
-  </form>
-  <sup><a href="https://docs.google.com/spreadsheets/d/1DvaYXhcpPJvMFNDlDtx9oG-YGKfqtT6ZbPWqZIvaIxw/edit#gid=0" target="blank">Jewpa Google Sheet Database (open new window)</a></sup>
-</details>
-<br><br>
-
+    <table id="table" border="1">
+      <tbody id="tbody">
+      </tbody>
+    </table>
 
     <script type="text/javascript">//<![CDATA[
 
 
-$(document).ready(function() {
-  $.getJSON("https://spreadsheets.google.com/feeds/list/1DvaYXhcpPJvMFNDlDtx9oG-YGKfqtT6ZbPWqZIvaIxw/1/public/full?alt=json", function(result) {
-    var data = result.feed.entry
-    console.log(data[7])
-    var x = data[7].gsx$cola.$t
-    var y = JSON.parse(x)
-
-    $("#maintable").html(y)
-
-    transLastNum();
-  })
-})
-
-function transLastNum() {
+document.addEventListener("DOMContentLoaded", getNASCARFEED);
 
 
-  calc();
-}
+function getNASCARFEED() {
+  var xhttp = new XMLHttpRequest();
+  xhttp.open("GET", "https://cf.nascar.com/cacher/2022/1/5150/weekend-feed.json", true);
+  xhttp.send();
+  xhttp.onreadystatechange = function() {
+  
+    if (this.readyState == 4 && this.status == 200) {
 
-function addNew() {
-  var a = $("<a></a>").attr("href", "javascript:").text("❌").attr("onclick", "deleteItem(this)")
-  var x = document.getElementById("maintable")
-  var r = x.insertRow()
-  r.setAttribute("class", "savingsexp")
-  var d1 = r.insertCell()
-  var d2 = r.insertCell()
-  d2.innerText
-  d2.setAttribute("class", "exp")
-  r.insertCell().setAttribute("class", "last")
-  var d4 = r.insertCell()
-  $(d4).append(a)
+      var result = JSON.parse(this.responseText)
+      
+      console.log(result)
+      
+      result.weekend_race[0].results.forEach(function(item, index) {
+      var tr = table.insertRow()
+      tr.insertCell().innerText = item.finishing_position
+      tr.id = item.driver_id
+      tr.insertCell().innerText = item.driver_fullname.split("(")[0].split(" *")[0].replace("* ","")
+      //tr.insertCell().innerText = 
+      
+      })
 
-  var d5 = $("<td></td>")
-  var b1 = $("<button>↑</button>").attr("onclick", "moveUp(this)")
-  var b2 = $("<button>↓</button>").attr("onclick", "moveDown(this)")
-  $(d5).append(b1).append(b2)
-  $(r).append(d5)
-
-
-  transLastNum();
-}
-
-function calc() {
-  var c = 0;
-  var x = $(".savingsexp").each(function(index) {
-    var y = $(this).find(".exp").text()
-    var z = parseInt(y)
-    c = c + z
-    $(this).find('.last').text(c)
-
-  })
-  saveIt();
+    }
+  };
+  
 }
 
 
-function saveIt() {
-  var x = $("#maintable").html()
-  var y = JSON.stringify(x)
-  $("#dataA").val(y)
-  $("form").submit();
-}
-
-function deleteItem(that) {
-  $(that).parent().parent().remove();
-  transLastNum()
-}
-
-function resett() {
-  //location.reload()
-}
-
-$("table").on('dblclick', 'td', function() {
-  var v = this.innerText
-  var p = prompt("Change entry?")
-
-  if (p != null) {
-    this.innerText = p
-    transLastNum();
-  }
-})
-
-function actionFunction() {
-  $("tr").each(function() {
-    var d = $("<td></td>")
-    var b1 = $("<button>↑</button>").attr("onclick", "moveUp(this)")
-    var b2 = $("<button>↓</button>").attr("onclick", "moveDown(this)")
-    $(d).append(b1).append(b2)
-    $(this).append(d)
-  })
-}
-
-function moveUp(that) {
-  var r = $(that).parent().parent()
-  var y = r.prev()
-  $(r).insertBefore(y)
-  transLastNum();
-}
-
-function moveDown(that) {
-  var r = $(that).parent().parent()
-  var y = r.next()
-  $(r).insertAfter(y)
-  transLastNum();
-}
 
 
 
@@ -234,7 +77,7 @@ function moveDown(that) {
     if (window.parent && window.parent.parent){
       window.parent.parent.postMessage(["resultsFrame", {
         height: document.body.getBoundingClientRect().height,
-        slug: "qxk4au3r"
+        slug: "57sn6vdu"
       }], "*")
     }
 

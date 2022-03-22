@@ -1,117 +1,228 @@
-
 <!DOCTYPE html>
 <html>
 
-  <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400&display=swap" rel="stylesheet">
-    <link href="https://stupid-fast.com/css.css" rel="stylesheet">
+<body>
 
-    <style>
-      p {
-        font-size: 0.83em;
-      }
-      
-      table {
-      table-layout: fixed;
-      }
-      
-      tr td:nth-child(2), tr td:nth-child(3) {
-      	width: 35%;
-      }
+<table id="table" border="1">
+  <thead>
+    <tr>
+      <th>Player</th>
+      <th>Driver 1</th>
+      <th>Driver 2</th>
+      <th>Pos 1</th>
+      <th>Pos 2</th>
+      <th>Pts 1</th>
+      <th>Pts 2</th>
+      <th>Bonus</th>
+      <th>Total</th>
+    </tr>
+  </thead>
+  <tbody id="tbody">
+    
+  </tbody>
+</table>
 
-    </style>
+<script>
+document.addEventListener("DOMContentLoaded", getRaceID);
 
-  </head>
+function getRaceID() {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      var result = JSON.parse(this.responseText);
+      //console.log(result);
 
-  <body id="body">
-
-    <a href="https://www.stupid-fast.com/" class="banner">
-      <img src="https://www.stupid-fast.com/banner.png"></a>
-
-    <center id="links"></center>
-
-    <table class="smalltable">
-      <tbody id="tbody">
-      </tbody>
-    </table>
-
-
-    <script>
-      document.addEventListener("DOMContentLoaded", loadXMLDoc);
-
-      function loadXMLDoc() {
-        var xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function() {
-          if (this.readyState == 4 && this.status == 200) {
-            var result = JSON.parse(this.responseText);
-            //console.log(result);
-            result.forEach(function(item, index) {
-              var el = document.createElement(item.tag)
-              el.href = item.href
-              el.innerText = item.text
-              el.className = item.class
-              el.target = item.target
-              el.style = item.style
-              links.appendChild(el)
-            })
-
-          };
+      var rid;
+      result.series_1.forEach(function(item, i) {
+        if (item.winner_driver_id) {
+          rid = item.race_id
         }
-        xhttp.open(
-          "GET",
-          "https://script.google.com/macros/s/AKfycbzGvt4ZYQ_N_qKsn5ULfGuanIJLVh6fvLTRM6wE0hsX3a2aWRwP7wuTLXpFQUq_lGDUhw/exec",
-          true
-        );
-        xhttp.send();
+      })
 
-        getSummary()
-      }
 
-      function getSummary() {
-        var xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function() {
-          if (this.readyState == 4 && this.status == 200) {
-            var result = JSON.parse(this.responseText);
-            console.log(result);
-            var sorted = result.Player.sort(function(a, b) {
-              return a.lastweek - b.lastweek
-            })
-            sorted.forEach(function(item, index) {
-              if (item.active !== false) {
-                var tr = tbody.insertRow()
-                var td1 = tr.insertCell()
-                td1.innerHTML = item.player + "&nbsp;<sup>(" + item.lastweek + ")</sup>"
-                var td2 = tr.insertCell()
-                td2.innerText = item.driver1
-                var td3 = tr.insertCell()
-                td3.innerText = item.driver2
+
+      getRaceData(rid)
+    }
+
+  };
+
+  xhttp.open(
+    "GET",
+    "https://cf.nascar.com/cacher/2022/race_list_basic.json",
+    true
+  );
+  xhttp.send();
+
+}
+
+
+
+function getRaceData(rid) {
+  //console.log(rid)
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      var result = JSON.parse(this.responseText);
+      //console.log(result);
+      getAlias(rid, result.vehicles)
+    }
+
+  };
+
+  xhttp.open(
+    "GET",
+    "https://cf.nascar.com/live/feeds/series_1/" + rid + "/live_feed.json",
+    true
+  );
+  xhttp.send();
+}
+
+
+
+
+
+function getAlias(rid, nascar) {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      var result = JSON.parse(this.responseText);
+      //CODE BELOW HERE***************
+      //console.log(result);
+      //console.log(nascar);
+
+      var counter = result.Player.filter(function(item) {
+        return item.active == true;
+      }).length * 2
+
+      nascar.forEach(function(item, i) {
+        result.Alias.forEach(function(jtem, j) {
+          var trim = item.driver.full_name.replace(" #", "").replace("* ", "").split(" (")[0].split("(")[0]
+          if (trim == jtem.alias) {
+            result.Player.forEach(function(ktem, k) {
+              if (!ktem.bonus) {
+                ktem.bonus = 0
+              }
+              if (ktem.driverid1 == jtem.driverid) {
+                if (parseInt(item.running_position) < 2) {
+                  ktem.bonus = ktem.bonus + 2
+                  console.log(item.running_position)
+                }
+                ktem.pos1 = item.running_position
+                ktem.pts1 = counter
+                counter--
               }
 
-              if (item.trashtalk) {
-                var p = document.createElement("P")
-                p.innerHTML = "<i><b>" + item.player + " says</b>—<br><blockquote>" + item.trashtalk + "</blockquote>"
-                body.appendChild(p) + "</i>"
+              if (ktem.driverid2 == jtem.driverid) {
+                if (parseInt(item.running_position) < 2) {
+                  ktem.bonus = ktem.bonus + 2
+                  console.log(item.running_position)
+                }
+                ktem.pos2 = item.running_position
+                ktem.pts2 = counter
+                counter--
               }
 
             })
 
-          };
-        }
-        xhttp.open(
-          "GET",
-          "https://script.google.com/macros/s/AKfycbxWY4yfPYawPQlV60bP6pMoZbvW124OZSMf_ftGk3QkUUyuFoDvnClgScK3JXHyu--w/exec",
-          true
-        );
-        xhttp.send();
+          }
+        })
 
-      }
+      })
+      //console.log(result)
+      getStage(rid, result)
+      //CODE ABOVE HERE***************
+    }
 
-    </script>
+  };
+
+  xhttp.open(
+    "GET",
+    "https://script.google.com/macros/s/AKfycbxWY4yfPYawPQlV60bP6pMoZbvW124OZSMf_ftGk3QkUUyuFoDvnClgScK3JXHyu--w/exec",
+    true
+  );
+  xhttp.send();
+}
 
 
-  </body>
 
+
+
+function getStage(rid, stupidfast) {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      var result = JSON.parse(this.responseText);
+      //CODE BELOW HERE***************
+      //console.log(result);
+      result.forEach(function(item, index) {
+        var drivername = item.results[0].full_name.replace(" #", "").replace("* ", "").split(" (")[0].split("(")[0]
+        //console.log(drivername)
+        stupidfast.Alias.forEach(function(jtem, j) {
+          if (drivername == jtem.alias) {
+            stupidfast.Player.forEach(function(ktem, k) {
+
+              if (ktem.driverid1 == jtem.driverid) {
+                ktem.bonus++
+              }
+
+              if (ktem.driverid2 == jtem.driverid) {
+                ktem.bonus++
+              }
+            })
+          }
+        })
+      })
+      //CODE ABOVE HERE***************
+      summaryTable(stupidfast.Player)
+    }
+
+  };
+
+  xhttp.open(
+    "GET",
+    "https://cf.nascar.com/cacher/2022/1/" + rid + "/live-stage-points.json",
+    true
+  );
+  xhttp.send();
+}
+
+
+
+
+
+
+function summaryTable(result) {
+  //console.log(result)
+
+  result.forEach(function(item, index) {
+
+    if (item.active) {
+      var tr = tbody.insertRow()
+      tr.insertCell().innerText = item.player
+      tr.insertCell().innerText = item.driver1
+      tr.insertCell().innerText = item.driver2
+      tr.insertCell().innerText = item.pos1
+      tr.insertCell().innerText = item.pos2
+      tr.insertCell().innerText = item.pts1
+      tr.insertCell().innerText = item.pts2
+      tr.insertCell().innerText = item.bonus
+      tr.insertCell().innerText = 0
+    }
+
+  })
+
+  var tr = document.getElementsByTagName("TR")
+  var i;
+  for (i = 1; i < tr.length; i++) {
+    var td5 = parseInt(tr[i].getElementsByTagName("td")[5].innerText)
+    var td6 = parseInt(tr[i].getElementsByTagName("td")[6].innerText)
+    var td7 = parseInt(tr[i].getElementsByTagName("td")[7].innerText)
+    tr[i].getElementsByTagName("td")[8].innerText = td5 + td6 + td7
+  }
+
+}
+
+
+</script>
+</body>
 </html>

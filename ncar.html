@@ -1,7 +1,11 @@
+
 <!DOCTYPE html>
 <html>
 
 <body>
+
+<select id="select" onchange="getRaceData(this.value)"></select>
+<br><br>
 
 <table id="table" border="1">
   <thead>
@@ -30,12 +34,19 @@ function getRaceID() {
   xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
       var result = JSON.parse(this.responseText);
-      //console.log(result);
+      console.log(result);
 
       var rid;
       result.series_1.forEach(function(item, i) {
         if (item.winner_driver_id) {
-          rid = item.race_id
+          rid = item.race_id + 1
+          result.series_1.forEach(function(item, index) {
+          	var opt = document.createElement("OPTION")
+            opt.value = item.race_id
+            opt.text = item.track_name
+            select.add(opt)
+          })
+          select.value = rid
         }
       })
 
@@ -58,6 +69,7 @@ function getRaceID() {
 
 
 function getRaceData(rid) {
+	tbody.innerHTML = ""
   //console.log(rid)
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {

@@ -83,7 +83,7 @@
               if (item.active !== false) {
                 var tr = tbody.insertRow()
                 var td1 = tr.insertCell()
-                td1.innerHTML = item.player + "&nbsp;<sup>(" + item.lastweek + ")</sup>"
+                td1.innerHTML = item.player + "&nbsp;<sup>(" + Math.round(item.lastweek) + ")</sup>"
                 var td2 = tr.insertCell()
                 td2.innerText = item.driver1
                 var td3 = tr.insertCell()

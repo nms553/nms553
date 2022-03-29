@@ -1,3 +1,4 @@
+
   <!DOCTYPE html>
 <html>
 
@@ -57,8 +58,12 @@ function loadXMLDoc() {
       var obj = JSON.parse(this.responseText);
       console.log(obj);
       table.innerHTML = "";
+      
+      var sort = obj.Driver.sort(function(a, b) {
+      	return a.standing - b.standing
+      })
 
-      obj.Driver.forEach(function (item, index) {
+      sort.forEach(function (item, index) {
         var tr = table.insertRow();
         var img = document.createElement("IMG");
         img.src = "https://stupid-fast.com/d/d" + item.number + ".png";

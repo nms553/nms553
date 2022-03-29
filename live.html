@@ -6,7 +6,8 @@
 
 <select id="select" onchange="getRaceData(this.value)"></select>
 <br><br>
-
+<p id="loading">LOADING......(data will only be displayed during race)</p>
+<br>
 <table id="table" border="1">
   <thead>
     <tr>
@@ -22,7 +23,8 @@
     </tr>
   </thead>
   <tbody id="tbody">
-    
+	  
+	 
   </tbody>
 </table>
 
@@ -69,7 +71,9 @@ function getRaceID() {
 
 
 function getRaceData(rid) {
-	tbody.innerHTML = ""
+	loading.style.display = ""
+    table.style.display = "none"
+
   //console.log(rid)
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
@@ -205,7 +209,8 @@ function getStage(rid, stupidfast) {
 
 function summaryTable(result) {
   //console.log(result)
-
+loading.style.display = "none"
+table.style.display = ""
   result.forEach(function(item, index) {
 
     if (item.active) {

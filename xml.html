@@ -1,11 +1,17 @@
 <!DOCTYPE html>
 <html>
-<body>
+<body bgcolor="whitesmoke">
+  <input id="inp" value="https://docs.google.com/spreadsheets/d/e/2PACX-1vReZb_mDJxh-jny2ntNF0hWYed5q1B9umQtn3u2oaw_KL3np7m_Ng6ppY1_DUEnXooSUCguS8j9Xj6b/pub?gid=210595935&single=true&output=tsv" onchange="loadXMLDoc()" style="width:90%;">
+  <br><br>
+<hr>
+<table id="table" border="1" width="100%" bgcolor="white"></table>
 
-<table id="table" border="1"></table>
 
 <script>
+
 function loadXMLDoc() {
+table.innerHTML = ""
+  var url = inp.value
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
@@ -24,7 +30,7 @@ function loadXMLDoc() {
   };
   
   
-  xhttp.open("GET", "https://docs.google.com/spreadsheets/d/e/2PACX-1vReZb_mDJxh-jny2ntNF0hWYed5q1B9umQtn3u2oaw_KL3np7m_Ng6ppY1_DUEnXooSUCguS8j9Xj6b/pub?gid=210595935&single=true&output=tsv", true);
+  xhttp.open("GET", url, true);
   xhttp.send();
 }
 

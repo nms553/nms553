@@ -1,42 +1,26 @@
 <!DOCTYPE html>
 <html>
-<body bgcolor="whitesmoke">
-  <input id="inp" value="https://docs.google.com/spreadsheets/d/e/2PACX-1vReZb_mDJxh-jny2ntNF0hWYed5q1B9umQtn3u2oaw_KL3np7m_Ng6ppY1_DUEnXooSUCguS8j9Xj6b/pub?gid=210595935&single=true&output=tsv" onchange="loadXMLDoc()" style="width:90%;">
-  <br><br>
-<hr>
-<table id="table" border="1" width="100%" bgcolor="white"></table>
+<body>
 
+<h2>Using the XMLHttpRequest Object</h2>
+
+<div id="demo">
+<button type="button" onclick="loadXMLDoc()">Change Content</button>
+</div>
 
 <script>
-
 function loadXMLDoc() {
-table.innerHTML = ""
-  var url = inp.value
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
-      var result = this.responseText.split(/\n/g)
-      console.log(result)
-      
-      result.forEach(function(item, i) {
-      	var tr = table.insertRow()
-        var split = item.split(/\t/g)
-        split.forEach(function(jtem, j) {
-        	tr.insertCell().innerText = jtem
-        })
-      })
-      
+      document.getElementById("demo").innerHTML =
+      this.responseText;
     }
   };
-  
-  
-  xhttp.open("GET", url, true);
+  xhttp.open("GET", "https://docs.google.com/spreadsheets/d/e/2PACX-1vSSGStcnsrb1-HnR_pCCxdFXMXYF3njjzQfQxFaT6fD6wytmlTiSfUY0MV6boc3oTGw28rC5npj_5On/pub?gid=0&single=true&output=csv", true);
   xhttp.send();
 }
-
-loadXMLDoc()
 </script>
-
 
 </body>
 </html>

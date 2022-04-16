@@ -25,3 +25,31 @@ function vlookup(searchvalue, headervalue, overwrite_value) {
 
 
 }
+
+
+
+
+
+function makeTable(array) {
+	
+	var table = document.createElement("TABLE")
+  var thead = document.createElement("THEAD")
+  var tbody = document.createElement("TBODY")
+  table.border = "1"
+  
+  array[0].forEach(function(item, index) {
+  	var th = document.createElement("TH")
+    th.innerText = item
+    thead.appendChild(th)
+  })
+  array.shift()
+	array.forEach(function(item, index) {
+  	var tr = tbody.insertRow()
+    item.forEach(function(jtem, j) {
+    	tr.insertCell().innerText = jtem
+    })
+  })
+  table.appendChild(thead)
+  table.appendChild(tbody)
+  return table
+}

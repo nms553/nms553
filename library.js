@@ -1,4 +1,5 @@
 Array.prototype.vlookup = vlookup
+Array.prototype.makeTable = makeTable
 
 function vlookup(searchvalue, headervalue, overwrite_value) {
 

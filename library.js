@@ -1,3 +1,5 @@
+Array.prototype.vlookup = vlookup
+
 function vlookup(searchvalue, headervalue, overwrite_value) {
 
   var foreach;

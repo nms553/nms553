@@ -54,3 +54,32 @@ function makeTable() {
   table.appendChild(tbody)
   return table
 }
+
+
+
+Array.prototype.JSONtoTable = function() {
+  var that = this
+  var header = Object.keys(that[0])
+  var table = document.createElement("TABLE")
+  table.border = "1"
+  var tbody = document.createElement("TBODY")
+  var thead = document.createElement("THEAD")
+  var tr = thead.insertRow()
+  header.forEach(function(item, index) {
+  	var th = document.createElement("TH")
+    th.innerText = item
+    tr.appendChild(th)
+  })
+  that.forEach(function(item, index) {
+  	var tr= tbody.insertRow()
+    var values = Object.values(item)
+    values.forEach(function(jtem, j) {
+    	tr.insertCell().innerText = jtem
+    })
+    
+  })
+  table.appendChild(thead)
+  table.appendChild(tbody)
+  console.log(table)
+  return table
+}

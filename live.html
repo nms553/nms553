@@ -1,5 +1,6 @@
 
 
+
 <!DOCTYPE html>
 <html>
 	<head>
@@ -34,6 +35,7 @@
 
 <script>
 document.addEventListener("DOMContentLoaded", getRaceID);
+var runonce = 0;
 
 function getRaceID() {
   var xhttp = new XMLHttpRequest();
@@ -83,7 +85,8 @@ function getRaceData(rid) {
   xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
       var result = JSON.parse(this.responseText);
-      //console.log(result);
+      console.log("getRaceData")
+      console.log(result);
       getAlias(rid, result.vehicles)
     }
 
@@ -199,6 +202,11 @@ function getStage(rid, stupidfast) {
       summaryTable(stupidfast.Player)
     } else {
     console.log("ready")
+    if (runonce < 1) {
+    summaryTable(stupidfast.Player)
+    runonce++
+    }
+    
     }
 
   };

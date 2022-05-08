@@ -8,29 +8,33 @@
   outline: 0px solid;
 }
 
+html {
+	padding: 0px;
+}
+
+body {
+	margin: 0px;
+}
+
 table {
   table-layout: fixed;
   position: relative;
+  border-collapse: collapse;
 
 }
 
 th {
   position: sticky;
   top: 0;
+  background: white;
 }
 
 td {
-  padding-left: 5px;
-  padding-right: 3px;
+  padding: 5px;
 }
 
 .today {
   background: yellow;
-}
-
-td:nth-child(3) {
-  width: 40px;
-  text-align: center;
 }
 
 td:last-child {
@@ -39,7 +43,17 @@ td:last-child {
   font-family: sans-serif;
 }
 
+tr:nth-child(even) {
+	background: #EFEFEF;
+}
 
+.players {
+	width: 45px;
+}
+
+.opp {
+	width: 150px;
+}
       
     </style>
     
@@ -109,6 +123,7 @@ xhttp.onreadystatechange = function() {
       a2.innerHTML = item.OPPONENT
       td1.appendChild(a1)
       td2.appendChild(a2)
+      td2.className = "opp"
 
       var d2 = new Date(item.DAY)
       var mo2 = d2.getMonth()
@@ -163,6 +178,7 @@ xhttp.onreadystatechange = function() {
     obj.players.forEach(function(item, index) {
       var th = document.createElement("TH")
       th.innerText = item.NAME
+      th.className = "players"
       thead.appendChild(th)
     })
 

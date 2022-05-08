@@ -1,0 +1,207 @@
+<html>
+  
+  <head>
+    <style>
+      {
+  outline: 0px solid;
+}
+
+table {
+  table-layout: fixed;
+}
+
+td {
+  padding-left: 5px;
+  padding-right: 3px;
+}
+
+.today {
+  background: yellow;
+}
+
+td:nth-child(3) {
+  width: 40px;
+  text-align: center;
+}
+
+td:last-child {
+  width: 135px;
+  font-size: 0.6em;
+  font-family: sans-serif;
+}
+      
+    </style>
+    
+  </head>
+  <body>
+    
+    <h1>Cardinals Fantasy</h1>
+
+<div>
+
+  <a href="https://www.cbssports.com/mlb/teams/STL/st-louis-cardinals/" target="_blank">Scores and gameday</a>
+
+</div>
+
+<br>
+<br>
+
+<table border='1'>
+  <thead>
+    <tr id="thead">
+      <th>Day</th>
+      <th>Opponent</th>
+      <th>Result/time</th>
+    </tr>
+  </thead>
+  <tbody id="tbody">
+
+  </tbody>
+</table>
+
+<form id="form" action="https://script.google.com/macros/s/AKfycbyEnj_rd6CNLmNaenm_AndJ7jGh-OboIP9SVHKB9TkhPikyOMZ0J6HV00qe1c3k7p8N1w/exec" method="post" target="iframe" style="display:none;">
+  <iframe src="" name="iframe" style="display:none;"></iframe>
+  <input type="text" name="timestamp">
+  <input type="text" name="game">
+  <input type="text" name="player">
+  <input type="text" name="value">
+  <input type="submit">
+</form>
+
+    
+    
+    <script>
+      
+      
+      var d = new Date(Date.now())
+var mo = d.getMonth()
+var day = d.getDate()
+var today = mo + day / 100
+console.log(today)
+
+
+
+var xhttp = new XMLHttpRequest();
+xhttp.onreadystatechange = function() {
+  if (this.readyState == 4 && this.status == 200) {
+    var obj = JSON.parse(this.responseText)
+    //console.log(obj)
+
+    obj.sched.forEach(function(item, index) {
+      var tr = tbody.insertRow()
+      tr.id = item.ID
+      var td1 = tr.insertCell()
+      var td2 = tr.insertCell()
+      var a1 = document.createElement("A")
+      var a2 = document.createElement("A")
+      a1.innerHTML = item.DAY
+      a2.innerHTML = item.OPPONENT
+      td1.appendChild(a1)
+      td2.appendChild(a2)
+
+      var d2 = new Date(item.DAY)
+      var mo2 = d2.getMonth()
+      var day2 = d2.getDate()
+      var today2 = mo2 + day2 / 100
+      var disabled = false
+      if (today == today2) {
+        tr.className = "today"
+        a1.href = "https://www.cbssports.com/mlb/teams/STL/st-louis-cardinals"
+        a2.href = "https://www.cbssports.com/mlb/teams/STL/st-louis-cardinals"
+        a1.target = "_blank"
+        a2.target = "_blank"
+      } else if (today2 < today) {
+        disabled = true
+      }
+
+
+      obj.players.forEach(function(jtem, jndex) {
+        var td = tr.insertCell()
+        if (item.OPPONENT) {
+          var select = document.createElement("SELECT")
+          select.className = jtem.ID
+          select.onchange = (function() {
+            makePick(this)
+          })
+          select.disabled = disabled
+          var n = document.createElement("OPTION")
+          n.innerText = ""
+          var w = document.createElement("OPTION")
+          w.innerText = "W"
+          var l = document.createElement("OPTION")
+          l.innerText = "L"
+          select.add(n)
+          select.add(w)
+          select.add(l)
+          td.append(select)
+        }
+      })
+
+
+
+    })
+
+    obj.picks.forEach(function(item, index) {
+      var tr = document.getElementById(item.id)
+      var sel = tr.getElementsByClassName(item.player)[0]
+      sel.value = item.value
+      sel.id = item.timestamp
+
+    })
+
+    obj.players.forEach(function(item, index) {
+      var th = document.createElement("TH")
+      th.innerText = item.NAME
+      thead.appendChild(th)
+    })
+
+    getResults(obj)
+  }
+};
+xhttp.open("GET", "https://script.google.com/macros/s/AKfycbyEnj_rd6CNLmNaenm_AndJ7jGh-OboIP9SVHKB9TkhPikyOMZ0J6HV00qe1c3k7p8N1w/exec", true);
+xhttp.send();
+
+
+function getResults(obj) {
+  obj.sched.forEach(function(item) {
+  var tr = document.getElementById(item.ID)
+  var td1 = tr.insertCell(2)
+  var td2 = tr.insertCell()
+      var find = obj.feed.find(function(jtem) {
+      	return item.ID == jtem.ID
+      })
+   try {
+   td1.innerHTML = find.RESULT  
+   td2.innerHTML = find.WIN + "&nbsp" + "<a href='https://www.google.com/search?q=" + find.OPPONENT.split("@")[1] + "+" + find.LOSS + "' target='_blank'>" + find.LOSS + "</a>"
+   
+   } catch(err) {}
+
+  })
+  var th = document.createElement("TH")
+      th.innerText = "Pitchers"
+      thead.appendChild(th)
+}
+
+
+function makePick(that) {
+  var timestamp = that.id
+  if (!timestamp) {
+    timestamp = Date.now()
+  }
+  var game = that.parentNode.parentNode.id
+  var player = that.className
+  var value = that.value
+  document.getElementsByName("timestamp")[0].value = timestamp
+  document.getElementsByName("game")[0].value = game
+  document.getElementsByName("player")[0].value = player
+  document.getElementsByName("value")[0].value = value
+
+  form.submit()
+}
+
+      
+    </script>
+    
+  </body>
+  
+</html>

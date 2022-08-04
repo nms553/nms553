@@ -1,12 +1,144 @@
 <!DOCTYPE html>
-<html style="height: 100%; margin: 0px;">
-  <head>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  </head>
-<body style="height: 100%; margin: 0px;">
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <title>Standings</title>
 
-<iframe src="https://docs.google.com/spreadsheets/d/1O0TjN3lFCFmuVFmLja_BEfjohMiBJmku_f71ElVffOM/htmlembed?single=true&gid=1785362971&range=a1:ff66&widget=false&chrome=false" width="100%" height="100%" frameborder="0">
-</iframe>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+    <link rel="stylesheet" type="text/css" href="/css/result-light.css">
+
+
+  <style id="compiled-css" type="text/css">
+    html, body {
+  //background-color: lightgray;
+  font-family: sans-serif;
+  font-size: 0.9em;
+}
+
+table, td, th {
+  border: 3px solid white;
+  border-collapse: collapse;
+  background: #EEE;
+  padding: 10px 20px 10px 15px;
+  text-align: center;
+  table-layout: fixed;
+}
+
+th {
+  background-color: #0BF;
+  color: white;
+  
+}
+
+td:nth-child(2) {
+  font-weight: bold;
+  text-align: left;
+}
+
+tr:nth-child(n+2):hover {
+  outline: 2px solid black;
+}
+
+
+  </style>
+
+</head>
+<body>
+    Points up through: <select name="select" id="select" onchange="changeRace(this.value)">
+</select>
+
+<br><br>
+
+<table id="table" border="1"></table>
+
+
+    <script type="text/javascript">
+
+
+var url = "https://docs.google.com/spreadsheets/d/1jwadkJYYfBmf-SbjUokDV0S_yzC7gD39-jHxVatJfLU/gviz/tq?sheet=Point&tq="
+
+function loadXMLDoc(uri, func) {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      var resp = this.responseText
+      //body.innerHTML = this.responseText
+
+      resp = resp.replace("/*O_o*/\ngoogle.visualization.Query.setResponse(", "")
+      var lio = resp.lastIndexOf(")")
+      var substr = resp.substring(0, lio)
+      var obj = JSON.parse(substr)
+
+      window[func](obj)
+
+
+
+
+    }
+  };
+  xhttp.open("GET", uri, true);
+  xhttp.send();
+}
+
+loadXMLDoc(url + "SELECT C, sum(K), sum(L) group by C order by sum(K) DESC label sum(K) 'Total', sum(L) 'Weekly $'", "buildTable")
+
+function changeRace(that) {
+  loadXMLDoc(url + "SELECT C, sum(K), sum(L) where B <= " + that + " group by C order by sum(K) DESC label sum(K) 'Total', sum(L) 'Weekly $'", "buildTable")
+}
+
+function buildTable(obj) {
+  //console.log(obj)
+  table.innerHTML = ""
+  var rh = table.insertRow()
+  rh.insertCell().style.background = "white"
+  obj.table.cols.forEach(function(item) {
+    var th = document.createElement("TH")
+    th.innerHTML = item.label
+    rh.append(th)
+  })
+  rh.insertCell().style.background = "white"
+  
+  var prev = 0
+  obj.table.rows.forEach(function(item, index) {
+    var tr = table.insertRow()
+    tr.insertCell().innerHTML = index + 1
+    
+    item.c.forEach(function(jtem) {
+      try {
+        tr.insertCell().innerText = jtem.v
+        
+      } catch (err) {
+
+      }
+      
+    })
+tr.insertCell().innerText = item.c[1].v - obj.table.rows[0].c[1].v
+  })
+}
+
+
+function createOptions(obj) {
+  console.log(obj)
+  obj.table.rows.forEach(function(item) {
+    var opt = document.createElement("OPTION")
+    opt.value = item.c[1].v
+    opt.innerHTML = item.c[0].v
+    opt.selected = true
+    select.appendChild(opt)
+  })
+
+
+}
+
+loadXMLDoc(url + "SELECT A, B where C matches 'Nick'", "createOptions")
+
+
+
+</script>
+
 
 </body>
 </html>
+

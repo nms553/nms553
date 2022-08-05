@@ -1,4 +1,9 @@
 
+Array.prototype.loadXML = loadXML
+
+Array.prototype.testABC = testABC
+
+
 function loadXML(url) {
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
@@ -13,4 +18,11 @@ function loadXML(url) {
   };
   xhttp.open("GET", url, true);
   xhttp.send();
+}
+
+
+
+function testABC() {
+
+return "testABC"
 }

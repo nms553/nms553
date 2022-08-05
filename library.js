@@ -1,6 +1,26 @@
 Array.prototype.vlookup = vlookup
 Array.prototype.makeTable = makeTable
 
+function loadXML(url, xmlReturn) {
+var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      var resp = this.responseText
+      //body.innerHTML = this.responseText
+
+      resp = resp.replace("/*O_o*/\ngoogle.visualization.Query.setResponse(", "")
+      var lio = resp.lastIndexOf(")")
+      var substr = resp.substring(0, lio)
+      var obj = JSON.parse(substr)
+      //console.log(obj)
+      //alert(JSON.stringify(obj))
+      xmlReturn(obj)
+    }
+  };
+  xhttp.open("GET", url, true);
+  xhttp.send();
+  }
+
 function vlookup(searchvalue, headervalue, overwrite_value) {
 
   var foreach;

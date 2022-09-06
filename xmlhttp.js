@@ -1,28 +1,11 @@
-
-Array.prototype.loadXML = loadXML
-
-Array.prototype.testABC = testABC
-
-
-function loadXML(url) {
+function xml(qstr) {
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
-      var resp = this.responseText    
-      resp = resp.replace("/*O_o*/\ngoogle.visualization.Query.setResponse(", "")
-      var lio = resp.lastIndexOf(")")
-      var substr = resp.substring(0, lio)
-      var obj = JSON.parse(substr)
-      return obj
+    	console.log(this.responseText)
+      return this.responseText
     }
   };
-  xhttp.open("GET", url, true);
+  xhttp.open("GET", "https://script.google.com/macros/s/AKfycbyjTonSlOhwkCFTaoIzgPcguGGrpv7UMvwqjElaMU9On2UrOm6Dx746WZjGnQkyWSWoHA/exec?" + qstr, true);
   xhttp.send();
-}
-
-
-
-function testABC() {
-
-return "testABC"
 }

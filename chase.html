@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400&display=swap" rel="stylesheet">
+  <link href="https://stupid-fast.com/css.css" rel="stylesheet">
+</head>
+<body>
+
+<h2>Chase points</h2>
+
+<select name="" id="select" onchange="changeTable('NO,==,' + this.value); (function() {playerssel.value = ''})()">
+  <option value="" disabled selected>Select track</option>
+  <option value=""></option>
+</select>
+
+<br>
+
+<select name="" id="playerssel" onchange="changeTable('PLAYER,==,' + this.value); (function() {select.value = ''})()">
+  <option value=""></option>
+</select>
+<label>Cumulate: <input type="checkbox" id="cum" onchange="changeTable('PLAYER,==,' + playerssel.value)"></label>
+
+<table id="table" border="1" width="100%">
+<thead>
+  <tr id="thead"></tr>
+</thead>
+  <tbody id="tbody">
+    
+  </tbody>
+</table>
+
+<script>
+function loadXMLDoc(q, x) {
+  var url = "https://script.google.com/macros/s/AKfycbyjTonSlOhwkCFTaoIzgPcguGGrpv7UMvwqjElaMU9On2UrOm6Dx746WZjGnQkyWSWoHA/exec?"
+  var ss = "ss=1jwadkJYYfBmf-SbjUokDV0S_yzC7gD39-jHxVatJfLU&"
+  console.log(url + ss + q)
+
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+
+      var json = JSON.parse(this.responseText)
+      window[x](json[0])
+      console.log(json[0])
+    }
+  };
+  xhttp.open("GET", encodeURI(url + ss + q), true);
+  xhttp.send();
+}
+
+loadXMLDoc("queries=sheet::Point>>filter::%23,>,26>>group::Player Name,Total>>sort::Total,desc>>select::Player Name,Total", "buildTable")
+//loadXMLDoc("queries=sheet::POINTS>>filter::RACE,!==,init>>group::NO,", "buildTracks")
+//loadXMLDoc("queries=sheet::POINTS>>filter::RACE,==,init", "buildPlayers")
+
+function buildTracks(json) {
+  json.forEach(function(item) {
+    var opt = document.createElement("OPTION")
+    opt.value = item.NO
+    opt.innerHTML = item.RACE
+    select.append(opt)
+  })
+}
+
+function buildPlayers(json) {
+  json.forEach(function(item) {
+    var opt = document.createElement("OPTION")
+    opt.value = item.PLAYER
+    opt.innerHTML = item.PLAYER
+    playerssel.append(opt)
+  })
+}
+
+function changeTable(val) {
+var group = ""
+if (cum.checked) {
+	group = ">>group::PLAYER,TOTAL"
+}
+
+  loadXMLDoc("queries=sheet::POINTS>>filter::" + val + ">>filter::RACE,!==,init>>select::NO,RACE,PLAYER,PTS1,PTS2,BONUS,TOTAL" + group, "buildTable")
+}
+
+
+function buildTable(vals) {
+  tbody.innerHTML = ""
+  thead.innerHTML = ""
+  var keys = Object.keys(vals[0])
+  keys.forEach(function(item) {
+  	var th = document.createElement("TH")
+    th.innerHTML = item
+  	thead.append(th)
+  })
+  vals.forEach(function(item) {
+    var tr = document.createElement("TR")
+    keys.forEach(function(jtem) {
+      tr.insertCell().innerHTML = item[jtem]
+    })
+    tbody.append(tr)
+  })
+
+}
+
+</script>
+
+
+</body>
+</html>

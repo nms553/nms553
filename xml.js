@@ -1,7 +1,5 @@
 //XMLHHTP GRAB FUNCTION -- DO NOT EDIT ANYTHING BELOW
 
-var 
-
 function loadXMLDoc(url, x) {
 
   var xhttp = new XMLHttpRequest();

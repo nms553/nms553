@@ -1,3 +1,58 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <title></title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="googlebot" content="noindex, nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <script
+    type="text/javascript"
+    src="/js/lib/dummy.js"
+    
+  ></script>
+
+    <link rel="stylesheet" type="text/css" href="/css/result-light.css">
+
+
+  <style id="compiled-css" type="text/css">
+    html, body {
+  height: 100%;
+}
+
+    /* EOS */
+  </style>
+
+  <script id="insert"></script>
+
+</head>
+<body>
+    <h1 id="h1"></h1>
+
+<select id="select" onchange="changeChapter()">
+  <option selected disabled></option>
+</select>
+<button onclick="randChapter()">Random chapter</button>
+
+<hr>
+
+<select id="sectionselect" onchange="changeSection()">
+</select>
+<button onclick="nextDay()" id="ndbutton">Advance to next day</button>
+
+<div id="div"></div>
+
+<iframe src="" id="iframe" height="100%" frameborder="0" width="100%"></iframe>
+
+
+
+    <script type="text/javascript">//<![CDATA[
+
+
 var chapters = [
   'GEN 1',
   'GEN 2',
@@ -1319,3 +1374,13 @@ function nextDay() {
   ndbutton.disabled = true
   changeSection()
 }
+
+
+
+  //]]></script>
+
+
+
+
+</body>
+</html>

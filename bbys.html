@@ -1,25 +1,3 @@
-<!DOCTYPE html>
-<html>
-<body>
-
-<h1 id="h1"></h1>
-
-<select id="select" onchange="changeChapter(this.value)">
-  <option selected disabled></option>
-</select>
-<button onclick="randChapter()">Random chapter</button>
-
-<hr>
-
-<select id="sectionselect" onchange="changeSection()">
-</select>
-<button onclick="nextDay()" id="ndbutton">Advance to next day</button>
-
-<div id="div"></div>
-
-<iframe src="" id="iframe" height="100%" frameborder="0" width="100%"></iframe>
-
-<script>
 var chapters = [
   'GEN 1',
   'GEN 2',
@@ -1264,10 +1242,11 @@ function loadVerses(chapter, section) {
       var json = JSON.parse(substring)
       console.log(json)
       var verse = json.table.rows[section].c
-
+      sectionselect.innerHTML = ""
       json.table.rows.forEach(function(ktem, k) {
         console.log("ktem")
         console.log(ktem)
+        
         var option = document.createElement("OPTION")
         option.innerHTML = ktem.c[1].v + " – " + ktem.c[2].v + ": " + ktem.c[0].v
         option.value = k
@@ -1340,8 +1319,3 @@ function nextDay() {
   ndbutton.disabled = true
   changeSection()
 }
-
-</script>
-
-</body>
-</html>

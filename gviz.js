@@ -1,4 +1,4 @@
-function gviz(SHEET, TQ, FUNC) {
+function gviz(KEY, SHEET, TQ, FUNC) {
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
@@ -25,6 +25,6 @@ function gviz(SHEET, TQ, FUNC) {
 
     }
   };
-  xhttp.open("GET", "https://docs.google.com/spreadsheets/d/1kqkXpF31nI0ek7D3bFMCG7nffgA1__LGI7sg6ZAxQqQ/gviz/tq?tqx=out:html&sheet=" + SHEET + "&" + "tq=" + TQ, true);
+  xhttp.open("GET", "https://docs.google.com/spreadsheets/d/" + KEY + "/gviz/tq?tqx=out:html&sheet=" + SHEET + "&" + "tq=" + TQ, true);
   xhttp.send();
 }

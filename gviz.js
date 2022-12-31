@@ -1,4 +1,4 @@
-function gviz(KEY, SHEET, TQ, FUNC) {
+function gviz(KEY, SHEET, TQ, CALLBACK) {
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
@@ -19,9 +19,8 @@ function gviz(KEY, SHEET, TQ, FUNC) {
         ARR.push(SUBARR)
       }
 
-      //console.log(ARR)
 
-      window[FUNC](ARR)
+      CALLBACK(ARR)
 
     }
   };

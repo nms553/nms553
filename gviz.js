@@ -13,7 +13,7 @@ function gviz(KEY, SHEET, TQ, CALLBACK) {
       var ARR = []
       var TRS = TEMPLATE.getElementsByTagName("TR")
 
-      for (var i = 1; i < TRS.length; i++) {
+      for (var i = 0; i < TRS.length; i++) {
         var SUBARR = []
         var TDS = TRS[i].getElementsByTagName("TD")
         for (var j = 0; j < TDS.length; j++) {

@@ -1,4 +1,7 @@
 function gviz(KEY, SHEET, TQ, CALLBACK) {
+  var URL = "https://docs.google.com/spreadsheets/d/" + KEY + "/gviz/tq?tqx=out:html&sheet=" + SHEET + "&" + "tq=" + TQ
+  console.log(URL)
+  
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
@@ -24,6 +27,6 @@ function gviz(KEY, SHEET, TQ, CALLBACK) {
 
     }
   };
-  xhttp.open("GET", "https://docs.google.com/spreadsheets/d/" + KEY + "/gviz/tq?tqx=out:html&sheet=" + SHEET + "&" + "tq=" + TQ, true);
+  xhttp.open("GET", URL, true);
   xhttp.send();
 }

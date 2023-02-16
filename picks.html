@@ -58,7 +58,7 @@ td {
     <dialog id="dialog">
 <center>
   <p id="p"></p>
-  <button onclick="(function(that){that.close()})(this.parentElement)">Close</button>
+  <button onclick="closeModal()">Close</button>
   </center>
 </dialog>
 
@@ -175,7 +175,9 @@ xhttpx.send();
 
 
 
-
+function closeModal() {
+	dialog.close()
+}
 
 
 
@@ -188,7 +190,7 @@ xhttpx.send();
     if (window.parent && window.parent.parent){
       window.parent.parent.postMessage(["resultsFrame", {
         height: document.body.getBoundingClientRect().height,
-        slug: "vya1grbo"
+        slug: "xt0e2onp"
       }], "*")
     }
 

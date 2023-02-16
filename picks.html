@@ -1,307 +1,201 @@
 
-  <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
-
 <head>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400&display=swap" rel="stylesheet">
-  <link href="https://stupid-fast.com/css.css" rel="stylesheet">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <title></title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="googlebot" content="noindex, nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <script
+    type="text/javascript"
+    src="/js/lib/dummy.js"
+    
+  ></script>
+
+    <link rel="stylesheet" type="text/css" href="/css/result-light.css">
+
+
+  <style id="compiled-css" type="text/css">
+    html, body {
+  //color: white;
+  //background: black;
+  font-family: sans-serif;
+  font-size: 0.92em;
   
-  <style>
-tr:nth-child(13) td {
-  padding-bottom: 25px;
-  border-bottom: 1px solid;
 }
 
-tr:nth-child(14) td {
-  padding-top: 25px;
+table {
+  table-layout: fixed;
+  width: 100%;
+  max-width: 300px;
+  border-spacing: 0px 10px;
 }
 
-input[name="trashtalk"] {
-  width: 92%;
+/*
+tr {
+  background: white;
 }
 
-</style>
+
+td {
+  padding: 20px;
+  border-radius: 5px;
+}
+
+*/
+
+    /* EOS */
+  </style>
+
+  <script id="insert"></script>
 
 </head>
-
 <body>
+    <dialog id="dialog">
+<center>
+  <p id="p"></p>
+  <button onclick="(function(that){that.close()})(this.parentElement)">Close</button>
+  </center>
+</dialog>
 
-  <a href="https://www.stupid-fast.com/" class="banner">
-  <img src="https://www.stupid-fast.com/banner.png"></a>
 
-<table id="table" border="1">
-  <tr>
-    <td>LOADING...</td>
-  </tr>
-</table>
+<center>
+  <a href="https://www.stupid-fast.com/">
+    <img src="https://www.stupid-fast.com/banner.png">
+  </a>
 
-<form action="https://script.google.com/macros/s/AKfycbxRJrxGeKwbSUxf3aFIinfquZJPucJf2Mhc61GDuEzVFsNbOWnS98dGH3KbiHkWU_Un_A/exec" method="post" target="iframe" onsubmit="delayFunc()">
-  <iframe name="iframe" style="display: none;"></iframe>
-  <br>
-  <input type="text" name="trashtalk" list="insults" placeholder="trashtalk...">
-  <input type="hidden" name="player" value="">
-  <br>
-  <input type="submit" id="submitbutton" value="Submit trashtalk" >
-</form>
+<br><br>
+
+  <table id="top10"></table>
+
+  <hr>
   
-  <script>
-    document.addEventListener("DOMContentLoaded", loadXMLDoc);
+  <table id="nontop10"></table>
+  
+  <a href="https://stupid-fast.com" target="_blank">
+    <button>Done</button>
+  </a>
 
-function loadXMLDoc() {
-  var xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = function () {
-    if (this.readyState == 4 && this.status == 200) {
-      var obj = JSON.parse(this.responseText);
-      console.log(obj);
-      table.innerHTML = "";
-      
-      var sort = obj.Driver.sort(function(a, b) {
-      	return a.standing - b.standing
-      })
+</center>
+<script src="https://nms553.github.io/gviz.js"></script>
 
-      sort.forEach(function (item, index) {
-        var tr = table.insertRow();
-        var img = document.createElement("IMG");
-        img.src = "https://stupid-fast.com/d/d" + item.number + ".png";
-        img.width = "50";
-        tr.insertCell().appendChild(img);
-        tr.insertCell().innerText = item.driver;
 
-        var select = document.createElement("SELECT");
-        select.id = item.driverid;
-        select.onchange = function () {
-          submitPick(this.id, this.value);
-        };
-        var option = document.createElement("OPTION");
-        //option.value = "";
-        option.value = "d000";
-        select.add(option);
 
-        obj.Player.forEach(function (item, index) {
-        	if (item.active == true) {
-            var opt = document.createElement("OPTION");
-            opt.innerText = item.player;
-            opt.value = item.playerid;
-            select.add(opt);
-            }
-        });
+    <script type="text/javascript">//<![CDATA[
 
-        tr.insertCell().appendChild(select);
-      });
 
-      obj.Driver.forEach(function (item, index) {
+var key = "1jwadkJYYfBmf-SbjUokDV0S_yzC7gD39-jHxVatJfLU"
+var select = document.createElement("SELECT")
+select.add(document.createElement("OPTION"))
 
-          var menu = document.getElementById(item.driverid);
-          menu.value = item.playerid;
+function getPlayers() {
+  gviz(key, "PLAYERS", "select A, B, C where C = true", function(data) {
+    console.log(data)
+    data.shift()
+    data.forEach(function(item) {
+      opt = document.createElement("OPTION")
+      opt.text = item[1]
+      opt.value = item[0]
+      select.add(opt)
+    })
+    console.log(select)
+    getDrivers(data)
+  })
+}
 
-      });
+
+function getDrivers(players) {
+  gviz(key, "DRIVERS", "select A, B, C, D", function(data) {
+    data.shift()
+    console.log(data)
+    getStandings(players, data)
+  })
+
+}
+
+
+function getStandings(players, drivers) {
+  gviz(key, "DSTANDINGS", "select K", function(data) {
+    data.shift()
+    console.log(data)
+    matchDrivers(players, drivers, data.flat())
+  })
+}
+
+
+function matchDrivers(players, drivers, standings) {
+
+  drivers.forEach(function(item) {
+    var tr = document.createElement("TR")
+    var indexof = standings.indexOf(item[0])
+    var table = document.getElementById("nontop10")
+    if (indexof < 10 && indexof > -1) {
+      table = document.getElementById("top10")
     }
-  };
-  xhttp.open(
-    "GET",
-    "https://script.google.com/macros/s/AKfycbxWY4yfPYawPQlV60bP6pMoZbvW124OZSMf_ftGk3QkUUyuFoDvnClgScK3JXHyu--w/exec",
-    true
-  );
-  xhttp.send();
+    var tr = table.insertRow()
+    tr.insertCell().innerHTML = item[1]
+    var td = tr.insertCell()
+    var clone = select.cloneNode(true)
+    clone.value = item[3]
+    clone.id = item[0]
+    clone.setAttribute("onchange", "submitDriver(this.value, this.id)")
+    
+    td.append(clone)
+  })
+
 }
 
-function submitPick(id, value) {
-  if (value !== "d000") {
-    document.getElementsByName("player")[0].value = value;
-  }
-  
-  
 
-  var http = new XMLHttpRequest();
-  http.open(
-    "POST",
-    "https://script.google.com/macros/s/AKfycbxWY4yfPYawPQlV60bP6pMoZbvW124OZSMf_ftGk3QkUUyuFoDvnClgScK3JXHyu--w/exec",
-    true
-  );
-  http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-  http.send("driver=" + id + "&player=" + value);
+
+
+getPlayers()
+
+
+
+function submitDriver(playerid, driverid) {
+var url = "https://script.google.com/macros/s/AKfycbz-bo8-JCGDorlrhvfS2zYWH_F7p5iwgk2TjxeSWdSZSZPuaS9v42WAidA9lbRaI2qBzg/exec?playerid=" + playerid + "&driverid=" + driverid
+console.log(url)
+
+var xhttpx = new XMLHttpRequest();
+xhttpx.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+    	p.innerHTML = "Success"
+       dialog.showModal()
+    }
+};
+xhttpx.open("GET", url, true);
+xhttpx.send();
+
+
 }
 
-function delayFunc() {
-  console.log("submitted")
-  	var b = document.getElementById("submitbutton")
-    var inp = document.getElementsByName("trashtalk")[0]
-    b.disabled = true
-    setTimeout(function() {
-    	b.disabled = false
-    }, 5000);
-  }
 
+
+
+
+
+
+
+
+  //]]></script>
+
+  <script>
+    // tell the embed parent frame the height of the content
+    if (window.parent && window.parent.parent){
+      window.parent.parent.postMessage(["resultsFrame", {
+        height: document.body.getBoundingClientRect().height,
+        slug: "vya1grbo"
+      }], "*")
+    }
+
+    // always overwrite window.name, in case users try to set it manually
+    window.name = "result"
   </script>
-  
-  <datalist id="insults">
-    <option value='“If you ain’t first, you’re last.” — Ricky Bobby'>
 
-<option value='“You’ve gotta cross over the anger bridge and come back to the friendship shore.” — Cal Naughton Jr.'>
-
-<option value='“I wet my bed until I was nineteen. There’s no shame in that.” — Cal Naughton, Jr.'>
-
-<option value='“Like the frightened baby chipmunk, you are scared by anything that is different.” — Jean Girard'>
-
-<option value='“Ricky, remember: The field mouse is fast, but the owl sees at night.” — Chip'>
-
-<option value='“No one lives forever, no one. But with advances in modern science and my high-level income, it’s not crazy to think I can live to be 245, maybe 300.” — Ricky Bobby'>
-
-<option value='“Hey, Jamie! Losing’s never fun, but here’s a little something to pick your spirits up… (flips the finger) It’s real nice…I got it at Target…it was on sale.” —Ricky Bobby'>
-
-<option value='“Here’s the deal—I’m the best there is. Plain and simple. I wake up in the morning and I piss excellence.” — Ricky Bobby'>
-
-<option value='“You gotta learn to drive with the fear, and there ain’t nothing more God damn frightening than driving with a live cougar in the car.” — Reese Bobby'>
-
-
-<option value='“We go together like cocaine and waffles.” — Cal Naughton Jr.'>
-
-<option value='“I like to picture my Jesus in a tuxedo T-shirt. ‘Cause it says like, I wanna be formal but I’m here to party too. I like to party, so I like my Jesus to party.” — Cal Naughton, Jr.'>
-
-<option value='“You don’t understand. You don’t understand because you don’t understand liberty. You don’t understand freedom. So, you put a crack in my arm like the crack in the Liberty Bell! You hear me?” — Ricky Bobby'>
-
-<option value='“Well, let me give you a saying from Colonel Sanders. I am too drunk to taste this chicken.” — Ricky Bobby'>
-
-<option value='“I like to think of Jesus as an Ice Dancer, dressed in an all-white jumpsuit, and doing an interpretive dance of my life.” — Cal Naughton, Jr.'>
-
-<option value='“Daddy, you made that grace your b*tch.” — Walker Bobby'>
-
-<option value='“Old man, I’m gonna come at you like a spider monkey!” — Texas Ranger'>
-
-<option value='“Did that blow your mind? Because that just happened!” – Ricky Bobby'>
-
-<option value='“I don’t know what to do with my hands.” – Ricky Bobby'>
-
-<option value='“I’m all jacked up on mountain dew!” – Texas Ranger'>
-
-<option value='“Aaaaah, Ricky Bobby! Now we shall dance. And yes, it will be a slow jam.” – Jean Girard'>
-<option value='“I’m just a big hairy American winning machine, you know?” – Ricky Bobby'>
-
-<option value='“I like to picture Jesus in a tuxedo T-shirt because it says I want to be formal, but I’m here to party.” – Cal Naughton, Jr.'>
-
-<option value='“Wow. I feel like I’m in Highlander!” – Ricky Bobby'>
-
-<option value='“Why do you want me to break your arm so badly?” – Jean Girard'>
-
-<option value='“You can’t have two No. 1s.” – Ricky Bobby'>
-
-<option value='“I’m not sure what to do with my hands.” – Ricky Bobby'>
-
-<option value='“We keep it on there for profiling purposes! We’ve also got The Pet Shop Boys and Seal.” — Bartender'>
-
-<option value='“Help me Jesus! Help me Jewish God! Help me Allah! AAAAAHHH! Help me Tom Cruise! Tom Cruise, use your witchcraft on me to get the fire off me!” – Ricky Bobby'>
-
-<option value='“What is that, a catchphrase or is that epilepsy?” — Jean Girard'>
-
-<option value='“From now on, you’re the Magic Man and I’m El Diablo.” – Ricky Bobby'>
-
-<option value='“Don’t you put that evil on me, Ricky Bobby!” — Lucius Washington'>
-
-<option value='“It won the Academy Award… Best movie ever made.” – Ricky Bobby'>
-
-<option value='“From now on, it’s Magic Man and El Diablo.” — Ricky Bobby'>
-
-<option value='“I threw a bunch of Grandpa Chip’s war medals off the bridge.” — Walker'>
-
-<option value='“One of you turds is gonna get smacked in the mouth!” – Texas Ranger'>
-
-<option value='“Hi, I’m Ricky Bobby. If you don’t chew Big Red, then bleep you.” – Ricky Bobby'>
-
-<option value='“Shake and bake!” — Cal Naughton Jr.'>
-
-<option value='“Dear 8 pounds 6 ounces… newborn infant Jesus, don’t even know a word yet.” – Ricky Bobby'>
-
-<option value='“I hope that both of you have sons… Handsome, beautiful, articulate sons, who are talented and star athletes and they have their legs taken away. I mean I pray you know that pain and that hurt.” – Ricky Bobby'>
-
-<option value='“This sticker is dangerous and inconvenient, but I do love Fig Newtons.” – Ricky Bobby'>
-
-<option value='“Why, if it isn’t our mangy, transient grandfather.” – Texas Ranger'>
-
-<option value='“I like to picture Jesus in a tuxedo t-shirt, cause it says, like, I want to be formal but I want to party too. Cause I like to party, so I like my Jesus to party.” — Cal Naughton Jr.'>
-
-<option value='“Hey, shut up you little pot-licker, I’ll stick you in a microwave!” – Reese Bobby'>
-
-<option value='“My husband Gregory And I want what any couple wants. To retire to Stockholm And develop a currency for dogs And cats to use.” — Jean Girard'>
-
-<option value='“I came here to tell you one thing: come race time tomorrow, I’m coming for you.” – Ricky Bobby'>
-
-<option value='“Will You be my… Katie Couric?” — Jean Girard'>
-
-<option value='“But before I can do that I must be beaten by a driver who is truly better than me.” – Jean Girard'>
-
-<option value='“Girard is sitting on the pole, which is a statement of fact And in no way a comment on his sexual orientation.” — PA Announcer'>
-
-<option value='“May God be with you, Monsieur Bobby. Because although today I am friendly. Tomorrow will be war!” – Jean Girard'>
-
-<option value='“I sent in my application to The Real World, so I’m hoping to hear back from that. I’m putting a lot of my eggs into that basket, the MTV basket. I’m also thinking about getting a gun, And dealing crack. Being a crack dealer. Not, like, a mean crack dealer, but like… like a nice one. Kinda friendly, like, “Hey, what’s up guys? You want some crack?”. I’m just waiting on those two things to just kinda flesh themselves out.” — Ricky Bobby'>
-
-<option value='“There’s nothing more frightening than driving with a live goddamn cougar next to you.” — Reese Bobby'>
-
-<option value='“I hope that both of You have sons… Handsome, beautiful, articulate sons, who are talented And star athletes And they have their legs taken away. I mean I pray for You to know that pain And that hurt.” — Ricky Bobby'>
-
-<option value='“Bon. So, what if you just said: ‘I love really thin pancakes’? That is a fair compromise, no?” –Jean Girard'>
-
-<option value='“Susan, I’ve never heard You talk like that… Are we about to get it on? Because I’m as hard as a diamond in an ice storm right now.” — Ricky Bobby'>
-
-<option value='“My husband Gregory and I want only that what every other couple wants: to tame komodo dragons in Sri Lanka and teach them to perform Hamlet, but before I can do that…” – Jean Girard'>
-
-<option value='“Hang on, Baby Jesus, this is gon’ get bumpy!” — Ricky Bobby'>
-
-<option value='“Best movie ever made. Look I came here to tell you tomorrow I’m coming for you.” – Ricky Bobby'>
-
-<option value='“Look, I like the Christmas Jesus best, And I’m sayin’ grace. When You say grace, You can say it to Grownup Jesus or Teenage Jesus or Bearded Jesus or whoever You want.” — Ricky Bobby'>
-
-<option value='“No, I don’t know what that means, I guess longer lives.” — Lucius Washington'>
-
-<option value='“One of you turds is about to get smacked in the mouth!” – Texas Ranger'>
-
-<option value='“Is that a catchphrase or epilepsy?” — Jean Girard'>
-
-<option value='“Jesus did grow up.” – Carley Bobby'>
-
-<option value='“I don’t care, I’m having a baby!” – Lucy Bobby'>
-
-<option value='“I’ll just bury it down inside.” – Cal Naughton Jr.'>
-
-<option value='“Got more plugs in him than a Circuit City.” – Carley Bobby'>
-
-<option value='“How many more times you going to toss me the radio in the bathtub?” – Lucy Bobby'>
-
-<option value='Reese: “You got big. How long’s it been? Three, four months?” Ricky: “Ten years.” Reese: “Ten years? Man, I’ve gotta lay off the peyote.”'>
-
-<option value='“It’s the fastest who gets paid and it’s the fastest who gets laid.” – Reese Bobby'>
-
-<option value='“Absolutely ma’am. I’d love to sign your baby. You’re not gonna want to wash that forehead.” – Ricky Bobby'>
-
-<option value='“Super’s ready! Come on, y’all! I’ve been slaving over this for hours.” – Carley Bobby'>
-
-<option value='“Yep, I’m flying through the air. This is not good.” – Ricky Bobby'>
-
-<option value='“Please be 18.” — Ricky Bobby'>
-
-<option value='“I’m going fast.” — Young Ricky Bobby'>
-
-<option value='“Break it, Pepé Le Pew.” — Ricky Bobby'>
-
-<option value='“It’s in the Geneva Convention!” — Ricky Bobby'>
-
-<option value='“I felt like I was on a spaceship.” — Ricky Bobby'>
-
-<option value='“See you when you’re grown up.” — Reese Bobby'>
-
-<option value='“I wanna go fast. I wanna go fast.” — Young Ricky Bobby'>
-
-<option value='“You don’t drive with your eyes, you drive with your heart.” — Reese Bobby'>
-
-<option value='“Now, there’s nothing like driving to avoid jail. Nothing hones your mind and your instincts like necessity.” — Reese Bobby'>
-
-  </datalist>
 
 </body>
-
 </html>
-

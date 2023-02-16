@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 
@@ -31,6 +32,10 @@
         width: 100%;
         max-width: 300px;
         border-spacing: 0px 10px;
+      }
+      
+      select {
+        float: right;
       }
 
       /*
@@ -76,9 +81,8 @@ td {
 
       <table id="nontop10"></table>
 
-      <a href="https://stupid-fast.com" target="_blank">
-        <button>Done</button>
-      </a>
+<br>
+<br>
 
     </center>
     <script src="https://nms553.github.io/gviz.js"></script>
@@ -159,7 +163,7 @@ td {
 
       function submitDriver(playerid, driverid) {
       	b.style.visibility = "hidden"
-        dialog.showModal()
+        //dialog.showModal()
         
         var url = "https://script.google.com/macros/s/AKfycbz-bo8-JCGDorlrhvfS2zYWH_F7p5iwgk2TjxeSWdSZSZPuaS9v42WAidA9lbRaI2qBzg/exec?playerid=" + playerid + "&driverid=" + driverid
         console.log(url)

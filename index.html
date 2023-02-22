@@ -1,199 +1,237 @@
-
-
 <!DOCTYPE html>
-<html>
-<head>
-  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-  <title></title>
-  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-  <meta name="robots" content="noindex, nofollow">
-  <meta name="googlebot" content="noindex, nofollow">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-
-  <script
-    type="text/javascript"
-    src="/js/lib/dummy.js"
-    
-  ></script>
-
-    <link rel="stylesheet" type="text/css" href="/css/result-light.css">
-
-
-  <style id="compiled-css" type="text/css">
-    
-
-    /* EOS */
-  </style>
-
-  <script id="insert"></script>
-
-</head>
-<body>
-    <!DOCTYPE html>
 <html>
 
   <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title></title>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="googlebot" content="noindex, nofollow">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400&display=swap" rel="stylesheet">
     <link href="https://stupid-fast.com/css.css" rel="stylesheet">
-    <script src="https://www.stupid-fast.com/gviz.js"></script>
 
-    <style>
-      a {
-        margin: 20px;
+
+    <script type="text/javascript" src="/js/lib/dummy.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="/css/result-light.css">
+
+
+    <style id="compiled-css" type="text/css">
+      html,
+      body {
+        //color: white;
+
       }
 
       table {
         table-layout: fixed;
-        border-collapse: collapse;
+        width: 100%;
+        max-width: 300px;
+        border-spacing: 0px 10px;
+      }
+
+      select {
+        float: right;
+      }
+      
+      input {
+        box-sizing: border-box;
         width: 100%;
       }
 
-      tr:nth-child(even) {
-        background: #DFC;
-      }
-      
-      td {
-        padding: 0px 10px 0px 10px;
-      }
+      /*
+tr {
+  background: white;
+}
 
 
-      p {
-        margin: 5px;
-        padding: 0px;
-        font-size: 0.9em;
-      }
+td {
+  padding: 20px;
+  border-radius: 5px;
+}
+
+*/
+
+      /* EOS */
 
     </style>
 
+    <script id="insert"></script>
+
   </head>
 
-  <body id="body">
+  <body>
+    <dialog id="dialog">
+      <center>
+        <p id="p">Submitting...</p>
+        <button id="b" onclick="closeModal()">Close</button>
+      </center>
+    </dialog>
+
+
     <center>
+      <a href="https://www.stupid-fast.com/">
+        <img src="https://www.stupid-fast.com/banner.png">
+      </a>
 
-      <a href="https://www.stupid-fast.com/" class="banner">
-        <img src="https://www.stupid-fast.com/banner.png"></a>
+      <br><br>
 
-      <div id="links"></div>
+      <table id="top10"></table>
 
-      <table>
-        <tbody id="tbody">
-        </tbody>
-      </table>
+      <hr>
+
+      <table id="nontop10"></table>
+
+      <br>
+      <br>
 
     </center>
+    <script src="https://nms553.github.io/gviz.js"></script>
 
+
+
+    <script type="text/javascript">
+      //<![CDATA[
+
+
+      var key = "1jwadkJYYfBmf-SbjUokDV0S_yzC7gD39-jHxVatJfLU"
+      var select = document.createElement("SELECT")
+      select.add(document.createElement("OPTION"))
+
+      function getPlayers() {
+        gviz(key, "PLAYERS", "select A, B, C where C = true", function(data) {
+          console.log(data)
+          data.shift()
+          data.forEach(function(item) {
+            opt = document.createElement("OPTION")
+            opt.text = item[1]
+            opt.value = item[0]
+            select.add(opt)
+          })
+          console.log(select)
+          getDrivers(data)
+        })
+      }
+
+
+      function getDrivers(players) {
+        gviz(key, "DRIVERS", "select A, B, C, D", function(data) {
+          data.shift()
+          console.log(data)
+          getStandings(players, data)
+        })
+
+      }
+
+
+      function getStandings(players, drivers) {
+        gviz(key, "DSTANDINGS", "select K", function(data) {
+          data.shift()
+          console.log(data)
+          matchDrivers(players, drivers, data.flat())
+        })
+      }
+
+
+      function matchDrivers(players, drivers, standings) {
+
+        drivers.forEach(function(item) {
+          var indexof = standings.indexOf(item[0])
+          var table = document.getElementById("nontop10")
+          if (indexof < 10 && indexof > -1) {
+            table = document.getElementById("top10")
+          }
+          var tr = table.insertRow()
+          var trtr = table.insertRow()
+          tr.insertCell().innerHTML = item[1]
+          var trtd = trtr.insertCell()
+          trtd.setAttribute("colspan", 2)
+          trtd.classList.add("trashtalk")
+          trtd.classList.add(item[0])
+          var inp = document.createElement("INPUT")
+          inp.placeholder = "trashtalk"
+          inp.title = item[0]
+          inp.setAttribute("onchange", "submitDriver('trashtalk', this.value, this.title)")
+          trtd.style.display = "none"
+          trtd.append(inp)
+          var td = tr.insertCell()
+          var clone = select.cloneNode(true)
+          clone.value = item[3]
+          clone.id = item[0]
+          clone.setAttribute("onchange", "submitDriver('driver', this.value, this.id)")
+
+          td.append(clone)
+        })
+
+      }
+
+
+
+
+
+
+      getPlayers()
+
+
+
+      function submitDriver(type, value, driverid) {
+      var tr = document.getElementsByClassName("trashtalk")
+      for (let i of tr) {
+      	i.style.display = "none"
+      }
+      document.getElementsByClassName(driverid)[0].style.display = ""
+        b.style.visibility = "hidden"
+        //dialog.showModal()
+
+        var url = "https://script.google.com/macros/s/AKfycbz-bo8-JCGDorlrhvfS2zYWH_F7p5iwgk2TjxeSWdSZSZPuaS9v42WAidA9lbRaI2qBzg/exec?type=" + type + "&value=" + value + "&driverid=" + driverid
+        console.log(url)
+
+        var xhttpx = new XMLHttpRequest();
+        xhttpx.onreadystatechange = function() {
+          if (this.readyState == 4 && this.status == 200) {
+            b.style.visibility = ""
+            p.innerHTML = "Success"
+          }
+        };
+        xhttpx.open("GET", url, true);
+        xhttpx.send();
+
+
+      }
+
+
+
+      function closeModal() {
+        p.innerHTML = "Submitting..."
+        dialog.close()
+      }
+
+
+
+
+
+      //]]>
+
+    </script>
 
     <script>
-      var key = "1jwadkJYYfBmf-SbjUokDV0S_yzC7gD39-jHxVatJfLU"
-
-      gviz(key, "HOMEPAGE", "select *", function(result) {
-        result.shift()
-        result.shift()
-        //console.log(result);
-        result.forEach(function(item, index) {
-          var el = document.createElement(item[1])
-          el.href = item[2]
-          el.innerText = item[0]
-          el.className = item[6]
-          el.target = item[4]
-          el.style = item[5]
-          links.appendChild(el)
-        })
-
-
-      })
-
-
-      gviz(key, "PICKORDER", "select A, B, G order by G", function(result) {
-        result.shift()
-        //console.log(result);
-        result.forEach(function(item) {
-          var tr = tbody.insertRow()
-          tr.id = item[0]
-          var td = tr.insertCell()
-          tr.insertCell()
-          var sup = document.createElement("SUP")
-          sup.innerHTML = item[1]
-          td.append(sup)
-        })
-        getPlayerNames(result)
-      })
-
-
-      function getPlayerNames(pickorder) {
-        gviz(key, "PLAYERS", "select A, B where C = true", function(result) {
-          result.shift()
-          //console.log(result);
-          result.forEach(function(item) {
-            var tr = document.getElementById(item[0])
-            var td = tr.getElementsByTagName("TD")[0]
-            var p = document.createElement("STRONG")
-            p.style.display = "inline-block"
-            p.innerHTML = item[1]
-
-            td.prepend(p)
-          })
-          getDrivers()
-
-        })
+      // tell the embed parent frame the height of the content
+      if (window.parent && window.parent.parent) {
+        window.parent.parent.postMessage(["resultsFrame", {
+          height: document.body.getBoundingClientRect().height,
+          slug: "xt0e2onp"
+        }], "*")
       }
 
-
-      function getDrivers() {
-        console.log("running")
-        gviz(key, "DRIVERS", "select A, B, D", function(result) {
-          result.shift()
-          console.log(result);
-          result.forEach(function(item) {
-            try {
-              var tr = document.getElementById(item[2])
-              var p = document.createElement("P")
-              p.innerHTML = item[1]
-              var td = tr.getElementsByTagName("TD")[1]
-              td.append(p)
-            } catch (err) {
-
-            }
-
-          })
-
-        })
-      }
+      // always overwrite window.name, in case users try to set it manually
+      window.name = "result"
 
     </script>
 
 
   </body>
 
-
-</html>
-
-
-    <script type="text/javascript">//<![CDATA[
-
-
-
-
-
-  //]]></script>
-
-  <script>
-    // tell the embed parent frame the height of the content
-    if (window.parent && window.parent.parent){
-      window.parent.parent.postMessage(["resultsFrame", {
-        height: document.body.getBoundingClientRect().height,
-        slug: "xt0e2onp"
-      }], "*")
-    }
-
-    // always overwrite window.name, in case users try to set it manually
-    window.name = "result"
-  </script>
-
-
-</body>
 </html>

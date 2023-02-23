@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 
@@ -141,7 +142,7 @@ td {
         drivers.forEach(function(item) {
           var indexof = standings.indexOf(item[0])
           var table = document.getElementById("nontop10")
-          if (indexof < 10 && indexof > -1) {
+          if (indexof < 12 && indexof > -1) {
             table = document.getElementById("top10")
           }
           var tr = table.insertRow()
@@ -217,19 +218,7 @@ td {
 
     </script>
 
-    <script>
-      // tell the embed parent frame the height of the content
-      if (window.parent && window.parent.parent) {
-        window.parent.parent.postMessage(["resultsFrame", {
-          height: document.body.getBoundingClientRect().height,
-          slug: "xt0e2onp"
-        }], "*")
-      }
 
-      // always overwrite window.name, in case users try to set it manually
-      window.name = "result"
-
-    </script>
 
 
   </body>

@@ -2,8 +2,8 @@ function gviz(KEY, SHEET, TQ, CALLBACK) {
   var URL = "https://docs.google.com/spreadsheets/d/" + KEY + "/gviz/tq?tqx=out:html&sheet=" + SHEET + "&" + "tq=" + TQ
   console.log(URL)
   
-  var xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = function() {
+  var XHTTP = new XMLHttpRequest();
+  XHTTP.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
 
       var RESPONSETEXT = this.responseText
@@ -27,6 +27,30 @@ function gviz(KEY, SHEET, TQ, CALLBACK) {
 
     }
   };
-  xhttp.open("GET", URL, true);
-  xhttp.send();
+  XHTTP.open("GET", URL, true);
+  XHTTP.send();
+}
+
+
+
+
+
+
+function gvizhtml(KEY, SHEET, TQ, CALLBACK) {
+  var URL = "https://docs.google.com/spreadsheets/d/" + KEY + "/gviz/tq?tqx=out:html&sheet=" + SHEET + "&" + "tq=" + TQ
+  //console.log(URL)
+  
+  var XHTTP = new XMLHttpRequest();
+  XHTTP.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+
+      var RESPONSETEXT = this.responseText
+
+
+      CALLBACK(RESPONSETEXT)
+
+    }
+  };
+  XHTTP.open("GET", URL, true);
+  XHTTP.send();
 }

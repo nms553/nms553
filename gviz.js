@@ -36,6 +36,13 @@ function gviz(KEY, SHEET, TQ, CALLBACK) {
 
 
 
+
+
+
+
+
+
+
 function gvizhtml(KEY, SHEET, TQ, CALLBACK) {
   var URL = "https://docs.google.com/spreadsheets/d/" + KEY + "/gviz/tq?tqx=out:html&sheet=" + SHEET + "&" + "tq=" + TQ
   //console.log(URL)
@@ -54,3 +61,42 @@ function gvizhtml(KEY, SHEET, TQ, CALLBACK) {
   XHTTP.open("GET", URL, true);
   XHTTP.send();
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function xhttp(URL, CALLBACK) {
+
+  var XHTTP = new XMLHttpRequest();
+  XHTTP.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+
+      var RESPONSETEXT = this.responseText
+
+
+
+      CALLBACK(RESPONSETEXT)
+
+    }
+  };
+  XHTTP.open("GET", URL, true);
+  XHTTP.send();
+}
+
+
+
+
+
+

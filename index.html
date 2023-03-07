@@ -58,12 +58,12 @@
 
       }
 
-      td:first-child {
+      table:first-child td:first-child {
         width: 33%;
         font-size: 0.9em;
       }
 
-      td:nth-child(2) {
+      table:first-child td:nth-child(2) {
         width: 45%;
       }
 
@@ -121,6 +121,33 @@
         </tbody>
 
       </table>
+      
+      <br><hr><br>
+      
+      <h1>Live scoring</h1>
+
+<select id="select" onchange="getResults(this.value)">
+
+</select>
+
+<br><br>
+
+<table border>
+
+
+  <tbody id="tbodylive">
+
+
+  </tbody>
+
+</table>
+
+<br><br>
+
+
+  <script src="https://stupid-fast.com/gviz.js"></script>
+
+
 
       <br>
       <hr><br>
@@ -292,6 +319,94 @@
         })
 
       }
+      
+      //RESULTS DATA
+      
+      fetch("https://cf.nascar.com/cacher/2023/race_list_basic.json").then(function(data) {
+  return data.text()
+}).then(function(result) {
+  var parse = JSON.parse(result)
+  console.log(parse)
+  var find = parse.series_1.find(function(item) {
+    return item.margin_of_victory == ""
+  })
+  console.log(find)
+  parse.series_1.forEach(function(item) {
+    var opt = document.createElement("OPTION")
+    opt.value = item.race_id
+    opt.text = item.track_name
+    if (find.race_id == item.race_id) {
+      opt.selected = true
+    }
+    select.add(opt)
+  })
+  
+  getResults()
+})
+
+
+
+function getResults() {
+var race_id = select.value
+  fetch("https://cf.nascar.com/live/feeds/series_1/" + race_id + "/live_feed.json").then(function(x) {
+    return x.text()
+  }).then(function(y) {
+    tbodylive.innerHTML = ""
+    var result = JSON.parse(y)
+    console.log(result)
+    result.vehicles.forEach(function(item, index) {
+      var tr = tbodylive.insertRow()
+      tr.insertCell().innerText = index + 1
+      tr.insertCell().innerText = item.driver.full_name
+      tr.insertCell().id = item.vehicle_number + "live"
+    })
+    getPicks()
+  })
+}
+
+
+function getPicks() {
+  var count = 1
+  var players = []
+  var bgcolors = [
+    "red", "blue", "yellow", "green", "purple", "orange", "goldenrod", "lightgray", "black", "fuchsia", "olive"
+  ]
+  var colors = [
+    "white", "white", "black", "white", "white", "white", "black", "black", "white", "white", "white"
+  ]
+  gviz("1jwadkJYYfBmf-SbjUokDV0S_yzC7gD39-jHxVatJfLU", "DRIVERS", "select A, C, D where D is not null", function(result) {
+    result.shift()
+    console.log(result)
+    result.forEach(function(item) {
+      var td = document.getElementById(item[1] + "live")
+      td.innerText = item[2]
+      var indexof = players.indexOf(item[2])
+      if (indexof < 0) {
+        players.push(item[2])
+        td.style.backgroundColor = bgcolors[players.length - 1]
+        td.style.color = colors[players.length - 1]
+      } else {
+        td.style.backgroundColor = bgcolors[indexof]
+        td.style.color = colors[indexof]
+      }
+
+    })
+    console.log(players)
+    assignPts()
+  })
+}
+
+function assignPts() {
+  var score = 23
+  var tr = document.getElementsByTagName("TR")
+  for (var i of tr) {
+    var td = i.insertCell()
+    if (i.getElementsByTagName("TD")[2].innerText) {
+      td.innerText = score--
+    }
+  }
+}
+
       
       
       //FLAG DATA

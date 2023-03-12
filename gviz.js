@@ -1,6 +1,6 @@
 function gviz(KEY, SHEET, TQ, CALLBACK) {
   var URL = "https://docs.google.com/spreadsheets/d/" + KEY + "/gviz/tq?tqx=out:html&sheet=" + SHEET + "&" + "tq=" + TQ
-  console.log(URL)
+  //console.log(URL)
   
   var XHTTP = new XMLHttpRequest();
   XHTTP.onreadystatechange = function() {

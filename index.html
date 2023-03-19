@@ -225,11 +225,12 @@ fetch("https://cf.nascar.com/cacher/2023/race_list_basic.json").then(function(da
   
   var find = filter[filter.length - 1]
 
-  getResults(find.race_id)
-  getFlagData(find.race_id)
+  getResults(5272)
+  getFlagData(5272)
 })
 
 function getResults(id) {
+	console.log(id)
   fetch("https://cf.nascar.com/live/feeds/series_1/" + id + "/live_feed.json").then(function(x) {
     //console.log("before then", x)
     return x.text()

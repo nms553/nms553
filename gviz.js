@@ -4,7 +4,7 @@ function gviz(KEY, SHEET, TQ, CALLBACK) {
   var SPLIT2 = SPLIT1.split("/d/").reverse()[0]
   
   var URL = "https://docs.google.com/spreadsheets/d/" + SPLIT2 + "/gviz/tq?tqx=out:html&sheet=" + SHEET + "&" + "tq=" + TQ
-  //console.log(URL)
+  console.log(URL)
   
   var XHTTP = new XMLHttpRequest();
   XHTTP.onreadystatechange = function() {

@@ -3,7 +3,7 @@ function gviz(KEY, SHEET, TQ, CALLBACK) {
   var SPLIT1 = KEY.split("/edit")[0]
   var SPLIT2 = SPLIT1.split("/d/").reverse()[0]
   
-  var URL = "https://docs.google.com/spreadsheets/d/" + SPLIT + "/gviz/tq?tqx=out:html&sheet=" + SHEET + "&" + "tq=" + TQ
+  var URL = "https://docs.google.com/spreadsheets/d/" + SPLIT2 + "/gviz/tq?tqx=out:html&sheet=" + SHEET + "&" + "tq=" + TQ
   //console.log(URL)
   
   var XHTTP = new XMLHttpRequest();

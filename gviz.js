@@ -1,4 +1,4 @@
-function gvizArr(KEY, SHEET, TQ, CALLBACK) {
+function gviz(KEY, SHEET, TQ, CALLBACK) {
 
   var SPLIT1 = KEY.split("/edit")[0]
   var SPLIT2 = SPLIT1.split("/d/").reverse()[0]
@@ -40,7 +40,7 @@ var testurl = "1kqkXpF31nI0ek7D3bFMCG7nffgA1__LGI7sg6ZAxQqQ"
 
 // ****************GVIZOBJ****************
 
-function gviz(KEY, SHEET, TQ, CALLBACK) {
+function gvizObj(KEY, SHEET, TQ, CALLBACK) {
   var SPLIT = KEY.split("/edit")[0].split("/d/").reverse()[0]
   var URL = "https://docs.google.com/spreadsheets/d/" + SPLIT + "/gviz/tq?sheet=" + SHEET + "&" + "tq=" + TQ
   console.log(URL)
@@ -52,11 +52,19 @@ function gviz(KEY, SHEET, TQ, CALLBACK) {
     var LINDEXOF = SPLIT.lastIndexOf(");")
     var SUBSTRING = SPLIT.substring(0, LINDEXOF)
     var PARSE = JSON.parse(SUBSTRING)
+    console.log(PARSE)
     var ARR = []
     var HEADER = PARSE.table.cols
+        if (!HEADER[1].label) {
+        	PARSE.table.rows[0].c.forEach(function(ITEM, I) {
+          	HEADER[I].label = ITEM.v
+          })
+          }
+    console.log(HEADER)
     for (var ITEM of PARSE.table.rows) {
       var OBJ = {}
       ITEM.c.forEach(function(JTEM, J) {
+            console.log(JTEM)
         var HEADING = HEADER[J].label
         if (HEADING) {
           if (JTEM) {

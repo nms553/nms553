@@ -128,23 +128,27 @@ function gvizhtml(KEY, SHEET, TQ, CALLBACK) {
 
 
 
+function gvizTest(KEY, SHEET, TQ, CALLBACK) {
+
+  var SPLIT = KEY.split("/edit")[0].split("/d/").reverse()[0]
+
+  var URL = "https://docs.google.com/spreadsheets/d/" + SPLIT + "/gviz/tq?tqx=out:html&sheet=" + SHEET + "&" + "tq=" + TQ
+  console.log(URL)
+  
+  fetch(URL).then(function(x) { return x.text();}).then(function(result) {
+    console.log(result)
+    var dialog = document.createElement("DIALOG")
+    var a = document.createElement("A")
+    var div = document.createElement("DIV")
+    a.href = "javascript:void(0)"
+    a.setAttribute("onclick", "this.parentElement.close()")
+    a.innerText = "Close"
+    div.innerHTML = result
+    dialog.append(a)
+    dialog.append(div)
+    document.getElementsByTagName("body")[0].prepend(dialog)
+    dialog.show()
+  })
 
 
-
-function xhttp(URL, CALLBACK) {
-
-  var XHTTP = new XMLHttpRequest();
-  XHTTP.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-
-      var RESPONSETEXT = this.responseText
-
-
-
-      CALLBACK(RESPONSETEXT)
-
-    }
-  };
-  XHTTP.open("GET", URL, true);
-  XHTTP.send();
-}
+  }

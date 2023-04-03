@@ -1,27 +1,26 @@
 
 <!DOCTYPE html>
 <html>
-
-  <head>
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-    <title></title>
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-    <meta name="robots" content="noindex, nofollow">
-    <meta name="googlebot" content="noindex, nofollow">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400&display=swap" rel="stylesheet">
-    <link href="https://stupid-fast.com/css.css" rel="stylesheet">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <title>STUPID_FAST PICKS CURRENT</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="googlebot" content="noindex, nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-    <script type="text/javascript" src="/js/lib/dummy.js"></script>
+  <script
+    type="text/javascript"
+    src="/js/lib/dummy.js"
+    
+  ></script>
 
     <link rel="stylesheet" type="text/css" href="/css/result-light.css">
 
 
-    <style id="compiled-css" type="text/css">
-      html,
+  <style id="compiled-css" type="text/css">
+          html,
       body {
         //color: white;
 
@@ -43,28 +42,39 @@
         width: 100%;
       }
 
-      /*
-tr {
-  background: white;
-}
+    /* EOS */
+  </style>
+
+  <script id="insert"></script>
+
+</head>
+<body>
+    
 
 
-td {
-  padding: 20px;
-  border-radius: 5px;
-}
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="googlebot" content="noindex, nofollow">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400&display=swap" rel="stylesheet">
+    <link href="https://stupid-fast.com/css.css" rel="stylesheet">
 
-*/
 
-      /* EOS */
+    <script type="text/javascript" src="/js/lib/dummy.js"></script>
 
-    </style>
+    <link rel="stylesheet" type="text/css" href="/css/result-light.css">
 
-    <script id="insert"></script>
+</head>
 
-  </head>
+<body>
+  
 
-  <body>
+
+
     <dialog id="dialog">
       <center>
         <p id="p">Submitting...</p>
@@ -75,7 +85,7 @@ td {
 
     <center>
       <a href="https://www.stupid-fast.com/">
-        <img src="https://www.stupid-fast.com/banner.png">
+        <img src="https://www.stupid-fast.com/banner/banner.png">
       </a>
 
       <br><br>
@@ -90,12 +100,15 @@ td {
       <br>
 
     </center>
-    <script src="https://nms553.github.io/gviz.js"></script>
+    
+    
+    <script src="https://stupid-fast.com/gviz.js"></script>
+
+</body>
+
+    <script type="text/javascript">//<![CDATA[
 
 
-
-    <script type="text/javascript">
-      //<![CDATA[
 
 
       var key = "1jwadkJYYfBmf-SbjUokDV0S_yzC7gD39-jHxVatJfLU"
@@ -119,10 +132,13 @@ td {
 
 
       function getDrivers(players) {
-        gviz(key, "DRIVERS", "select A, B, C, D", function(data) {
+        gviz(key, "DRIVERS", "select A, B, C, D, F", function(data) {
           data.shift()
           console.log(data)
-          getStandings(players, data)
+          var filter = data.filter(function(item) {
+          	return item[4] !== "✗"
+          })
+          getStandings(players, filter)
         })
 
       }
@@ -214,13 +230,24 @@ td {
 
 
 
-      //]]>
-
-    </script>
 
 
 
+  //]]></script>
 
-  </body>
+  <script>
+    // tell the embed parent frame the height of the content
+    if (window.parent && window.parent.parent){
+      window.parent.parent.postMessage(["resultsFrame", {
+        height: document.body.getBoundingClientRect().height,
+        slug: "g0av52om"
+      }], "*")
+    }
 
+    // always overwrite window.name, in case users try to set it manually
+    window.name = "result"
+  </script>
+
+
+</body>
 </html>

@@ -52,7 +52,7 @@ function gvizObj(KEY, SHEET, TQ, CALLBACK) {
     var LINDEXOF = SPLIT.lastIndexOf(");")
     var SUBSTRING = SPLIT.substring(0, LINDEXOF)
     var PARSE = JSON.parse(SUBSTRING)
-    console.log(PARSE)
+    //console.log(PARSE)
     var ARR = []
     var HEADER = PARSE.table.cols
         if (!HEADER[1].label) {
@@ -60,11 +60,10 @@ function gvizObj(KEY, SHEET, TQ, CALLBACK) {
           	HEADER[I].label = ITEM.v
           })
           }
-    console.log(HEADER)
+    //console.log(HEADER)
     for (var ITEM of PARSE.table.rows) {
       var OBJ = {}
       ITEM.c.forEach(function(JTEM, J) {
-            console.log(JTEM)
         var HEADING = HEADER[J].label
         if (HEADING) {
           if (JTEM) {

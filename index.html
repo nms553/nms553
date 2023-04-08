@@ -3,7 +3,7 @@
 <html>
 <head>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-  <title>SF HOMEPAGE CURRENT</title>
+  <title>STUPID-FAST HOMEPAGE</title>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <meta name="robots" content="noindex, nofollow">
   <meta name="googlebot" content="noindex, nofollow">
@@ -83,7 +83,7 @@
       }
 
       #livetable td:nth-child(3) {
-        width: 75px;
+        width: 65px;
       }
 
 
@@ -224,19 +224,17 @@ fetch("https://script.google.com/macros/s/AKfycbw5XAEcm4QL4-mD2A74apN2QP7bZPmwBU
 function getResults(id) {
 	console.log(id)
   fetch("https://cf.nascar.com/live/feeds/series_1/" + id + "/live_feed.json").then(function(x) {
-    //console.log("before then", x)
     return x.text()
   }).then(function(y) {
     tbodylive.innerHTML = ""
-    //console.log("running order raw", y)
     var result = JSON.parse(y)
-    console.log("getresults()", result)
+    console.log("NACAR FEED", result)
     result.vehicles.forEach(function(item, index) {
       var margin = Math.round(item.delta * 10) / 10
       var tr = tbodylive.insertRow()
       tr.insertCell().innerText = index + 1
       tr.insertCell().innerHTML = item.driver.full_name + "<small>" + margin + "</small>"
-      tr.insertCell().id = item.vehicle_number + "live"
+      tr.insertCell().id = "c" + item.vehicle_number
     })
     getPicks()
   })
@@ -252,12 +250,13 @@ function getPicks() {
   var colors = [
     "white", "white", "black", "white", "white", "white", "black", "black", "white", "white", "white"
   ]
-  gviz("1jwadkJYYfBmf-SbjUokDV0S_yzC7gD39-jHxVatJfLU", "DRIVERS", "select A, C, D where D is not null", function(result) {
+  gviz("1jwadkJYYfBmf-SbjUokDV0S_yzC7gD39-jHxVatJfLU", "DRIVERS", "select A, B, C where C is not null", function(result) {
     result.shift()
-    //console.log(result)
+    result.shift()
+    console.log("PICKS LIST", result)
     result.forEach(function(item) {
       try {
-        var td = document.getElementById(item[1] + "live")
+        var td = document.getElementById(item[0])
         td.innerText = item[2]
         var indexof = players.indexOf(item[2])
         if (indexof < 0) {

@@ -1,0 +1,128 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <title>NASCAR driver standings</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="googlebot" content="noindex, nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <script
+    type="text/javascript"
+    src="/js/lib/dummy.js"
+    
+  ></script>
+
+    <link rel="stylesheet" type="text/css" href="/css/result-light.css">
+
+
+  <style id="compiled-css" type="text/css">
+    
+
+    /* EOS */
+  </style>
+
+  <script id="insert"></script>
+
+</head>
+<body>
+    
+<center id="center">
+<h1>Driver standings</h1>
+<main style="text-align: left; max-width: 220px;">
+
+  <table id="table">
+    
+  </table>
+
+  <ol id="ol">
+    
+  </ol>
+  
+  
+  
+  <details>
+    <summary>Admin</summary>
+    <form action="https://script.google.com/macros/s/AKfycbyKFOY9PMeAZI-5SfDvDE-_QvkGTd0ZlzJkHh7SPgLI14ost4SjDLJ7LlKgmIk-wniP/exec" method="post" target="iframe">
+      <iframe name="iframe"></iframe>
+      <textarea name="value" id="textarea" cols="30" rows="10"></textarea>
+      <input type="submit">
+    </form>
+  </details>
+  
+  <br><br><br><br><br><br><br>
+  </main>
+  </center>
+
+    <script type="text/javascript">//<![CDATA[
+
+
+
+
+function getAllDrivers() {
+fetch ("https://cf.nascar.com/cacher/drivers.json")
+.then(x => x.text()).then(function(result) {
+	var parse = JSON.parse(result)
+  //console.log(parse.response)
+  var filter = parse.response.filter(function(item) {
+  	return item.Driver_Series == "nascar-cup-series"
+  })
+  console.log(filter)
+})
+}
+
+//getAllDrivers()
+
+
+
+function getStandings() {
+var masterarr = []
+	fetch("https://cf.nascar.com/cacher/2023/1/final/1-drivers-points.json")
+  .then(x => x.text())
+  .then(function(result) {
+  	var parse = JSON.parse(result)
+    console.log(parse)
+    parse.sort(function(a, b) {
+    	return b.points - a.points
+    })
+    parse.forEach(function(item, index) {
+    	var arr = []
+    	arr.push(index + 1)
+    	arr.push(item.car_no)
+      arr.push(item.driver_name)
+    	ol.innerHTML += ("<li>" + item.driver_name + " #" + item.car_no + "</li>")
+      masterarr.push(arr)
+      var json = JSON.stringify(masterarr)
+      textarea.value = json
+    })
+  })
+
+
+}
+
+getStandings()
+
+
+
+
+  //]]></script>
+
+  <script>
+    // tell the embed parent frame the height of the content
+    if (window.parent && window.parent.parent){
+      window.parent.parent.postMessage(["resultsFrame", {
+        height: document.body.getBoundingClientRect().height,
+        slug: "2kmvbj6f"
+      }], "*")
+    }
+
+    // always overwrite window.name, in case users try to set it manually
+    window.name = "result"
+  </script>
+
+
+</body>
+</html>

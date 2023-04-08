@@ -20,17 +20,22 @@
 
 
   <style id="compiled-css" type="text/css">
-          #links a {
+          * {
+        //outline: 1px solid;
+      }
+      
+      #links a {
         margin: 20px;
       }
 
       table {
         table-layout: fixed;
         border-collapse: collapse;
+        //border: 1px solid;
         width: 100%;
       }
 
-      tr:nth-child(even) {
+      tbody > tr:nth-child(even) tr {
         background: #DFC;
       }
 
@@ -39,13 +44,14 @@
         padding: 0px 0px 0px 0px;
       }
 
-      table:first-child td:first-child {
-        width: 33%;
+      #pickstable tr td:first-child {
+        width: 25%;
         font-size: 0.9em;
+        font-weight: bold;
       }
 
       table:first-child td:nth-child(2) {
-        width: 45%;
+        width: 37%;
       }
 
       sup {
@@ -53,8 +59,8 @@
       }
 
       td:nth-child(3) {
-        white-space: nowrap;
-        font-size: 0.8em;
+        //white-space: nowrap;
+        //font-size: 0.8em;
       }
 
       small {
@@ -65,7 +71,7 @@
       p {
         margin: 5px;
         padding: 0px;
-        font-size: 0.9em;
+        //font-size: 0.9em;
       }
 
       #livetable td {
@@ -106,6 +112,8 @@
   </a>
 
   <div id="links"></div>
+  
+  <br>
 
   <table id="pickstable">
     <tbody id="tbody"></tbody>
@@ -139,9 +147,6 @@
   <details>
     <summary>Admin</summary>
     <br>
-    <a href="https://stupid-fast.com/raceset.html">Set next race</a>
-    <a href="https://stupid-fast.com/raceset.html" target="_blank">↗</a>
-    &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
     <a href="https://stupid-fast.com/calc.html">Calc</a>
     <a href="https://stupid-fast.com/calc.html" target="_blank">↗</a>
     
@@ -177,13 +182,23 @@ gviz("1jwadkJYYfBmf-SbjUokDV0S_yzC7gD39-jHxVatJfLU", "PICKORDER", "select A, B, 
   //console.log(result);
   result.forEach(function(item) {
     var tr = tbody.insertRow()
-    tr.id = item[0]
-    var td = tr.insertCell()
-    tr.insertCell()
-    tr.insertCell()
+    var innertable = document.createElement("TABLE")
+    var tr1 = innertable.insertRow()
+    var trtr = innertable.insertRow()
+    trtr.style.fontStyle = "italic"
+    trtr.style.fontSize = "0.8em"
+    tr1.id = item[0]
+    var td = tr1.insertCell()
+    trtr.insertCell()
+    var tdtr = trtr.insertCell()
+    tdtr.setAttribute("colspan", "2")
+    tr1.insertCell()
+    tr1.insertCell()
+    tdtr.id = "tr" + item[0]
     var sup = document.createElement("SUP")
     sup.innerHTML = item[1]
     td.append(sup)
+    tr.append(innertable)
   })
   getPlayerNames(result)
 })
@@ -215,9 +230,12 @@ function getDrivers() {
         var p = document.createElement("P")
         p.innerHTML = item[1]
         var td = tr.getElementsByTagName("TD")[1]
+        if(td.innerHTML) {
+        	td = tr.getElementsByTagName("TD")[2]
+        }
         //console.log(item[3])
         if (item[3]) {
-          tr.getElementsByTagName("TD")[2].innerHTML += item[3]
+          document.getElementById("tr" + item[2]).innerHTML += item[3]
         }
         td.append(p)
       } catch (err) {}

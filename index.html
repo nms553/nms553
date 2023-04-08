@@ -20,7 +20,7 @@
 
 
   <style id="compiled-css" type="text/css">
-          a {
+          #links a {
         margin: 20px;
       }
 
@@ -134,7 +134,20 @@
 
   <div id="flag" style="font-size: 3em;"></div>
   <main id="laps"></main>
-
+  <br><br><br>
+  <footer id="footer">
+  <details>
+    <summary>Admin</summary>
+    <br>
+    <a href="https://stupid-fast.com/raceset.html">Set next race</a>
+    <a href="https://stupid-fast.com/raceset.html" target="_blank">↗</a>
+    &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+    <a href="https://stupid-fast.com/calc.html">Calc</a>
+    <a href="https://stupid-fast.com/calc.html" target="_blank">↗</a>
+    
+  </details>
+  </footer>
+  <br><br><br><br><br>
 
 
 </center>
@@ -143,16 +156,15 @@
     <script type="text/javascript">//<![CDATA[
 
 
-var key = "1jwadkJYYfBmf-SbjUokDV0S_yzC7gD39-jHxVatJfLU"
 
-gviz(key, "HOMEPAGE", "select *", function(result) {
+gviz("1jwadkJYYfBmf-SbjUokDV0S_yzC7gD39-jHxVatJfLU", "HOMEPAGE", "select *", function(result) {
   result.shift()
   result.shift()
   //console.log(result);
   result.forEach(function(item, index) {
     var el = document.createElement(item[1])
     el.href = item[2]
-    el.innerText = item[0]
+    el.innerHTML = item[0]
     el.className = item[6]
     el.target = item[4]
     el.style = item[5]
@@ -160,7 +172,7 @@ gviz(key, "HOMEPAGE", "select *", function(result) {
   })
 })
 
-gviz(key, "PICKORDER", "select A, B, G order by G", function(result) {
+gviz("1jwadkJYYfBmf-SbjUokDV0S_yzC7gD39-jHxVatJfLU", "PICKORDER", "select A, B, G order by G", function(result) {
   result.shift()
   //console.log(result);
   result.forEach(function(item) {
@@ -177,7 +189,7 @@ gviz(key, "PICKORDER", "select A, B, G order by G", function(result) {
 })
 
 function getPlayerNames(pickorder) {
-  gviz(key, "PLAYERS", "select A, B where C = true", function(result) {
+  gviz("1jwadkJYYfBmf-SbjUokDV0S_yzC7gD39-jHxVatJfLU", "PLAYERS", "select A, B where C = true", function(result) {
     result.shift()
     //console.log(result);
     result.forEach(function(item) {
@@ -194,7 +206,7 @@ function getPlayerNames(pickorder) {
 
 function getDrivers() {
   //console.log("running")
-  gviz(key, "DRIVERS", "select A, B, C, D", function(result) {
+  gviz("1jwadkJYYfBmf-SbjUokDV0S_yzC7gD39-jHxVatJfLU", "DRIVERS", "select A, B, C, D", function(result) {
     result.shift()
     //console.log(result);
     result.forEach(function(item) {

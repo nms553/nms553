@@ -36,11 +36,19 @@
       select {
         float: right;
       }
-      
+
       input {
         box-sizing: border-box;
         width: 100%;
       }
+
+
+
+      tr:nth-child(25) td {
+        border-top: 1px solid;
+        padding-top: 35px;
+      }
+
 
     /* EOS */
   </style>
@@ -109,127 +117,138 @@
     <script type="text/javascript">//<![CDATA[
 
 
+var PLAYERS = []
+var DRIVERS = []
+var STANDINGS = []
 
 
-      var key = "1jwadkJYYfBmf-SbjUokDV0S_yzC7gD39-jHxVatJfLU"
-      var select = document.createElement("SELECT")
-      select.add(document.createElement("OPTION"))
+var key = "1jwadkJYYfBmf-SbjUokDV0S_yzC7gD39-jHxVatJfLU"
+var select = document.createElement("SELECT")
+select.add(document.createElement("OPTION"))
 
-      function getPlayers() {
-        gviz(key, "PLAYERS", "select A, B, C where C = true", function(data) {
-          console.log(data)
-          data.shift()
-          data.forEach(function(item) {
-            opt = document.createElement("OPTION")
-            opt.text = item[1]
-            opt.value = item[0]
-            select.add(opt)
-          })
-          console.log(select)
-          getDrivers(data)
-        })
-      }
-
-
-      function getDrivers(players) {
-        gviz(key, "DRIVERS", "select A, B, C, D, F", function(data) {
-          data.shift()
-          console.log(data)
-          var filter = data.filter(function(item) {
-          	return item[4] !== "✗"
-          })
-          getStandings(players, filter)
-        })
-
-      }
+function getPlayers() {
+  gviz(key, "PLAYERS", "select A, B, C where C = true", function(data) {
+    console.log(data)
+    data.shift()
+    data.forEach(function(item) {
+      opt = document.createElement("OPTION")
+      opt.text = item[1]
+      opt.value = item[0]
+      select.add(opt)
+    })
+    PLAYERS = data
+    console.log("PLAYERS", PLAYERS)
+    getDrivers()
+  })
+}
 
 
-      function getStandings(players, drivers) {
-        gviz(key, "DSTANDINGS", "select K", function(data) {
-          data.shift()
-          console.log(data)
-          matchDrivers(players, drivers, data.flat())
-        })
-      }
+function getDrivers(players) {
+  gviz(key, "DRIVERS", "select A, B, C, D", function(data) {
+    data.shift()
+    data.shift()
+    console.log("DRIVERS", data)
+    DRIVERS = data
+    //.filter(function(item) {
+      //return item[4] !== "✗"
+    //})
+    getStandings()
+  })
+
+}
 
 
-      function matchDrivers(players, drivers, standings) {
-
-        drivers.forEach(function(item) {
-          var indexof = standings.indexOf(item[0])
-          var table = document.getElementById("nontop10")
-          if (indexof < 12 && indexof > -1) {
-            table = document.getElementById("top10")
-          }
-          var tr = table.insertRow()
-          var trtr = table.insertRow()
-          tr.insertCell().innerHTML = item[1]
-          var trtd = trtr.insertCell()
-          trtd.setAttribute("colspan", 2)
-          trtd.classList.add("trashtalk")
-          trtd.classList.add(item[0])
-          var inp = document.createElement("INPUT")
-          inp.placeholder = "trashtalk"
-          inp.title = item[0]
-          inp.setAttribute("onchange", "submitDriver('trashtalk', this.value, this.title)")
-          trtd.style.display = "none"
-          trtd.append(inp)
-          var td = tr.insertCell()
-          var clone = select.cloneNode(true)
-          clone.value = item[3]
-          clone.id = item[0]
-          clone.setAttribute("onchange", "submitDriver('driver', this.value, this.id)")
-
-          td.append(clone)
-        })
-
-      }
+function getStandings(players, drivers) {
+  gviz(key, "DSTANDINGS", "select B", function(data) {
+    data.shift()
+    console.log(data)
+    STANDINGS = data.flat()
+    matchDrivers()
+  })
+}
 
 
+function matchDrivers() {
 
+  DRIVERS.forEach(function(item) {
+    var indexof = STANDINGS.indexOf(item[0])
+    item.push(indexof)
 
+  })
 
+  DRIVERS.sort(function(a, b) {
+    return a[4] - b[4]
+  })
 
-      getPlayers()
+  DRIVERS.forEach(function(item) {
+  	var table = document.getElementById("top10")
 
+    var tr = table.insertRow()
+    var trtr = table.insertRow()
+    tr.insertCell().innerHTML = item[1]
+    var trtd = trtr.insertCell()
+    trtd.setAttribute("colspan", 2)
+    trtd.classList.add("trashtalk")
+    trtd.classList.add(item[0])
+    var inp = document.createElement("INPUT")
+    inp.placeholder = "trashtalk"
+    inp.title = item[0]
+    inp.setAttribute("onchange", "submitDriver('trashtalk', this.value, this.title)")
+    trtd.style.display = "none"
+    trtd.append(inp)
+    var td = tr.insertCell()
+    var clone = select.cloneNode(true)
+    clone.value = item[2]
+    clone.id = item[0]
+    clone.setAttribute("onchange", "submitDriver('driver', this.value, this.id)")
 
+    td.append(clone)
 
-      function submitDriver(type, value, driverid) {
-      var tr = document.getElementsByClassName("trashtalk")
-      for (let i of tr) {
-      	i.style.display = "none"
-      }
-      document.getElementsByClassName(driverid)[0].style.display = ""
-        b.style.visibility = "hidden"
-        //dialog.showModal()
+  })
+  console.log("DRIVERS", DRIVERS)
 
-        var url = "https://script.google.com/macros/s/AKfycbz-bo8-JCGDorlrhvfS2zYWH_F7p5iwgk2TjxeSWdSZSZPuaS9v42WAidA9lbRaI2qBzg/exec?type=" + type + "&value=" + value + "&driverid=" + driverid
-        console.log(url)
-
-        var xhttpx = new XMLHttpRequest();
-        xhttpx.onreadystatechange = function() {
-          if (this.readyState == 4 && this.status == 200) {
-            b.style.visibility = ""
-            p.innerHTML = "Success"
-          }
-        };
-        xhttpx.open("GET", url, true);
-        xhttpx.send();
-
-
-      }
-
-
-
-      function closeModal() {
-        p.innerHTML = "Submitting..."
-        dialog.close()
-      }
+}
 
 
 
 
 
+
+getPlayers()
+
+
+
+function submitDriver(type, value, driverid) {
+  var tr = document.getElementsByClassName("trashtalk")
+  for (let i of tr) {
+    i.style.display = "none"
+  }
+  document.getElementsByClassName(driverid)[0].style.display = ""
+  b.style.visibility = "hidden"
+  //dialog.showModal()
+
+  var url = "https://script.google.com/macros/s/AKfycbz-bo8-JCGDorlrhvfS2zYWH_F7p5iwgk2TjxeSWdSZSZPuaS9v42WAidA9lbRaI2qBzg/exec?type=" + type + "&value=" + value + "&driverid=" + driverid
+  console.log(url)
+
+  var xhttpx = new XMLHttpRequest();
+  xhttpx.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      b.style.visibility = ""
+      p.innerHTML = "Success"
+    }
+  };
+  xhttpx.open("GET", url, true);
+  xhttpx.send();
+
+
+}
+
+
+
+function closeModal() {
+  p.innerHTML = "Submitting..."
+  dialog.close()
+}
 
 
 

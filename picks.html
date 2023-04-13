@@ -146,7 +146,6 @@ function getPlayers() {
 function getDrivers(players) {
   gviz(key, "DRIVERS", "select A, B, C, D", function(data) {
     data.shift()
-    data.shift()
     //console.log("get DRIVERS", data)
     DRIVERS = data
     //.filter(function(item) {

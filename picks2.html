@@ -1,0 +1,148 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <title>SF PICKS - GAS/PHP</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="googlebot" content="noindex, nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <script
+    type="text/javascript"
+    src="/js/lib/dummy.js"
+    
+  ></script>
+
+    <link rel="stylesheet" type="text/css" href="/css/result-light.css">
+
+
+  <style id="compiled-css" type="text/css">
+    * {
+  //outline: 1px solid;
+}
+
+header {
+  margin: 30px auto 30px auto;
+}
+
+
+center center {
+  width: 100%;
+  max-width: 290px;
+}
+
+table {
+  margin-top: 20px;
+  border-collapse: collapse;
+}
+
+table tr:nth-child(even) {
+  background: whitesmoke;
+}
+
+table img {
+  width: 40px;
+}
+
+footer {
+  margin-bottom: 100px;
+}
+
+    /* EOS */
+  </style>
+
+  <script id="insert"></script>
+
+</head>
+<body>
+    <center>
+  <center>
+  <header>
+  <a href="https://stupid-fast.com">
+    <img src="https://www.stupid-fast.com/banner/banner.png" alt="" width="100%">
+  </a>
+    
+  </header>
+  
+  <dialog id="dialog">
+  <iframe name="iframe"></iframe>
+    <button onclick="closeModal()">Close</button>
+  </dialog>
+    
+<table id="table" cellpadding="3">
+<tbody id="tbody"></tbody>
+</table>
+
+<form action="https://script.google.com/macros/s/AKfycby5Lbz4bLQCqU-tdkG7idtj-ob2SrFk6mUuJa0KYLfVIan2KdcVOQ4grFiJ-igZAeU/exec" method="post" target="iframe">
+  <input type="hidden" name="input_race">
+  <input type="hidden" name="input_driver">
+  <input type="hidden" name="input_player">
+</form>
+
+<footer>
+  
+</footer>
+  </center>
+</center>
+
+
+
+    <script type="text/javascript">//<![CDATA[
+
+
+
+
+fetch("https://script.google.com/macros/s/AKfycby5Lbz4bLQCqU-tdkG7idtj-ob2SrFk6mUuJa0KYLfVIan2KdcVOQ4grFiJ-igZAeU/exec?pathInfo=getDriverStandings").then(function(x) {
+  return x.text()
+}).then(function(y) {
+  tbody.innerHTML = y
+  var tr = tbody.insertRow(12)
+  var td = tr.insertCell()
+  td.setAttribute("colspan", 3)
+  td.innerHTML = "<br><br><hr><br><br>"
+})
+
+
+
+
+function submitPicks(driverid, playerid, raceid) {
+  var form = document.getElementsByTagName("FORM")[0]
+  var inputdriver = document.getElementsByName("input_driver")[0]
+  var inputplayer = document.getElementsByName("input_player")[0]
+  var inputrace = document.getElementsByName("input_race")[0]
+  
+  inputdriver.value = driverid
+  inputplayer.value = playerid
+  inputrace.value = raceid
+  form.submit()
+  //dialog.showModal()
+}
+
+
+function closeModal() {
+  dialog.close()
+}
+
+
+
+  //]]></script>
+
+  <script>
+    // tell the embed parent frame the height of the content
+    if (window.parent && window.parent.parent){
+      window.parent.parent.postMessage(["resultsFrame", {
+        height: document.body.getBoundingClientRect().height,
+        slug: "oe6hvd5q"
+      }], "*")
+    }
+
+    // always overwrite window.name, in case users try to set it manually
+    window.name = "result"
+  </script>
+
+
+</body>
+</html>

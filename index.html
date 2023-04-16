@@ -114,19 +114,22 @@
   <div id="links"></div>
   
   <br>
+  
+  <iframe src="https://stupid-fast.com/pickstable.html" frameborder="0" height="300"></iframe>
 
-  <table id="pickstable">
+  <table id="pickstable" style="display: none">
     <tbody id="tbody"></tbody>
   </table>
 
   <br>
   <hr><br>
 
-  <h1>Live scoring</h1>
+  <h1>Live running order</h1>
+  <br>
+  
+  <iframe src="https://stupid-fast.com/liveresults.html" frameborder="0" width="100%" height="700"></iframe>
 
-  <br><br>
-
-  <table id="livetable" border>
+  <table id="livetable" border style="display: none">
     <tbody id="tbodylive">
     </tbody>
   </table>
@@ -282,7 +285,7 @@ function getPicks() {
   ]
   gviz("1jwadkJYYfBmf-SbjUokDV0S_yzC7gD39-jHxVatJfLU", "DRIVERS", "select A, B, C where C is not null", function(result) {
     result.shift()
-    //result.shift()
+    result.shift()
     console.log("PICKS LIST", result)
     result.forEach(function(item) {
       try {

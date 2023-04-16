@@ -244,11 +244,11 @@ function getDrivers() {
 }
 
 //LIVE scoring RESULTS DATA
-fetch("https://script.google.com/macros/s/AKfycbw5XAEcm4QL4-mD2A74apN2QP7bZPmwBUMtIRnbc75CGc3gffffQyoEP9gTY7H8Q6da/exec?key=raceset").then(function(data) {
-  return data.text()
-}).then(function(result) {
-  getResults(result)
-  getFlagData(result)
+  gviz("1jwadkJYYfBmf-SbjUokDV0S_yzC7gD39-jHxVatJfLU", "INFO", "select A", function(result) {
+  console.log(result)
+  result.shift()
+  getResults(result[0])
+  getFlagData(result[0])
 })
 
 function getResults(id) {

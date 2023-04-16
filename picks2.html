@@ -24,8 +24,18 @@
   //outline: 1px solid;
 }
 
+center center > * {
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
 header {
-  margin: 30px auto 30px auto;
+  //margin: 30px auto 30px auto;
+}
+
+select {
+  width: 100%;
+  display: flex;
 }
 
 
@@ -35,7 +45,7 @@ center center {
 }
 
 table {
-  margin-top: 20px;
+  //margin-top: 20px;
   border-collapse: collapse;
 }
 
@@ -48,7 +58,11 @@ table img {
 }
 
 footer {
-  margin-bottom: 100px;
+  //margin-bottom: 100px;
+}
+
+textarea {
+  width: 90%;
 }
 
     /* EOS */
@@ -66,24 +80,41 @@ footer {
   </a>
     
   </header>
-  
+
   <dialog id="dialog">
-  <iframe name="iframe"></iframe>
+    <iframe name="iframe"></iframe>
     <button onclick="closeModal()">Close</button>
   </dialog>
+  
+  <form action="https://script.google.com/macros/s/AKfycbxg87yiTCT-D6RaUMcP7b1alWfATjv3iIGbVNZfPXfT6ucjUC4UAT7ZfQnN3gJw83qYtA/exec" method="get" id="raceform" target="iframe">
+  <select name="raceselect" id="selectrace" onchange="raceform.submit()"></select>
+  </form>
     
 <table id="table" cellpadding="3">
-<tbody id="tbody"></tbody>
+<tbody id="tbody">
+<tr><td>LOADING...</td></tr></tbody>
 </table>
 
-<form action="https://script.google.com/macros/s/AKfycby5Lbz4bLQCqU-tdkG7idtj-ob2SrFk6mUuJa0KYLfVIan2KdcVOQ4grFiJ-igZAeU/exec" method="post" target="iframe">
+<form action="https://script.google.com/macros/s/AKfycby5Lbz4bLQCqU-tdkG7idtj-ob2SrFk6mUuJa0KYLfVIan2KdcVOQ4grFiJ-igZAeU/exec" method="post" id="picksform" target="iframe">
   <input type="hidden" name="input_race">
   <input type="hidden" name="input_driver">
   <input type="hidden" name="input_player">
 </form>
 
+
+<form action="https://script.google.com/macros/s/AKfycby5Lbz4bLQCqU-tdkG7idtj-ob2SrFk6mUuJa0KYLfVIan2KdcVOQ4grFiJ-igZAeU/exec" method="post" id="trashtalkform" target="iframe" onsubmit="setTimeout(function() {inputtrashtalk.value = ''; inputtrashtalk.placeholder = 'Submitted.'}, 1000)">
+  <input type="hidden" name="input_race">
+  <textarea type="text" name="input_trashtalk" placeholder="Trashtalk" id="inputtrashtalk"></textarea>
+  <br>
+  <input type="submit">
+</form>
+
+
 <footer>
-  
+  <details>
+    <summary>Admin</summary>
+    <button onclick="allowSelection()">Allow selection</button>
+  </details>
 </footer>
   </center>
 </center>
@@ -94,11 +125,18 @@ footer {
 
 
 
+  var form = document.getElementsByTagName("FORM")[0]
+  var inputdriver = document.getElementsByName("input_driver")[0]
+  var inputplayer = document.getElementsByName("input_player")[0]
+  var inputrace = document.getElementsByName("input_race")[0]
 
 fetch("https://script.google.com/macros/s/AKfycby5Lbz4bLQCqU-tdkG7idtj-ob2SrFk6mUuJa0KYLfVIan2KdcVOQ4grFiJ-igZAeU/exec?pathInfo=getDriverStandings").then(function(x) {
   return x.text()
 }).then(function(y) {
-  tbody.innerHTML = y
+	var parse = JSON.parse(y)
+  console.log(parse)
+  tbody.innerHTML = parse[0]
+  selectrace.innerHTML = parse[1]
   var tr = tbody.insertRow(12)
   var td = tr.insertCell()
   td.setAttribute("colspan", 3)
@@ -109,15 +147,17 @@ fetch("https://script.google.com/macros/s/AKfycby5Lbz4bLQCqU-tdkG7idtj-ob2SrFk6m
 
 
 function submitPicks(driverid, playerid, raceid) {
-  var form = document.getElementsByTagName("FORM")[0]
-  var inputdriver = document.getElementsByName("input_driver")[0]
-  var inputplayer = document.getElementsByName("input_player")[0]
-  var inputrace = document.getElementsByName("input_race")[0]
   
   inputdriver.value = driverid
   inputplayer.value = playerid
   inputrace.value = raceid
-  form.submit()
+  picksform.submit()
+  setTimeout(function() {
+	inputdriver.value = ""
+	inputplayer.value = ""
+  inputtrashtalk.value = ""
+  
+  }, 1000)
   //dialog.showModal()
 }
 
@@ -125,6 +165,21 @@ function submitPicks(driverid, playerid, raceid) {
 function closeModal() {
   dialog.close()
 }
+
+function clearForm() {
+	picksform.submit()
+	inputtrashtalk.value = ""
+}
+
+
+function allowSelection() {
+	var opt = selectrace.getElementsByTagName("OPTION")
+  for (var i in opt) {
+  opt[i].removeAttribute("disabled")
+  
+  }
+}
+
 
 
 

@@ -1,0 +1,208 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <title>PICKS TABLE SUMMARY</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="googlebot" content="noindex, nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <script
+    type="text/javascript"
+    src="/js/lib/dummy.js"
+    
+  ></script>
+
+    <link rel="stylesheet" type="text/css" href="/css/result-light.css">
+
+
+  <style id="compiled-css" type="text/css">
+    center center {
+  font-family: sans-serif;
+  font-size: 0.8em;
+}
+
+table, td {
+  //border: 1px solid;
+  border-collapse: collapse;
+}
+
+#table {
+  table-layout: fixed;
+  width: 100%;
+  max-width: 290px;
+}
+
+table table td {
+  width: 50%;
+}
+
+table > tbody > tr > td:first-child {
+  width: 75px;
+}
+
+table table {
+  table-layout: fixed;
+  width: 100%;
+  
+}
+
+table tr:nth-child(even) tr, table tr:nth-child(even) {
+  background-color: #AFA;
+}
+
+    /* EOS */
+  </style>
+
+  <script id="insert"></script>
+
+</head>
+<body>
+    <center>
+  <center>
+    
+<table id="table">
+
+  <tbody id="tbody"></tbody>
+
+</table>
+
+
+
+
+
+<script src="https://stupid-fast.com/gviz.js"></script>
+  </center>
+</center>
+
+
+
+    <script type="text/javascript">//<![CDATA[
+
+
+
+var CURRENTRACE = ""
+var PICKS = []
+var PLAYERS = []
+var PICKORDER = []
+var DRIVERS = []
+
+gviz("https://docs.google.com/spreadsheets/d/1jwadkJYYfBmf-SbjUokDV0S_yzC7gD39-jHxVatJfLU/edit#gid=2062292820", "INFO", "", function(result) {
+  result.shift()
+	//console.log(result)
+  CURRENTRACE = result[0][0]
+  //console.log("CURRENET RACE", CURRENTRACE)
+  getDrivers()
+  
+})
+
+
+
+function getDrivers() {
+gviz("https://docs.google.com/spreadsheets/d/1jwadkJYYfBmf-SbjUokDV0S_yzC7gD39-jHxVatJfLU/edit#gid=2062292820", "DRIVERS", "SELECT * ", function(result) {
+	result.shift()
+	//console.log("DRIVERS", result)
+  DRIVERS = result
+  getPicks()
+})
+
+}
+
+
+
+function getPicks() {
+gviz("https://docs.google.com/spreadsheets/d/1jwadkJYYfBmf-SbjUokDV0S_yzC7gD39-jHxVatJfLU/edit#gid=2062292820", "PICKS", "SELECT A, B, C, D, E where (B = " + CURRENTRACE + ")" , function(result) {
+	result.shift()
+	//console.log("PICKS", result)
+  PICKS = result
+  getPickOrder()
+})
+
+}
+
+function getPickOrder() {
+gviz("https://docs.google.com/spreadsheets/d/1jwadkJYYfBmf-SbjUokDV0S_yzC7gD39-jHxVatJfLU/edit#gid=2062292820", "PICKORDER", "SELECT D, E, F, G order by G" , function(result) {
+	result.shift()
+	//console.log(result)
+  PICKORDER = result
+  makeTable()
+})
+
+}
+
+
+
+function makeTable() {
+	PICKORDER.forEach(function(item) {
+  	var tr = tbody.insertRow()
+    tr.id = item[0]
+    tr.insertCell().innerHTML = "<span class='playername'></span>" + "<sup>" + parseInt(item[3]) + "</sup>"
+    tr.insertCell().innerHTML = "<table><tr class='picks'></tr></table>"
+  })
+  getPlayers()
+}
+
+
+
+
+function getPlayers() {
+gviz("https://docs.google.com/spreadsheets/d/1jwadkJYYfBmf-SbjUokDV0S_yzC7gD39-jHxVatJfLU/edit#gid=2062292820", "PLAYERS", "SELECT * where C = " + "TRUE" + "" , function(result) {
+	result.shift()
+	//console.log(result)
+  PLAYERS = result
+  assignPlayerNames()
+})
+
+}
+
+function assignPlayerNames() {
+	PLAYERS.forEach(function(item) {
+  	var tr = document.getElementById(item[0])
+    tr.getElementsByClassName("playername")[0].innerHTML = item[1]
+  })
+  assignDrivers()
+}
+
+
+function assignDrivers() {
+	PICKS.reverse()
+	DRIVERS.forEach(function(item) {
+  	var find = PICKS.find(function(jtem) {
+    	return jtem[2] == item[0]
+    })
+    try {
+  	var tr = document.getElementById(find[3])
+    var innertr = tr.getElementsByClassName("picks")[0]
+    innertr.innerHTML += "<td>" + item[1] + "</td>"
+    
+    } catch(err) {}
+    
+    
+  })
+}
+
+
+
+
+
+  //]]></script>
+
+  <script>
+    // tell the embed parent frame the height of the content
+    if (window.parent && window.parent.parent){
+      window.parent.parent.postMessage(["resultsFrame", {
+        height: document.body.getBoundingClientRect().height,
+        slug: "tq0enxbw"
+      }], "*")
+    }
+
+    // always overwrite window.name, in case users try to set it manually
+    window.name = "result"
+  </script>
+
+
+</body>
+</html>

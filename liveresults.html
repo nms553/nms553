@@ -1,0 +1,176 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <title></title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="googlebot" content="noindex, nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <script
+    type="text/javascript"
+    src="/js/lib/dummy.js"
+    
+  ></script>
+
+    <link rel="stylesheet" type="text/css" href="/css/result-light.css">
+
+
+  <style id="compiled-css" type="text/css">
+        center center {
+  font-family: sans-serif;
+  font-size: 0.8em;
+}
+
+table, td {
+  //border: 1px solid;
+  border-collapse: collapse;
+}
+
+table {
+  //table-layout: fixed;
+  width: 100%;
+  max-width: 290px;
+}
+
+
+
+table tr:nth-child(even) tr, table tr:nth-child(even) {
+  background-color: #FFA;
+}
+
+    /* EOS */
+  </style>
+
+  <script id="insert"></script>
+
+</head>
+<body>
+    
+
+<center><center>
+  <table border>
+<tbody id="tbody"></tbody>
+  
+</table>
+
+
+
+
+
+
+
+<script src="https://stupid-fast.com/gviz.js"></script>
+  
+</center></center>
+
+
+    <script type="text/javascript">//<![CDATA[
+
+
+var CURRENTRACE = ""
+var PICKS = []
+var PLAYERS = []
+var COUNT = 22
+
+
+  gviz("1jwadkJYYfBmf-SbjUokDV0S_yzC7gD39-jHxVatJfLU", "INFO", "select A", function(result) {
+  //console.log(result)
+  result.shift()
+  CURRENTRACE = result[0]
+  getResults()
+})
+
+function getResults() {
+  fetch("https://cf.nascar.com/live/feeds/series_1/" + CURRENTRACE + "/live_feed.json").then(function(x) {
+    return x.text()
+  }).then(function(y) {
+  	var parse = JSON.parse(y)
+  	//console.log("LIVE RESULTS", parse)
+    parse.vehicles.forEach(function(item, index) {
+    	var tr = tbody.insertRow()
+      tr.id = "c" + item.vehicle_number
+      var td0 = tr.insertCell()
+      td0.innerHTML = item.driver.full_name
+      var td1 = tr.insertCell()
+      td1.classList.add("player")
+      tr.insertCell(0).innerHTML = index + 1
+    })
+    getPicks()
+  })
+}
+
+function getPicks() {
+
+gviz("1jwadkJYYfBmf-SbjUokDV0S_yzC7gD39-jHxVatJfLU", "PICKS", "select A, B, C, D, E, F where B = " + CURRENTRACE, function(result) {
+  //console.log("PICKS", result)
+  result.shift()
+  PICKS = result
+  assignPlayers()
+})
+}
+
+
+function assignPlayers() {
+	PICKS.forEach(function(item) {
+  	try {
+  	var tr = document.getElementById(item[2])
+    var td = tr.getElementsByClassName("player")[0]
+    td.classList.add(item[3])
+    
+    } catch(e) {}
+  })
+  assignPlayerNames()
+}
+
+
+function assignPlayerNames() {
+gviz("1jwadkJYYfBmf-SbjUokDV0S_yzC7gD39-jHxVatJfLU", "PLAYERS", "select A, B, C where C = " + "TRUE", function(result) {
+  //console.log("PICKS", result)
+  result.shift()
+  PLAYERS = result
+  //console.log("PLAYERS", PLAYERS)
+  PLAYERS.forEach(function(item) {
+  	var td = document.getElementsByClassName(item[0])
+    for (var i in td) {
+    td[i].innerHTML = item[1]
+    }
+  })
+  //assignPts()
+})
+}
+
+
+function assignPts() {
+	var trs = document.getElementsByTagName("tr")
+  for (var i in trs) {
+  	var td = trs[i].getElementsByClassName("player")[0]
+  console.log(td)
+  if (td.innerText) {
+  	td.innerText = COUNT--
+  }
+  }
+}
+
+
+  //]]></script>
+
+  <script>
+    // tell the embed parent frame the height of the content
+    if (window.parent && window.parent.parent){
+      window.parent.parent.postMessage(["resultsFrame", {
+        height: document.body.getBoundingClientRect().height,
+        slug: "6y9wroq7"
+      }], "*")
+    }
+
+    // always overwrite window.name, in case users try to set it manually
+    window.name = "result"
+  </script>
+
+
+</body>
+</html>

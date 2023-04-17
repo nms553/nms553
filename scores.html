@@ -1,0 +1,276 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <title>Race Pts Lookup</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="googlebot" content="noindex, nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <script
+    type="text/javascript"
+    src="/js/lib/dummy.js"
+    
+  ></script>
+
+    <link rel="stylesheet" type="text/css" href="/css/result-light.css">
+
+
+  <style id="compiled-css" type="text/css">
+    
+
+table {
+  border-collapse: collapse;
+}
+
+.pts, .pos {
+  text-align: center;
+}
+
+.pts:not(.bonus) {
+  font-weight: bold;
+}
+
+tbody tr:nth-child(odd) {
+  background: #FAA;
+}
+
+    /* EOS */
+  </style>
+
+  <script id="insert"></script>
+
+</head>
+<body>
+    <center>
+  <center>
+    <script src="https://stupid-fast.com/gviz.js"></script>
+    <h1>Lookup points by race</h1>
+    <h4>Select race to view your points.</h4>
+    
+    <select name="race_select" id="raceselect" onchange="getScores()"></select>
+    
+    <br><br>
+    
+    <table cellpadding="3">
+      <thead>
+        <tr>
+          <th>Player</th>
+          <th>Driver 1</th>
+          <th>Pos1</th>
+          <th>Pts1</th>
+          <th>Driver 2</th>
+          <th>Pos1</th>
+          <th>Pts1</th>
+          <th>Bonus</th>
+          <th>TOTAL</th>
+        </tr>
+      </thead>
+      <tbody id="tbody"></tbody>
+    </table>
+    <footer>
+      <small>
+        <br>
+        https://jsfiddle.net/schweissguth/6rbc7x5a/
+      </small>
+    </footer>
+  </center>
+</center>
+
+    <script type="text/javascript">//<![CDATA[
+
+
+var SCORES = []
+var RACELIST = []
+var PLAYERS = []
+var CURRENTRACE = 0
+
+
+
+  gviz("1jwadkJYYfBmf-SbjUokDV0S_yzC7gD39-jHxVatJfLU", "INFO", "select A", function(result) {
+    result.shift()
+    CURRENTRACE = result[0]
+    //console.log("SCORES", SCORES)
+    getRaceList()
+  })
+
+function getRaceList() {
+  fetch("https://cf.nascar.com/cacher/2023/race_list_basic.json").then(function(x) {
+    return x.text()
+  }).then(function(result) {
+    var parse = JSON.parse(result)
+    RACELIST = parse.series_1
+    //console.log("RACELST", RACELIST)
+    buildSelectRaces()
+  })
+
+}
+
+function buildSelectRaces() {
+  RACELIST.forEach(function(item) {
+    var option = document.createElement("OPTION")
+    option.value = item.race_id
+    option.text = item.track_name
+    raceselect.append(option)
+  })
+  raceselect.value = CURRENTRACE
+  var idx = raceselect.selectedIndex
+  raceselect.selectedIndex = idx - 1
+  getScores()
+
+}
+
+
+
+function getScores() {
+  tbody.innerHTML = ""
+  gviz("1jwadkJYYfBmf-SbjUokDV0S_yzC7gD39-jHxVatJfLU", "SCORING", "select * where B = " + raceselect.value, function(result) {
+    result.shift()
+    SCORES = result
+    //console.log("SCORES", SCORES)
+    getPlayerNames()
+  })
+}
+
+function getPlayerNames() {
+  gviz("1jwadkJYYfBmf-SbjUokDV0S_yzC7gD39-jHxVatJfLU", "PLAYERS", "select A, B where C = TRUE", function(result) {
+    result.shift()
+    PLAYERS = result
+    //console.log("PLAYAS", PLAYERS)
+    buildTable()
+  })
+
+}
+
+function buildTable() {
+  var helperarr = []
+  SCORES.forEach(function(item) {
+    var i = helperarr.indexOf(item[3])
+    var tr;
+    //add new row
+    if (i < 0) {
+      tr = tbody.insertRow()
+      tr.classList.add("playerrow")
+      tr.id = item[3]
+      var td0 = tr.insertCell()
+      td0.classList.add("playername")
+      helperarr.push(item[3])
+    } else {
+      //add to existing row
+      var tr = document.getElementById(item[3])
+
+    }
+
+
+    var td1 = tr.insertCell()
+    td1.id = item[2]
+    td1.innerHTML = item[2]
+    var td2 = tr.insertCell()
+    td2.classList.add("pos")
+    td2.innerHTML = item[4]
+    var td3 = tr.insertCell()
+    td3.classList.add("pts")
+    td3.innerHTML = item[5]
+
+
+
+  })
+
+  assignBonus()
+
+}
+
+function assignBonus() {
+
+  var trs = document.getElementsByClassName("playerrow")
+  for (var i = 0; i < trs.length; i++) {
+    var td = trs[i].insertCell()
+    td.classList.add("bonus")
+    td.classList.add("pts")
+    td.innerText = 0
+  }
+
+
+  SCORES.forEach(function(item) {
+    var tr = document.getElementById(item[3])
+    var td = tr.getElementsByClassName("bonus")[0]
+    var int = 0
+    if (parseInt(item[6])) {
+      int = parseInt(item[6])
+    }
+
+    td.innerText = parseInt(td.innerText) + int
+  })
+
+  getDriverNames()
+  //calc()
+}
+
+
+function getDriverNames() {
+  gviz("1jwadkJYYfBmf-SbjUokDV0S_yzC7gD39-jHxVatJfLU", "DRIVERS", "select A, B", function(result) {
+    result.shift()
+    DRIVERS = result
+    //console.log("DRIVERS", DRIVERS)
+    assignDriverNames()
+  })
+
+}
+
+function assignDriverNames() {
+  DRIVERS.forEach(function(item) {
+    try {
+      var td = document.getElementById(item[0])
+      td.innerHTML = item[1]
+
+    } catch (err) {}
+  })
+  assignPlayerNames()
+}
+
+
+
+function assignPlayerNames() {
+  PLAYERS.forEach(function(item) {
+    var tr = document.getElementById(item[0])
+    tr.getElementsByClassName("playername")[0].innerHTML = item[1]
+  })
+  calc()
+}
+
+function calc() {
+	var trs = document.getElementsByClassName("playerrow")
+  for (var i = 0; i < trs.length; i++) {
+  	var tds = trs[i].getElementsByClassName("pts")
+    var count = 0
+    for (var j = 0; j < tds.length; j++) {
+    	count += parseInt(tds[j].innerText)
+    }
+    var td = trs[i].insertCell()
+    td.innerHTML = count
+    td.classList.add("pts")
+  }
+}
+
+
+  //]]></script>
+
+  <script>
+    // tell the embed parent frame the height of the content
+    if (window.parent && window.parent.parent){
+      window.parent.parent.postMessage(["resultsFrame", {
+        height: document.body.getBoundingClientRect().height,
+        slug: "6rbc7x5a"
+      }], "*")
+    }
+
+    // always overwrite window.name, in case users try to set it manually
+    window.name = "result"
+  </script>
+
+
+</body>
+</html>

@@ -3,7 +3,7 @@
 <html>
 <head>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-  <title>Stupid-Fast.com Picks Page</title>
+  <title>SF PICKS - GAS/PHP</title>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <meta name="robots" content="noindex, nofollow">
   <meta name="googlebot" content="noindex, nofollow">
@@ -20,35 +20,51 @@
 
 
   <style id="compiled-css" type="text/css">
-          html,
-      body {
-        //color: white;
+    * {
+  //outline: 1px solid;
+}
 
-      }
+center center > * {
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
 
-      table {
-        table-layout: fixed;
-        width: 100%;
-        max-width: 300px;
-        border-spacing: 0px 10px;
-      }
+header {
+  //margin: 30px auto 30px auto;
+}
 
-      select {
-        float: right;
-      }
-
-      input {
-        box-sizing: border-box;
-        width: 100%;
-      }
+select {
+  width: 100%;
+  display: flex;
+}
 
 
+center center {
+  width: 100%;
+  max-width: 290px;
+}
 
-      tr:nth-child(25) td {
-        border-top: 1px solid;
-        padding-top: 35px;
-      }
+table {
+  //margin-top: 20px;
+  border-collapse: collapse;
+  width: 100%;
+}
 
+table tr:nth-child(even) {
+  background: whitesmoke;
+}
+
+table img {
+  width: 40px;
+}
+
+footer {
+  //margin-bottom: 100px;
+}
+
+textarea {
+  width: 90%;
+}
 
     /* EOS */
   </style>
@@ -57,198 +73,134 @@
 
 </head>
 <body>
-    
-
-
-  <head>
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-    <meta name="robots" content="noindex, nofollow">
-    <meta name="googlebot" content="noindex, nofollow">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400&display=swap" rel="stylesheet">
-    <link href="https://stupid-fast.com/css.css" rel="stylesheet">
-
-
-    <script type="text/javascript" src="/js/lib/dummy.js"></script>
-
-    <link rel="stylesheet" type="text/css" href="/css/result-light.css">
-
-</head>
-
-<body>
-  
-
-
-
-    <dialog id="dialog">
-      <center>
-        <p id="p">Submitting...</p>
-        <button id="b" onclick="closeModal()">Close</button>
-      </center>
-    </dialog>
-
-
-    <center>
-      <a href="https://www.stupid-fast.com/">
-        <img src="https://www.stupid-fast.com/banner/banner.png">
-      </a>
-
-      <br><br>
-
-      <table id="top10"></table>
-
-      <hr>
-
-      <table id="nontop10"></table>
-
-      <br>
-      <br>
-
-    </center>
-    
-    
     <script src="https://stupid-fast.com/gviz.js"></script>
+<center>
+  <center>
+  <header>
+  <a href="https://stupid-fast.com">
+    <img src="https://www.stupid-fast.com/banner/banner.png" alt="" width="100%">
+  </a>
+    
+  </header>
+    
+<table id="table" cellpadding="3">
+<tbody id="tbody">
+  <tr>
+    <td>
+      <center>
+        <code>LOADING...</code>
+      </center>
+    </td>
+  </tr>
+</tbody>
+</table>
 
-</body>
+<form action="https://script.google.com/macros/s/AKfycby5Lbz4bLQCqU-tdkG7idtj-ob2SrFk6mUuJa0KYLfVIan2KdcVOQ4grFiJ-igZAeU/exec" method="post" id="form" target="iframe">
+  <iframe name="iframe" frameborder="1" height="30" width="100%" style="display: none;"></iframe>
+  <input type="hidden" name="input_race" id="input_race">
+  <input type="hidden" name="input_driver" id="input_driver">
+  <input type="hidden" name="input_player" id="input_player">
+</form>
+
+
+<footer>
+<small>https://jsfiddle.net/schweissguth/oe6hvd5q/</small>
+</footer>
+  </center>
+</center>
+
+
 
     <script type="text/javascript">//<![CDATA[
 
 
+var CURRENTRACE = 0
 var PLAYERS = []
 var DRIVERS = []
-var STANDINGS = []
+var PICKS = []
 
 
-var key = "1jwadkJYYfBmf-SbjUokDV0S_yzC7gD39-jHxVatJfLU"
-var select = document.createElement("SELECT")
-select.add(document.createElement("OPTION"))
+gviz("1jwadkJYYfBmf-SbjUokDV0S_yzC7gD39-jHxVatJfLU", "INFO", "SELECT A", function(result) {
+  result.shift()
+  CURRENTRACE = result
+  getDrivers()
+})
 
-function getPlayers() {
-  gviz(key, "PLAYERS", "select A, B, C where C = true", function(data) {
-    //console.log(data)
-    data.shift()
-    data.forEach(function(item) {
-      opt = document.createElement("OPTION")
-      opt.text = item[1]
-      opt.value = item[0]
-      select.add(opt)
-    })
-    PLAYERS = data
-    //console.log("PLAYERS", PLAYERS)
-    getDrivers()
+function getDrivers() {
+  gviz("1jwadkJYYfBmf-SbjUokDV0S_yzC7gD39-jHxVatJfLU", "DRIVERS", "SELECT A, B, C, D", function(result) {
+    result.shift()
+    DRIVERS = result
+    assignDrivers()
   })
 }
 
 
-function getDrivers(players) {
-  gviz(key, "DRIVERS", "select A, B, C, D", function(data) {
-    data.shift()
-    //console.log("get DRIVERS", data)
-    DRIVERS = data
-    //.filter(function(item) {
-      //return item[4] !== "✗"
-    //})
-    getStandings()
-  })
-
-}
-
-
-function getStandings(players, drivers) {
-  gviz(key, "DSTANDINGS", "select B", function(data) {
-    data.shift()
-    //console.log("get standings", data)
-    STANDINGS = data.flat()
-    matchDrivers()
-  })
-}
-
-
-function matchDrivers() {
-
+function assignDrivers() {
+	tbody.innerHTML = ""
   DRIVERS.forEach(function(item) {
-    var indexof = STANDINGS.indexOf(item[0].split("c")[1])
-    item.push(indexof)
-
-  })
-
-  DRIVERS.sort(function(a, b) {
-    return a[4] - b[4]
-  })
-
-  DRIVERS.forEach(function(item) {
-  	var table = document.getElementById("top10")
-
-    var tr = table.insertRow()
-    var trtr = table.insertRow()
+    var tr = tbody.insertRow()
+    tr.insertCell().innerHTML = "<img src='" + item[2] + "' />"
     tr.insertCell().innerHTML = item[1]
-    var trtd = trtr.insertCell()
-    trtd.setAttribute("colspan", 2)
-    trtd.classList.add("trashtalk")
-    trtd.classList.add(item[0])
-    var inp = document.createElement("INPUT")
-    inp.placeholder = "trashtalk"
-    inp.title = item[0]
-    inp.setAttribute("onchange", "submitDriver('trashtalk', this.value, this.title)")
-    trtd.style.display = "none"
-    trtd.append(inp)
-    var td = tr.insertCell()
-    var clone = select.cloneNode(true)
-    clone.value = item[2]
-    clone.id = item[0]
-    clone.setAttribute("onchange", "submitDriver('driver', this.value, this.id)")
-
-    td.append(clone)
-
+    var td2 = tr.insertCell()
+    var select = document.createElement("SELECT")
+    select.id = item[0]
+    select.classList.add("playerselect")
+    select.setAttribute("onchange", "selectDriver(CURRENTRACE, this.id, this.value)")
+    td2.append(select)
   })
-  //console.log("DRIVERS", DRIVERS)
-
+  getPlayerNames()
 }
 
 
-
-
-
-
-getPlayers()
-
-
-
-function submitDriver(type, value, driverid) {
-  var tr = document.getElementsByClassName("trashtalk")
-  for (let i of tr) {
-    i.style.display = "none"
-  }
-  document.getElementsByClassName(driverid)[0].style.display = ""
-  b.style.visibility = "hidden"
-  //dialog.showModal()
-
-  var url = "https://script.google.com/macros/s/AKfycbz-bo8-JCGDorlrhvfS2zYWH_F7p5iwgk2TjxeSWdSZSZPuaS9v42WAidA9lbRaI2qBzg/exec?type=" + type + "&value=" + value + "&driverid=" + driverid
-  console.log(url)
-
-  var xhttpx = new XMLHttpRequest();
-  xhttpx.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-      b.style.visibility = ""
-      p.innerHTML = "Success"
+function getPlayerNames() {
+  gviz("1jwadkJYYfBmf-SbjUokDV0S_yzC7gD39-jHxVatJfLU", "PLAYERS", "SELECT A, B, C, D where C = TRUE", function(result) {
+    result.shift()
+    PLAYERS = result
+    assignPlayers()
+  })
+	
+}
+  
+  
+  function assignPlayers() {
+  	var opt = "<option>"
+  	PLAYERS.forEach(function(item) {
+    	opt += "<option value='" + item[0] + "'>" + item[1] + "</option>"
+    })
+    opt += "</option>"
+    
+    var sels = document.getElementsByClassName("playerselect")
+    for (var i in sels) {
+    	sels[i].innerHTML = opt
     }
-  };
-  xhttpx.open("GET", url, true);
-  xhttpx.send();
-
-
-}
-
-
-
-function closeModal() {
-  p.innerHTML = "Submitting..."
-  dialog.close()
-}
-
+    getPicks()
+  }
+  
+  
+  function getPicks() {
+  gviz("1jwadkJYYfBmf-SbjUokDV0S_yzC7gD39-jHxVatJfLU", "PICKS", "SELECT A, B, C, D, E", function(result) {
+    result.shift()
+    PICKS = result
+    assignPicks()
+  })
+  
+  }
+  
+  
+  function assignPicks() {
+  	PICKS.forEach(function(item) {
+    	var sel = document.getElementById(item[2])
+      sel.value = item[3]
+    })
+  }
+  
+  
+  function selectDriver(raceid, driverid, playerid) {
+  	input_race.value = raceid
+    input_driver.value = driverid
+    input_player.value = playerid
+    form.submit()
+  }
 
 
   //]]></script>
@@ -258,7 +210,7 @@ function closeModal() {
     if (window.parent && window.parent.parent){
       window.parent.parent.postMessage(["resultsFrame", {
         height: document.body.getBoundingClientRect().height,
-        slug: "g0av52om"
+        slug: "oe6hvd5q"
       }], "*")
     }
 

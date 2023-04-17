@@ -131,7 +131,7 @@ gviz("https://docs.google.com/spreadsheets/d/1jwadkJYYfBmf-SbjUokDV0S_yzC7gD39-j
 }
 
 function getPickOrder() {
-gviz("https://docs.google.com/spreadsheets/d/1jwadkJYYfBmf-SbjUokDV0S_yzC7gD39-jHxVatJfLU/edit#gid=2062292820", "PICKORDER", "SELECT D, E, F, G order by G" , function(result) {
+gviz("https://docs.google.com/spreadsheets/d/1jwadkJYYfBmf-SbjUokDV0S_yzC7gD39-jHxVatJfLU/edit#gid=2062292820", "PICKORDER", "SELECT A, B order by D" , function(result) {
 	result.shift()
 	//console.log(result)
   PICKORDER = result
@@ -146,7 +146,7 @@ function makeTable() {
 	PICKORDER.forEach(function(item) {
   	var tr = tbody.insertRow()
     tr.id = item[0]
-    tr.insertCell().innerHTML = "<span class='playername'></span>" + "<small> (" + parseInt(item[3]) + ")</small>"
+    tr.insertCell().innerHTML = "<span class='playername'></span>" + "<small> (" + parseInt(item[1]) + ")</small>"
     tr.insertCell().innerHTML = "<table><tr class='picks'></tr></table>"
   })
   getPlayers()

@@ -66,6 +66,7 @@ textarea {
   width: 90%;
 }
 
+
     /* EOS */
   </style>
 
@@ -178,7 +179,7 @@ function getPlayerNames() {
   
   
   function getPicks() {
-  gviz("1jwadkJYYfBmf-SbjUokDV0S_yzC7gD39-jHxVatJfLU", "PICKS", "SELECT A, B, C, D, E", function(result) {
+  gviz("1jwadkJYYfBmf-SbjUokDV0S_yzC7gD39-jHxVatJfLU", "PICKS", "SELECT A, B, C, D, E where B = " + CURRENTRACE, function(result) {
     result.shift()
     PICKS = result
     assignPicks()
@@ -192,6 +193,13 @@ function getPlayerNames() {
     	var sel = document.getElementById(item[2])
       sel.value = item[3]
     })
+      addSeparator()
+  }
+  
+  function addSeparator() {
+  	var td = tbody.insertRow(12).insertCell()
+    td.setAttribute("colspan", 3)
+    td.innerHTML = "<br><br><br><hr><br><br><br>"
   }
   
   

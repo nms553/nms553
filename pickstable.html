@@ -28,7 +28,9 @@
 table, td {
   //border: 1px solid;
   border-collapse: collapse;
-	padding: 3px;
+	padding: 3px 0px 3px 3px;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 #table {
@@ -41,18 +43,13 @@ table, td {
   font-weight: bold;
 }
 
-table table td {
-  width: 50%;
-}
-
 table > tbody > tr > td:first-child {
   width: 85px;
 }
 
 table table {
   table-layout: fixed;
-  width: 100%;
-  
+  width: 100%;  
 }
 
 table tr:nth-child(even) tr, table tr:nth-child(even) {

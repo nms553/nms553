@@ -1,144 +1,141 @@
+
 <!DOCTYPE html>
 <html>
 <head>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-  <title>Standings</title>
-
+  <title>SF Standings Page</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="googlebot" content="noindex, nofollow">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
+
+  <script
+    type="text/javascript"
+    src="/js/lib/dummy.js"
+    
+  ></script>
 
     <link rel="stylesheet" type="text/css" href="/css/result-light.css">
 
 
   <style id="compiled-css" type="text/css">
-    html, body {
-  //background-color: lightgray;
-  font-family: sans-serif;
-  font-size: 0.9em;
-}
-
-table, td, th {
-  border: 3px solid white;
+    table {
   border-collapse: collapse;
-  background: #EEE;
-  padding: 10px 20px 10px 15px;
-  text-align: center;
   table-layout: fixed;
+  width: 100%;
+  max-width: 290px;
 }
 
-th {
-  background-color: #0BF;
-  color: white;
-  
+table tr:nth-child(even) {
+  background: #FDF;
 }
 
-td:nth-child(2) {
+tr td:first-child {
+  width: 50px;
+  text-align: center
+}
+
+tr td:nth-child(2) {
   font-weight: bold;
-  text-align: left;
 }
 
-tr:nth-child(n+2):hover {
-  outline: 2px solid black;
+tr td:nth-child(3) {
+  width: 75px;
+  text-align: center;
 }
 
-
+    /* EOS */
   </style>
+
+  <script id="insert"></script>
 
 </head>
 <body>
-    Points up through: <select name="select" id="select" onchange="changeRace(this.value)">
-</select>
+    <center>
+  <center>
+    <script src="https://stupid-fast.com/gviz.js"></script>
+    <header>
+    <h1>Player Standings</h1>
+    <h3>Regular season</h3>
+    </header>
+    <table cellpadding="3">
+      <tbody id="tbody">
+        <tr>
+          <td>
+            <center>
+              <code>LOADING...</code>
+            </center>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <small>
+    <br>
+      https://jsfiddle.net/schweissguth/at6v5dub/
+    </small>
+  </center>
+</center>
 
-<br><br>
-
-<table id="table" border="1"></table>
-
-
-    <script type="text/javascript">
-
-
-var url = "https://docs.google.com/spreadsheets/d/1jwadkJYYfBmf-SbjUokDV0S_yzC7gD39-jHxVatJfLU/gviz/tq?sheet=Point&tq="
-
-function loadXMLDoc(uri, func) {
-  var xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-      var resp = this.responseText
-      //body.innerHTML = this.responseText
-
-      resp = resp.replace("/*O_o*/\ngoogle.visualization.Query.setResponse(", "")
-      var lio = resp.lastIndexOf(")")
-      var substr = resp.substring(0, lio)
-      var obj = JSON.parse(substr)
-
-      window[func](obj)
-
-
+    <script type="text/javascript">//<![CDATA[
 
 
-    }
-  };
-  xhttp.open("GET", uri, true);
-  xhttp.send();
-}
+var STANDINGS = []
+var PLAYERNAMES = []
 
-loadXMLDoc(url + "SELECT C, sum(K), sum(L) group by C order by sum(K) DESC label sum(K) 'Total', sum(L) 'Weekly $'", "buildTable")
 
-function changeRace(that) {
-  loadXMLDoc(url + "SELECT C, sum(K), sum(L) where B <= " + that + " group by C order by sum(K) DESC label sum(K) 'Total', sum(L) 'Weekly $'", "buildTable")
-}
+gviz("https://docs.google.com/spreadsheets/d/1jwadkJYYfBmf-SbjUokDV0S_yzC7gD39-jHxVatJfLU/edit#gid=244048059", "STANDINGS", "SELECT A, B", function(result) {
+result.shift()
+	STANDINGS = result
+  console.log("STANDIGNS", STANDINGS)
+  assignStandings()
+})
 
-function buildTable(obj) {
-  //console.log(obj)
-  table.innerHTML = ""
-  var rh = table.insertRow()
-  rh.insertCell().style.background = "white"
-  obj.table.cols.forEach(function(item) {
-    var th = document.createElement("TH")
-    th.innerHTML = item.label
-    rh.append(th)
-  })
-  rh.insertCell().style.background = "white"
-  
-  var prev = 0
-  obj.table.rows.forEach(function(item, index) {
-    var tr = table.insertRow()
+
+function assignStandings() {
+	tbody.innerHTML = ""
+	STANDINGS.forEach(function(item, index) {
+  	var tr = tbody.insertRow()
     tr.insertCell().innerHTML = index + 1
-    
-    item.c.forEach(function(jtem) {
-      try {
-        tr.insertCell().innerText = jtem.v
-        
-      } catch (err) {
+    tr.insertCell().id = item[0]
+    tr.insertCell().innerHTML = item[1]
+  })
+  getPlayerNames()
+}
 
-      }
-      
-    })
-tr.insertCell().innerText = item.c[1].v - obj.table.rows[0].c[1].v
+
+function getPlayerNames() {
+	gviz("https://docs.google.com/spreadsheets/d/1jwadkJYYfBmf-SbjUokDV0S_yzC7gD39-jHxVatJfLU/edit#gid=244048059", "PLAYERS", "SELECT A, B where C = TRUE", function(result) {
+result.shift()
+	PLAYERS = result
+  console.log("PLAYERS", PLAYERS)
+  assignPlayerNames()
+})
+}
+
+
+function assignPlayerNames() {
+	PLAYERS.forEach(function(item) {
+  	document.getElementById(item[0]).innerHTML = item[1]
   })
 }
 
 
-function createOptions(obj) {
-  console.log(obj)
-  obj.table.rows.forEach(function(item) {
-    var opt = document.createElement("OPTION")
-    opt.value = item.c[1].v
-    opt.innerHTML = item.c[0].v
-    opt.selected = true
-    select.appendChild(opt)
-  })
+  //]]></script>
 
+  <script>
+    // tell the embed parent frame the height of the content
+    if (window.parent && window.parent.parent){
+      window.parent.parent.postMessage(["resultsFrame", {
+        height: document.body.getBoundingClientRect().height,
+        slug: "at6v5dub"
+      }], "*")
+    }
 
-}
-
-loadXMLDoc(url + "SELECT A, B where C matches 'Nick'", "createOptions")
-
-
-
-</script>
+    // always overwrite window.name, in case users try to set it manually
+    window.name = "result"
+  </script>
 
 
 </body>
 </html>
-

@@ -37,7 +37,7 @@ table, td {
   max-width: 290px;
 }
 
-#table > tbody > tr > td:first-child {
+#table > tbody > tr > td:first-child span {
   font-weight: bold;
 }
 
@@ -46,7 +46,7 @@ table table td {
 }
 
 table > tbody > tr > td:first-child {
-  width: 75px;
+  width: 85px;
 }
 
 table table {
@@ -80,6 +80,11 @@ table tr:nth-child(even) tr, table tr:nth-child(even) {
 
 
 <script src="https://stupid-fast.com/gviz.js"></script>
+
+<br>
+  <small>https://jsfiddle.net/schweissguth/tq0enxbw/</small>
+<footer>
+</footer>
   </center>
 </center>
 
@@ -144,7 +149,7 @@ function makeTable() {
 	PICKORDER.forEach(function(item) {
   	var tr = tbody.insertRow()
     tr.id = item[0]
-    tr.insertCell().innerHTML = "<span class='playername'></span>" + "<sup>" + parseInt(item[3]) + "</sup>"
+    tr.insertCell().innerHTML = "<span class='playername'></span>" + "<small> (" + parseInt(item[3]) + ")</small>"
     tr.insertCell().innerHTML = "<table><tr class='picks'></tr></table>"
   })
   getPlayers()

@@ -20,7 +20,26 @@
 
 
   <style id="compiled-css" type="text/css">
-    
+    center center {
+  width: 100%;
+  max-width: 300px;
+}
+
+table {
+  width: 100%;
+  font-size: 0.85em;
+  font-family: sans-serif;
+  border-collapse: collapse;
+}
+
+table tr:nth-child(even) {
+  background: #EEE;
+}
+
+table tr td:nth-child(2) {
+  font-weight: bold;
+}
+
 
     /* EOS */
   </style>
@@ -29,14 +48,23 @@
 
 </head>
 <body>
-    <center id="center">
+    <center>
+<center>
   
-  <table id="table">
+  <table id="table" cellpadding="3">
     
   </table>
+  
+  <script src="https://stupid-fast.com/gviz.js"></script>
+  
+  <footer>
+  <br>
+    <small>https://jsfiddle.net/schweissguth/av147cfg/</small>
+  </footer>
+</center>
 </center>
 
-<script src="https://stupid-fast.com/gviz.js"></script>
+
 
     <script type="text/javascript">//<![CDATA[
 
@@ -58,6 +86,13 @@ return e.text();
     }
     tr.insertCell().innerText = date.toLocaleDateString()
     tr.insertCell().innerText = item.track_name
+    var minutes = "00"
+    if (new Date(item.race_date).getMinutes() > 0) {
+    	minutes = new Date(item.race_date).getMinutes()
+    }
+    tr.insertCell().innerHTML = (new Date(item.race_date).getHours() - 13) + ":" + minutes + "cst"
+    tr.insertCell().innerHTML = item.radio_broadcaster
+    tr.insertCell().innerHTML = item.television_broadcaster
   })
 })
 

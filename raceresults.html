@@ -1,7 +1,145 @@
+
+<!DOCTYPE html>
 <html>
-  <head>
-  <script type="text/javascript">
-    location.replace("https://jsfiddle.net/schweissguth/5f0umr68/show");
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <title>Race results</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="googlebot" content="noindex, nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <script
+    type="text/javascript"
+    src="/js/lib/dummy.js"
+    
+  ></script>
+
+    <link rel="stylesheet" type="text/css" href="/css/result-light.css">
+
+
+  <style id="compiled-css" type="text/css">
+    center center {
+  width: 100%;
+  max-width: 290px;
+}
+
+#selectrace {
+  width: 100%;
+}
+
+#selectdriver {
+  width: 100%;
+  
+  padding: 3px;
+}
+
+    /* EOS */
+  </style>
+
+  <script id="insert"></script>
+
+</head>
+<body>
+    <center>
+<center>
+
+<script src="https://stupid-fast.com/gviz.js"></script>
+
+<h1>Race results</h1>
+
+<p>Select your race from the menu to see race results:</p>
+
+<select name="" id="selectrace" onchange="lookupRace(this.value)">
+<option></option>
+</select>
+
+<br><br>
+
+<select name="" id="selectdriver" multiple size="40"></select>
+
+
+<br><br><br>
+<footer id="footer">
+
+</footer>
+<br>
+<small>https://jsfiddle.net/schweissguth/5f0umr68/</small>
+<br><br><br><br>
+</center>
+</center>
+
+    <script type="text/javascript">//<![CDATA[
+
+
+var CURRENTRACE = ""
+
+function getSetRace() {
+  gviz("https://docs.google.com/spreadsheets/d/1jwadkJYYfBmf-SbjUokDV0S_yzC7gD39-jHxVatJfLU/edit#gid=2062292820", "INFO", "select A", function(result) {
+    result.shift()
+    CURRENTRACE = result[0]
+    console.log(CURRENTRACE)
+    getRaceSchedule()
+  })
+}
+
+getSetRace()
+
+
+function getRaceSchedule() {
+  fetch("https://cf.nascar.com/cacher/2023/race_list_basic.json").then(function(x) {
+    return x.text()
+  }).then(function(y) {
+    console.log(JSON.parse(y))
+    JSON.parse(y).series_1.forEach(function(item) {
+      var opt = document.createElement("OPTION")
+      opt.text = item.track_name + " - " + item.race_id
+      opt.value = item.race_id
+      selectrace.add(opt)
+    })
+    selectrace.value = CURRENTRACE
+    selectrace.selectedIndex = selectrace.selectedIndex - 1
+    lookupRace()
+  })
+}
+
+
+
+
+function lookupRace() {
+  selectdriver.innerHTML = ""
+  fetch("https://cf.nascar.com/live/feeds/series_1/" + selectrace.value + "/live_feed.json").then(function(x) {
+    return x.text()
+  }).then(function(y) {
+    console.log("lookuprace", JSON.parse(y))
+    JSON.parse(y).vehicles.forEach(function(item, i) {
+      var opt = document.createElement("OPTION")
+      opt.text = i + 1 + " - " + item.driver.full_name
+      opt.value = item.driver.driver_id
+      selectdriver.add(opt)
+    })
+
+  })
+}
+
+
+
+  //]]></script>
+
+  <script>
+    // tell the embed parent frame the height of the content
+    if (window.parent && window.parent.parent){
+      window.parent.parent.postMessage(["resultsFrame", {
+        height: document.body.getBoundingClientRect().height,
+        slug: "5f0umr68"
+      }], "*")
+    }
+
+    // always overwrite window.name, in case users try to set it manually
+    window.name = "result"
   </script>
-  </head>
+
+
+</body>
 </html>

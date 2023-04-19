@@ -1,0 +1,144 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <title>Race Pts Lookup</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="googlebot" content="noindex, nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <script
+    type="text/javascript"
+    src="/js/lib/dummy.js"
+    
+  ></script>
+
+    <link rel="stylesheet" type="text/css" href="/css/result-light.css">
+
+
+  <style id="compiled-css" type="text/css">
+    
+
+table {
+  border-collapse: collapse;
+  font-size: 0.85em;
+  font-family: sans-serif;
+}
+
+.pts, .pos {
+  text-align: center;
+}
+
+.pts:not(.bonus) {
+  font-weight: bold;
+}
+
+tbody tr:nth-child(odd) {
+  background: #FAA;
+}
+
+    /* EOS */
+  </style>
+
+  <script id="insert"></script>
+
+</head>
+<body>
+    <center>
+  <center>
+    <script src="https://stupid-fast.com/gviz.js"></script>
+    <h1>Lookup points by player</h1>
+    <h4>Select player to view your points.</h4>
+    
+    
+   <select name="player_select" id="playerselect" onchange="getScores()">
+   <option value=""></option>
+   </select>
+   
+   <br><br>
+   
+   <section id="section2"></section>
+    <footer>
+      <small>
+        <br>
+        https://jsfiddle.net/schweissguth/39j4qm8c/
+      </small>
+    </footer>
+  </center>
+</center>
+
+    <script type="text/javascript">//<![CDATA[
+
+
+var SCORES = []
+var RACELIST = []
+var PLAYERS = []
+var CURRENTRACE = 0
+
+
+
+
+
+
+function getPlayers() {
+	gviz("1jwadkJYYfBmf-SbjUokDV0S_yzC7gD39-jHxVatJfLU", "PLAYERS", "select A, B where C = TRUE", function(result) {
+  	result.shift()
+  	PLAYERS = result
+    assignPlayerNames()
+  })
+}
+
+getPlayers()
+
+
+function assignPlayerNames() {
+	PLAYERS.forEach(function(item) {
+		var opt = document.createElement("OPTION")
+    opt.text = item[1]
+		opt.value = item[0]
+    playerselect.add(opt)
+  })
+  getScores()
+}
+
+
+
+function getScores() {
+	section2.innerHTML = ""
+	gvizHTML("1jwadkJYYfBmf-SbjUokDV0S_yzC7gD39-jHxVatJfLU", "SCORING", "select * where D = '" + playerselect.value + "'", function(result) {
+  	console.log(result)
+  	//result.shift()
+    SCORES = result
+    console.log("SCORES", SCORES)
+    displayHTML()
+  })
+}
+
+
+function displayHTML() {
+	section2.innerHTML = SCORES
+}
+
+
+
+  //]]></script>
+
+  <script>
+    // tell the embed parent frame the height of the content
+    if (window.parent && window.parent.parent){
+      window.parent.parent.postMessage(["resultsFrame", {
+        height: document.body.getBoundingClientRect().height,
+        slug: "39j4qm8c"
+      }], "*")
+    }
+
+    // always overwrite window.name, in case users try to set it manually
+    window.name = "result"
+  </script>
+
+
+</body>
+</html>

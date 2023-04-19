@@ -20,7 +20,16 @@
 
 
   <style id="compiled-css" type="text/css">
-    
+    html, body, center {
+  padding: 0px;
+  margin: 0px;
+}
+
+
+center center {
+  width: 100%;
+  max-width: 290px;
+}
 
 table {
   border-collapse: collapse;
@@ -38,6 +47,10 @@ table {
 
 tbody tr:nth-child(odd) {
   background: #FAA;
+}
+
+tr td:nth-child(10) {
+  font-weight: bold;
 }
 
     /* EOS */
@@ -61,6 +74,12 @@ tbody tr:nth-child(odd) {
    <br><br>
    
    <section id="section2"></section>
+   
+   <br><br><br>
+   
+   <table>
+     <tbody id="tbody"></tbody>
+   </table>
     <footer>
       <small>
         <br>
@@ -77,6 +96,9 @@ var SCORES = []
 var RACELIST = []
 var PLAYERS = []
 var CURRENTRACE = 0
+var OBJ = {}
+var TRACKS = []
+var DRIVERS = []
 
 
 
@@ -108,12 +130,13 @@ function assignPlayerNames() {
 
 function getScores() {
 	section2.innerHTML = ""
-	gvizHTML("1jwadkJYYfBmf-SbjUokDV0S_yzC7gD39-jHxVatJfLU", "SCORING", "select * where D = '" + playerselect.value + "'", function(result) {
+	gviz("1jwadkJYYfBmf-SbjUokDV0S_yzC7gD39-jHxVatJfLU", "SCORING", "select * where D = '" + playerselect.value + "'", function(result) {
   	console.log(result)
-  	//result.shift()
+  	result.shift()
     SCORES = result
     console.log("SCORES", SCORES)
-    displayHTML()
+    //displayHTML()
+    setRaces()
   })
 }
 
@@ -122,6 +145,116 @@ function displayHTML() {
 	section2.innerHTML = SCORES
 }
 
+
+function setRaces() {
+	SCORES.forEach(function(item) {
+  	OBJ[item[1]] = {
+    	racename: "",
+      cars: {},
+      
+    }
+  })
+  SCORES.forEach(function(item) {
+  	OBJ[item[1]].cars[item[2]] = {
+    	pos: parseInt(item[4]) || 0,
+      pts: parseInt(item[5]) || 0,
+      bonus: parseInt(item[6]) || 0,
+      total: function() {
+      	return this.bonus + this.pts;
+      },
+      driver: "",
+    }
+  })
+  console.log(OBJ)
+  getTrackNames()
+}
+
+
+function getTrackNames() {
+	fetch("https://cf.nascar.com/cacher/2023/race_list_basic.json").then(function(x) {
+  	return x.text()
+  }).then(function(result) {
+  	var parse = JSON.parse(result)
+    TRACKS = parse.series_1
+    console.log(parse)
+    assignTrackNames()
+  })
+}
+
+
+function assignTrackNames() {
+	TRACKS.forEach(function(item) {
+  	try {
+  	OBJ[item.race_id].racename = item.track_name
+    
+    } catch(err) {}
+  })
+  console.log("OBJ2", OBJ)
+  getDrivers()
+}
+
+function getDrivers() {
+	gviz("1jwadkJYYfBmf-SbjUokDV0S_yzC7gD39-jHxVatJfLU", "DRIVERS", "select A, B", function(result) {
+  	console.log(result)
+  	result.shift()
+    DRIVERS = result
+    assignDrivers()
+  })
+
+}
+
+function assignDrivers() {
+	DRIVERS.forEach(function(item) {
+  	for (var i in OBJ) {
+    	for (var j in OBJ[i].cars) {
+      	try {
+      	OBJ[i].cars[item[0]].driver = item[1]
+          
+        
+        } catch(err) {
+        
+        }
+      }
+    }
+  })
+  makeTable()
+}
+
+
+function makeTable() {
+	for (var i in OBJ) {
+  	var tr = tbody.insertRow()
+    tr.insertCell().innerHTML = OBJ[i].racename
+    for (var j in OBJ[i].cars) {
+    	tr.insertCell().innerHTML = OBJ[i].cars[j].driver
+      }
+      
+    for (var j in OBJ[i].cars) {
+      tr.insertCell().innerHTML = OBJ[i].cars[j].pos
+      }
+      
+    for (var j in OBJ[i].cars) {
+      tr.insertCell().innerHTML = OBJ[i].cars[j].pts
+      }
+    for (var j in OBJ[i].cars) {
+      tr.insertCell().innerHTML = OBJ[i].cars[j].bonus
+      }
+    
+  }
+  calcSum()
+}
+
+function calcSum() {
+	var trs = document.getElementsByTagName("TR")
+  console.log(trs)
+  for (var i in trs) {
+  	var a = trs[i].getElementsByTagName("TD")[5].innerText
+  	var b = trs[i].getElementsByTagName("TD")[6].innerText
+  	var c = trs[i].getElementsByTagName("TD")[7].innerText
+    var total = parseInt(a) + parseInt(b) + parseInt(c)
+    trs[i].insertCell().innerHTML = total
+  }
+}
 
 
   //]]></script>

@@ -120,7 +120,7 @@ function getPicks() {
 gviz("1jwadkJYYfBmf-SbjUokDV0S_yzC7gD39-jHxVatJfLU", "PICKS", "select A, B, C, D, E, F where B = " + CURRENTRACE, function(result) {
   //console.log("PICKS", result)
   result.shift()
-  PICKS = result
+  PICKS = result.reverse()
   assignPlayers()
 })
 }

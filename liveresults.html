@@ -66,10 +66,6 @@ tr td:nth-child(3) {
 
 
 
-
-
-
-
 <script src="https://stupid-fast.com/gviz.js"></script>
     <br>
     <small>https://jsfiddle.net/schweissguth/6y9wroq7/</small>
@@ -87,6 +83,10 @@ var CURRENTRACE = ""
 var PICKS = []
 var PLAYERS = []
 var COUNT = 22
+var DRIVERSobj = {}
+var RESULTS = []
+var PLAYERSobj = {}
+var PICKSobj = {}
 
 
   gviz("1jwadkJYYfBmf-SbjUokDV0S_yzC7gD39-jHxVatJfLU", "INFO", "select A", function(result) {
@@ -101,68 +101,81 @@ function getResults() {
     return x.text()
   }).then(function(y) {
   	var parse = JSON.parse(y)
-  	//console.log("LIVE RESULTS", parse)
-    parse.vehicles.forEach(function(item, index) {
-    	var tr = tbody.insertRow()
-      tr.id = "c" + item.vehicle_number
-      var td0 = tr.insertCell()
-      td0.innerHTML = item.driver.full_name
-      var td1 = tr.insertCell()
-      td1.classList.add("player")
-      tr.insertCell(0).innerHTML = index + 1
-    })
+    RESULTS = parse
+  	//console.log("RESULTS", RESULTS)
     getPicks()
   })
 }
 
 function getPicks() {
-
 gviz("1jwadkJYYfBmf-SbjUokDV0S_yzC7gD39-jHxVatJfLU", "PICKS", "select A, B, C, D, E, F where B = " + CURRENTRACE, function(result) {
-  //console.log("PICKS", result)
   result.shift()
-  PICKS = result.reverse()
-  assignPlayers()
+  PICKS = result
+  //console.log("PICKS", PICKS)
+  getPlayers()
 })
 }
 
-
-function assignPlayers() {
-	PICKS.forEach(function(item) {
-  	try {
-  	var tr = document.getElementById(item[2])
-    var td = tr.getElementsByClassName("player")[0]
-    td.classList.add(item[3])
-    
-    } catch(e) {}
-  })
-  assignPlayerNames()
-}
-
-
-function assignPlayerNames() {
-gviz("1jwadkJYYfBmf-SbjUokDV0S_yzC7gD39-jHxVatJfLU", "PLAYERS", "select A, B, C where C = " + "TRUE", function(result) {
-  //console.log("PICKS", result)
+function getPlayers() {
+gviz("1jwadkJYYfBmf-SbjUokDV0S_yzC7gD39-jHxVatJfLU", "PLAYERS", "select A, B, C where C = TRUE", function(result) {
   result.shift()
   PLAYERS = result
   //console.log("PLAYERS", PLAYERS)
-  PLAYERS.forEach(function(item) {
-  	var td = document.getElementsByClassName(item[0])
-    for (var i in td) {
-    td[i].innerHTML = item[1]
-    }
-  })
-  //assignPts()
+  mapPlayers()
 })
+}
+
+
+function mapPlayers() {
+	var obj = {}
+	PLAYERS.forEach(function(item) {
+  	obj[item[0]] = item[1]
+  })
+  PLAYERSobj = obj
+  //console.log("mapplayers", PLAYERSobj)
+  mapPicks()
+}
+
+function mapPicks() {
+	var obj = {}
+	PICKS.forEach(function(item) {
+  	obj[item[2]] = PLAYERSobj[item[3]]
+  })
+  PICKSobj = obj
+  //console.log("mappicks", PICKSobj)
+  makeTable()
+}
+
+
+function makeTable() {
+	RESULTS.vehicles.forEach(function(item, index) {
+    	var tr = tbody.insertRow()
+      tr.insertCell().innerHTML = index + 1
+      tr.insertCell().innerHTML = item.driver.full_name
+      tr.insertCell().id = "c" + item.vehicle_number
+    })
+    assignPlayers()
+}
+
+
+
+function assignPlayers() {
+	var trs = document.getElementsByTagName("TR")
+	for (var i in PICKSobj) {
+  	document.getElementById(i).innerHTML = PICKSobj[i] || ""
+  }
+  assignPts()
 }
 
 
 function assignPts() {
-	var trs = document.getElementsByTagName("tr")
-  for (var i in trs) {
-  	var td = trs[i].getElementsByClassName("player")[0]
-  console.log(td)
-  if (td.innerText) {
-  	td.innerText = COUNT--
+	var trs = document.querySelectorAll("TR")
+  console.log(trs)
+  for (var i = 0; i < trs.length; i++) {
+  	var td2 = trs[i].insertCell()
+  	var td1 = trs[i].getElementsByTagName("TD")[2]
+  if (td1.innerText) {
+  	td2.innerText = COUNT--
   }
   }
 }

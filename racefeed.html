@@ -43,6 +43,12 @@
   <br><br><br>
   <br><br><br><br><br>
   <script src="https://stupid-fast.com/gviz.js"></script>
+  <footer>
+  <br>
+    <small>
+      https://jsfiddle.net/schweissguth/vzkm5ra2/
+    </small>
+  </footer>
 </center></center>
 
 
@@ -55,20 +61,20 @@
     <script type="text/javascript">//<![CDATA[
 
 
-var CURRENTRACE = ""
+var PREVRACE = ""
 
 //LIVE scoring RESULTS DATA
-  gviz("1jwadkJYYfBmf-SbjUokDV0S_yzC7gD39-jHxVatJfLU", "INFO", "select A", function(result) {
+  gviz("1jwadkJYYfBmf-SbjUokDV0S_yzC7gD39-jHxVatJfLU", "INFO", "select C", function(result) {
   console.log(result)
   result.shift()
-  CURRENTRACE = result[0]
+  PREVRACE = result[0]
   getFlagData()
 })
 
 
 
 function getFlagData() {
-  fetch("https://cf.nascar.com/cacher/2023/1/" + CURRENTRACE + "/lap-notes.json").then(function(x) {
+  fetch("https://cf.nascar.com/cacher/2023/1/" + PREVRACE + "/lap-notes.json").then(function(x) {
     return x.text();
   }).then(function(y) {
     var arr = JSON.parse(y)

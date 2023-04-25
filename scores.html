@@ -88,13 +88,13 @@ tbody tr:nth-child(odd) {
 var SCORES = []
 var RACELIST = []
 var PLAYERS = []
-var CURRENTRACE = 0
+var PREVRACE = 0
 
 
 
-  gviz("1jwadkJYYfBmf-SbjUokDV0S_yzC7gD39-jHxVatJfLU", "INFO", "select A", function(result) {
+  gviz("1jwadkJYYfBmf-SbjUokDV0S_yzC7gD39-jHxVatJfLU", "INFO", "select C", function(result) {
     result.shift()
-    CURRENTRACE = result[0]
+    PREVRACE = result[0]
     //console.log("SCORES", SCORES)
     getRaceList()
   })
@@ -118,7 +118,7 @@ function buildSelectRaces() {
     option.text = item.track_name
     raceselect.append(option)
   })
-  raceselect.value = CURRENTRACE
+  raceselect.value = PREVRACE
   var idx = raceselect.selectedIndex
   raceselect.selectedIndex = idx
   getScores()

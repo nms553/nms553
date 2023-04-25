@@ -50,10 +50,12 @@ tbody tr:nth-child(odd) {
     <center>
   <center>
     <script src="https://stupid-fast.com/gviz.js"></script>
+    <header>
     <h1>Lookup points by race</h1>
     <h4>Select race to view your points.</h4>
-    
-    <select name="race_select" id="raceselect" onchange="getScores()"></select>
+    </header>
+    <main>
+          <select name="race_select" id="raceselect" onchange="getScores()"></select>
     
     <br><br>
     
@@ -73,6 +75,9 @@ tbody tr:nth-child(odd) {
       </thead>
       <tbody id="tbody"></tbody>
     </table>
+    </main>
+    
+
     <footer>
       <small>
         <br>

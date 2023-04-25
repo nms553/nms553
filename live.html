@@ -79,7 +79,7 @@ tr td:nth-child(3) {
     <script type="text/javascript">//<![CDATA[
 
 
-var CURRENTRACE = ""
+var PREVRACE = ""
 var PICKS = []
 var PLAYERS = []
 var COUNT = 22
@@ -89,15 +89,15 @@ var PLAYERSobj = {}
 var PICKSobj = {}
 
 
-  gviz("1jwadkJYYfBmf-SbjUokDV0S_yzC7gD39-jHxVatJfLU", "INFO", "select A", function(result) {
+  gviz("1jwadkJYYfBmf-SbjUokDV0S_yzC7gD39-jHxVatJfLU", "INFO", "select C", function(result) {
   //console.log(result)
   result.shift()
-  CURRENTRACE = result[0]
+  PREVRACE = result[0]
   getResults()
 })
 
 function getResults() {
-  fetch("https://cf.nascar.com/live/feeds/series_1/" + CURRENTRACE + "/live_feed.json").then(function(x) {
+  fetch("https://cf.nascar.com/live/feeds/series_1/" + PREVRACE + "/live_feed.json").then(function(x) {
     return x.text()
   }).then(function(y) {
   	var parse = JSON.parse(y)
@@ -108,7 +108,7 @@ function getResults() {
 }
 
 function getPicks() {
-gviz("1jwadkJYYfBmf-SbjUokDV0S_yzC7gD39-jHxVatJfLU", "PICKS", "select A, B, C, D, E, F where B = " + CURRENTRACE, function(result) {
+gviz("1jwadkJYYfBmf-SbjUokDV0S_yzC7gD39-jHxVatJfLU", "PICKS", "select A, B, C, D, E, F where B = " + PREVRACE, function(result) {
   result.shift()
   PICKS = result
   //console.log("PICKS", PICKS)

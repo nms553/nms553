@@ -31,3 +31,7 @@ function gviz(KEY, SHEET, TQ, CALLBACK) {
   })
 
 }
+
+function init() {
+  console.log("init")
+}

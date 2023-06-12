@@ -1,8 +1,385 @@
 
+<!DOCTYPE html>
 <html>
-  <head>
-  <script type="text/javascript">
-    location.replace("https://jsfiddle.net/schweissguth/mebwpqh1/show");
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <title>STUPID-FAST HOMEPAGE</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="googlebot" content="noindex, nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <script
+    type="text/javascript"
+    src="/js/lib/dummy.js"
+    
+  ></script>
+
+    <link rel="stylesheet" type="text/css" href="/css/result-light.css">
+
+
+  <style id="compiled-css" type="text/css">
+          * {
+        //outline: 1px solid;
+      }
+      
+      html, body, center {
+        
+        padding: 0px;
+        margin: 0px;
+      }
+      
+      #links a {
+        margin: 20px;
+      }
+
+      table {
+        table-layout: fixed;
+        border-collapse: collapse;
+        //border: 1px solid;
+        width: 100%;
+      }
+
+      tbody > tr:nth-child(even) tr {
+        background: #DFC;
+      }
+
+      td {
+        font-size: 0.9em;
+      }
+
+      #pickstable tr td:first-child {
+        //width: 25%;
+        font-size: 0.9em;
+        font-weight: bold;
+      }
+
+      table:first-child td:nth-child(2) {
+        width: 37%;
+      }
+
+
+      td:nth-child(3) {
+        //white-space: nowrap;
+        //font-size: 0.8em;
+      }
+
+      small {
+        font-size: 0.65em;
+        margin: 0px 0px 0px 3px;
+      }
+
+      p {
+        margin: 5px;
+        padding: 0px;
+        //font-size: 0.9em;
+      }
+
+      #livetable td {
+        padding: 0px 3px 0px 3px;
+        text-align: center;
+      }
+
+      #livetable td:first-child {
+        width: 25px;
+      }
+
+      #livetable td:nth-child(2) {
+        width: 140px;
+        text-align: left;
+      }
+
+      #livetable td:nth-child(3) {
+        width: 65px;
+      }
+      
+      
+
+
+    /* EOS */
+  </style>
+
+  <script id="insert"></script>
+
+</head>
+<body>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400&display=swap" rel="stylesheet">
+<link href="https://stupid-fast.com/css.css" rel="stylesheet">
+
+<center>
+
+  <a href="https://www.stupid-fast.com" class="banner">
+    <img src="https://www.stupid-fast.com/banner/banner.png" width="100%" height="48">
+  </a>
+  
+  <hr><br>
+
+  <div id="links">
+    
+  </div>
+  
+  <br><hr><br>
+  
+  <iframe src="https://stupid-fast.com/pickstable.html" frameborder="0" height="375" width="100%"></iframe>
+
+  <table id="pickstable" style="display: none">
+    <tbody id="tbody"></tbody>
+  </table>
+
+  <br><hr><br>
+
+  <h1>Live running order</h1>
+  <br>
+  
+  <iframe src="https://stupid-fast.com/liveresults.html" frameborder="0" width="100%" height="500"></iframe>
+
+  <table id="livetable" border style="display: none">
+    <tbody id="tbodylive">
+    </tbody>
+  </table>
+
+  <br><br>
+
+  <script src="https://stupid-fast.com/gviz.js"></script>
+
+
+
+  <br>
+  <h1>Live race feed</h1>
+  <br>
+  <iframe src="https://stupid-fast.com/racefeed.html" frameborder="0" height="500" width="100%"></iframe>
+
+  <div id="flag" style="font-size: 3em; display: none;"></div>
+  <main id="laps" style="display: none;"></main>
+  <br><br><br>
+  <footer id="footer">
+  <small>https://jsfiddle.net/schweissguth/mebwpqh1/</small>
+  </footer>
+  <br><br><br><br><br>
+
+
+</center>
+
+
+    <script type="text/javascript">//<![CDATA[
+
+
+
+gviz("1jwadkJYYfBmf-SbjUokDV0S_yzC7gD39-jHxVatJfLU", "HOMEPAGE", "select *", function(result) {
+  result.shift()
+  result.shift()
+  //console.log(result);
+  result.forEach(function(item, index) {
+    var el = document.createElement(item[1])
+    el.href = item[2]
+    el.innerHTML = item[0]
+    el.className = item[6]
+    el.target = item[4]
+    el.style = item[5]
+    links.appendChild(el)
+  })
+})
+
+gviz("1jwadkJYYfBmf-SbjUokDV0S_yzC7gD39-jHxVatJfLU", "PICKORDER", "select A, B, G order by G", function(result) {
+  result.shift()
+  //console.log(result);
+  result.forEach(function(item) {
+    var tr = tbody.insertRow()
+    var innertable = document.createElement("TABLE")
+    var tr1 = innertable.insertRow()
+    var trtr = innertable.insertRow()
+    trtr.style.fontStyle = "italic"
+    trtr.style.fontSize = "0.8em"
+    tr1.id = item[0]
+    var td = tr1.insertCell()
+    trtr.insertCell()
+    var tdtr = trtr.insertCell()
+    tdtr.setAttribute("colspan", "2")
+    tr1.insertCell()
+    tr1.insertCell()
+    tdtr.id = "tr" + item[0]
+    var sup = document.createElement("SUP")
+    sup.innerHTML = item[1]
+    td.append(sup)
+    tr.append(innertable)
+  })
+  getPlayerNames(result)
+})
+
+function getPlayerNames(pickorder) {
+  gviz("1jwadkJYYfBmf-SbjUokDV0S_yzC7gD39-jHxVatJfLU", "PLAYERS", "select A, B where C = true", function(result) {
+    result.shift()
+    //console.log(result);
+    result.forEach(function(item) {
+      var tr = document.getElementById(item[0])
+      var td = tr.getElementsByTagName("TD")[0]
+      var p = document.createElement("STRONG")
+      p.style.display = "inline-block"
+      p.innerHTML = item[1]
+      td.prepend(p)
+    })
+    getDrivers()
+  })
+}
+
+function getDrivers() {
+  //console.log("running")
+  gviz("1jwadkJYYfBmf-SbjUokDV0S_yzC7gD39-jHxVatJfLU", "DRIVERS", "select A, B, C, D", function(result) {
+    result.shift()
+    //console.log(result);
+    result.forEach(function(item) {
+      try {
+        var tr = document.getElementById(item[2])
+        var p = document.createElement("P")
+        p.innerHTML = item[1]
+        var td = tr.getElementsByTagName("TD")[1]
+        if(td.innerHTML) {
+        	td = tr.getElementsByTagName("TD")[2]
+        }
+        //console.log(item[3])
+        if (item[3]) {
+          document.getElementById("tr" + item[2]).innerHTML += item[3]
+        }
+        td.append(p)
+      } catch (err) {}
+    })
+  })
+}
+
+//LIVE scoring RESULTS DATA
+  gviz("1jwadkJYYfBmf-SbjUokDV0S_yzC7gD39-jHxVatJfLU", "INFO", "select A", function(result) {
+  console.log(result)
+  result.shift()
+  getResults(result[0])
+  getFlagData(result[0])
+})
+
+function getResults(id) {
+	console.log(id)
+  fetch("https://cf.nascar.com/live/feeds/series_1/" + id + "/live_feed.json").then(function(x) {
+    return x.text()
+  }).then(function(y) {
+    tbodylive.innerHTML = ""
+    var result = JSON.parse(y)
+    console.log("NACAR FEED", result)
+    result.vehicles.forEach(function(item, index) {
+      var margin = Math.round(item.delta * 10) / 10
+      var tr = tbodylive.insertRow()
+      tr.insertCell().innerText = index + 1
+      tr.insertCell().innerHTML = item.driver.full_name + "<small>" + margin + "</small>"
+      tr.insertCell().id = "c" + item.vehicle_number
+    })
+    getPicks()
+  })
+}
+
+
+function getPicks() {
+  var count = 1
+  var players = []
+  var bgcolors = [
+    "red", "blue", "yellow", "green", "purple", "orange", "goldenrod", "lightgray", "black", "fuchsia", "olive"
+  ]
+  var colors = [
+    "white", "white", "black", "white", "white", "white", "black", "black", "white", "white", "white"
+  ]
+  gviz("1jwadkJYYfBmf-SbjUokDV0S_yzC7gD39-jHxVatJfLU", "DRIVERS", "select A, B, C where C is not null", function(result) {
+    result.shift()
+    result.shift()
+    console.log("PICKS LIST", result)
+    result.forEach(function(item) {
+      try {
+        var td = document.getElementById(item[0])
+        td.innerText = item[2]
+        var indexof = players.indexOf(item[2])
+        if (indexof < 0) {
+          players.push(item[2])
+          td.style.backgroundColor = bgcolors[players.length - 1]
+          td.style.color = colors[players.length - 1]
+        } else {
+          td.style.backgroundColor = bgcolors[indexof]
+          td.style.color = colors[indexof]
+        }
+      } catch (err) {}
+    })
+    //console.log(players)
+    assignPts()
+  })
+}
+
+function assignPts() {
+  var score = 22
+  var tr = tbodylive.getElementsByTagName("TR")
+  for (var i of tr) {
+    var td = i.insertCell()
+    if (i.getElementsByTagName("TD")[2].innerText) {
+      td.innerText = score--
+    }
+  }
+}
+
+
+
+//FLAG DATA
+function getFlagData(raceid) {
+  fetch("https://cf.nascar.com/cacher/2023/1/" + raceid + "/lap-notes.json").then(function(x) {
+    return x.text();
+  }).then(function(y) {
+    var arr = JSON.parse(y)
+    //console.log(arr)
+    var keys = Object.keys(arr.laps)
+    keys.forEach(function(item) {
+      var p = document.createElement("P")
+      p.innerHTML = "<b>Lap " + item + ": </b><br>" + arr.laps[item][0].Note + "<br><br>"
+      laps.prepend(p)
+    })
+  })
+
+  fetch("https://cf.nascar.com/live/feeds/live-flag-data.json").then(x => x.text()).then(function(result) {
+    var parse = JSON.parse(result)
+    //console.log(parse)
+    var pop = parse.pop()
+    //console.log(pop)
+
+    switch (pop.flag_state) {
+      case 8:
+        flag.innerText = "🏴"
+        break;
+
+      case 1:
+        flag.innerText = "🟢"
+        break;
+
+      case 2:
+        flag.innerText = "🟡"
+        break;
+
+      case 4:
+        flag.innerText = "🏁"
+    }
+  })
+}
+
+
+
+  //]]></script>
+
+  <script>
+    // tell the embed parent frame the height of the content
+    if (window.parent && window.parent.parent){
+      window.parent.parent.postMessage(["resultsFrame", {
+        height: document.body.getBoundingClientRect().height,
+        slug: "mebwpqh1"
+      }], "*")
+    }
+
+    // always overwrite window.name, in case users try to set it manually
+    window.name = "result"
   </script>
-  </head>
-</html> 
+
+
+</body>
+</html>

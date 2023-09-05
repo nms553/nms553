@@ -1,96 +1,140 @@
+
 <!DOCTYPE html>
 <html>
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400&display=swap" rel="stylesheet">
-  <link href="https://stupid-fast.com/css.css" rel="stylesheet">
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <title>Chase Standings Page</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="googlebot" content="noindex, nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <script
+    type="text/javascript"
+    src="/js/lib/dummy.js"
+    
+  ></script>
+
+    <link rel="stylesheet" type="text/css" href="/css/result-light.css">
+
+
+  <style id="compiled-css" type="text/css">
+    table {
+  border-collapse: collapse;
+  table-layout: fixed;
+  width: 100%;
+  max-width: 290px;
+}
+
+table tr:nth-child(even) {
+  background: #DFF;
+}
+
+tr td:first-child {
+  width: 50px;
+  text-align: center;
+}
+
+tr td:nth-child(2) {
+  font-weight: bold;
+}
+
+tr td:nth-child(3) {
+  width: 75px;
+  text-align: center;
+}
+
+    /* EOS */
+  </style>
+
+  <script id="insert"></script>
+
 </head>
 <body>
+    <center>
+  <center>
+    <script src="https://stupid-fast.com/gviz.js"></script>
+    <header>
+    <h1>Chase Standings</h1>
+    <h3>The Chase</h3>
+    </header>
+    <table cellpadding="3">
+      <tbody id="tbody">
+        <tr>
+          <td>
+            <center>
+              <code>LOADING...</code>
+            </center>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <small>
+    <br>
+      https://jsfiddle.net/schweissguth/at6v5dub/
+    </small>
+  </center>
+</center>
 
-<h2>Chase points</h2>
+    <script type="text/javascript">//<![CDATA[
 
-<table id="table" border="1" width="100%">
-<thead>
-  <tr id="thead"></tr>
-</thead>
-  <tbody id="tbody">
-    
-  </tbody>
-</table>
 
-<script>
-function loadXMLDoc(q, x) {
-  var url = "https://script.google.com/macros/s/AKfycbyjTonSlOhwkCFTaoIzgPcguGGrpv7UMvwqjElaMU9On2UrOm6Dx746WZjGnQkyWSWoHA/exec?"
-  var ss = "ss=1jwadkJYYfBmf-SbjUokDV0S_yzC7gD39-jHxVatJfLU&"
-  console.log(url + ss + q)
+var STANDINGS = []
+var PLAYERNAMES = []
 
-  var xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
 
-      var json = JSON.parse(this.responseText)
-      window[x](json[0])
-      console.log(json[0])
+gviz("https://docs.google.com/spreadsheets/d/1jwadkJYYfBmf-SbjUokDV0S_yzC7gD39-jHxVatJfLU/edit#gid=244048059", "STANDINGS", "SELECT C, D", function(result) {
+result.shift()
+	STANDINGS = result
+  console.log("STANDIGNS", STANDINGS)
+  assignStandings()
+})
+
+
+function assignStandings() {
+	tbody.innerHTML = ""
+	STANDINGS.forEach(function(item, index) {
+  	var tr = tbody.insertRow()
+    tr.insertCell().innerHTML = index + 1
+    tr.insertCell().id = item[0]
+    tr.insertCell().innerHTML = item[1]
+  })
+  getPlayerNames()
+}
+
+
+function getPlayerNames() {
+	gviz("https://docs.google.com/spreadsheets/d/1jwadkJYYfBmf-SbjUokDV0S_yzC7gD39-jHxVatJfLU/edit#gid=244048059", "PLAYERS", "SELECT A, B where C = TRUE", function(result) {
+result.shift()
+	PLAYERS = result
+  console.log("PLAYERS", PLAYERS)
+  assignPlayerNames()
+})
+}
+
+
+function assignPlayerNames() {
+	PLAYERS.forEach(function(item) {
+  	document.getElementById(item[0]).innerHTML = item[1]
+  })
+}
+
+
+  //]]></script>
+
+  <script>
+    // tell the embed parent frame the height of the content
+    if (window.parent && window.parent.parent){
+      window.parent.parent.postMessage(["resultsFrame", {
+        height: document.body.getBoundingClientRect().height,
+        slug: "0w6vjtsz"
+      }], "*")
     }
-  };
-  xhttp.open("GET", encodeURI(url + ss + q), true);
-  xhttp.send();
-}
 
-loadXMLDoc("queries=sheet::Point>>filter::%23,>,26>>group::Player Name,Total>>sort::Total,desc>>select::Player Name,Total", "buildTable")
-//loadXMLDoc("queries=sheet::POINTS>>filter::RACE,!==,init>>group::NO,", "buildTracks")
-//loadXMLDoc("queries=sheet::POINTS>>filter::RACE,==,init", "buildPlayers")
-
-function buildTracks(json) {
-  json.forEach(function(item) {
-    var opt = document.createElement("OPTION")
-    opt.value = item.NO
-    opt.innerHTML = item.RACE
-    select.append(opt)
-  })
-}
-
-function buildPlayers(json) {
-  json.forEach(function(item) {
-    var opt = document.createElement("OPTION")
-    opt.value = item.PLAYER
-    opt.innerHTML = item.PLAYER
-    playerssel.append(opt)
-  })
-}
-
-function changeTable(val) {
-var group = ""
-if (cum.checked) {
-	group = ">>group::PLAYER,TOTAL"
-}
-
-  loadXMLDoc("queries=sheet::POINTS>>filter::" + val + ">>filter::RACE,!==,init>>select::NO,RACE,PLAYER,PTS1,PTS2,BONUS,TOTAL" + group, "buildTable")
-}
-
-
-function buildTable(vals) {
-  tbody.innerHTML = ""
-  thead.innerHTML = ""
-  var keys = Object.keys(vals[0])
-  keys.forEach(function(item) {
-  	var th = document.createElement("TH")
-    th.innerHTML = item
-  	thead.append(th)
-  })
-  vals.forEach(function(item) {
-    var tr = document.createElement("TR")
-    keys.forEach(function(jtem) {
-      tr.insertCell().innerHTML = item[jtem]
-    })
-    tbody.append(tr)
-  })
-
-}
-
-</script>
+    // always overwrite window.name, in case users try to set it manually
+    window.name = "result"
+  </script>
 
 
 </body>

@@ -24,6 +24,8 @@
   font-size: 0.825em;
   font-family: sans-serif;
   margin: 0;
+  padding-left: 5px;
+  padding-right: 5px;
 }
 
 center center {
@@ -50,7 +52,7 @@ input {
 
 #secresults {
   visibility: hidden;
-  height: 500px;
+  height: 800px;
 }
 
 table {
@@ -59,6 +61,10 @@ table {
   width: 100%;
   word-break: break-word;
   //border-collapse: collapse;
+}
+
+tr:hover {
+  outline: 2px solid;
 }
 
 tr:nth-child(even) {
@@ -80,6 +86,12 @@ td:last-child {
   text-align: center;
 }
 
+td:last-child img {
+  
+  width: 100%;
+  max-width: 100px;
+}
+
 form input[type=number] {
   width: 40px;
   font-size: 1em;
@@ -99,6 +111,8 @@ dialog {
 dialog input[type=image] {
   display: block;
   margin: auto;
+  width: 100%;
+  max-width: 100px;
 }
 
 
@@ -166,7 +180,7 @@ footer {
 <br>
     <h3><b>KeepingItGreen.com</b></h3>
     <p>636-221-2591</p>
-    <p><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="492420222c3a2a213e2c203a3a2e3c3d21092e24282025672a2624">[email&#160;protected]</a></p>
+    <p><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="a4c9cdcfc1d7c7ccd3c1cdd7d7c3d1d0cce4c3c9c5cdc88ac7cbc9">[email&#160;protected]</a></p>
     <p>St. Louis, MO</p>
     <br>
 </footer>
@@ -377,7 +391,18 @@ if (pn) {
 
   //]]></script>
 
+  <script>
+    // tell the embed parent frame the height of the content
+    if (window.parent && window.parent.parent){
+      window.parent.parent.postMessage(["resultsFrame", {
+        height: document.body.getBoundingClientRect().height,
+        slug: "q7gkhu5a"
+      }], "*")
+    }
 
+    // always overwrite window.name, in case users try to set it manually
+    window.name = "result"
+  </script>
 
 
 </body>

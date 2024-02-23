@@ -3,7 +3,7 @@
 <html>
 <head>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-  <title>STUPID-FAST HOMEPAGE</title>
+  <title>KIG v3</title>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <meta name="robots" content="noindex, nofollow">
   <meta name="googlebot" content="noindex, nofollow">
@@ -20,81 +20,93 @@
 
 
   <style id="compiled-css" type="text/css">
-          * {
-        //outline: 1px solid;
-      }
-      
-      html, body, center {
-        
-        padding: 0px;
-        margin: 0px;
-      }
-      
-      #links a {
-        margin: 20px;
-      }
+    body {
+  font-size: 0.825em;
+  font-family: sans-serif;
+  margin: 0;
+}
 
-      table {
-        table-layout: fixed;
-        border-collapse: collapse;
-        //border: 1px solid;
-        width: 100%;
-      }
+center center {
+  width: 100%;
+  max-width: 750px;
+}
 
-      tbody > tr:nth-child(even) tr {
-        background: #DFC;
-      }
+img {
+  vertical-align: middle;
+}
 
-      td {
-        font-size: 0.9em;
-      }
-
-      #pickstable tr td:first-child {
-        //width: 25%;
-        font-size: 0.9em;
-        font-weight: bold;
-      }
-
-      table:first-child td:nth-child(2) {
-        width: 37%;
-      }
+h1 {
+  font-style: italic;
+  font-family: Cambria;
+  font-size: 1.1em;
+  color: #888;
+  
+}
 
 
-      td:nth-child(3) {
-        //white-space: nowrap;
-        //font-size: 0.8em;
-      }
+input {
+  font-size: 16px;
+}
 
-      small {
-        font-size: 0.65em;
-        margin: 0px 0px 0px 3px;
-      }
+#secresults {
+  visibility: hidden;
+  height: 500px;
+}
 
-      p {
-        margin: 5px;
-        padding: 0px;
-        //font-size: 0.9em;
-      }
+table {
+  table-layout: fixed;
+  box-sizing: border-box;
+  width: 100%;
+  word-break: break-word;
+  //border-collapse: collapse;
+}
 
-      #livetable td {
-        padding: 0px 3px 0px 3px;
-        text-align: center;
-      }
+tr:nth-child(even) {
+  background: #EEE;
+}
 
-      #livetable td:first-child {
-        width: 25px;
-      }
+td {
+  vertical-align: top;
+  
+}
 
-      #livetable td:nth-child(2) {
-        width: 140px;
-        text-align: left;
-      }
+td:first-child {
+  width: 20%;
+  font-weight: bold;
+}
 
-      #livetable td:nth-child(3) {
-        width: 65px;
-      }
-      
-      
+td:last-child {
+  width: 20%;
+  text-align: center;
+}
+
+form input[type=number] {
+  width: 40px;
+  font-size: 1em;
+  margin-bottom: 15px;
+}
+
+
+i {
+  color: #666;
+}
+
+dialog {
+  text-align: center;
+}
+
+
+dialog input[type=image] {
+  display: block;
+  margin: auto;
+}
+
+
+
+footer {
+  text-align: center;
+  background: lightgray;
+}
 
 
     /* EOS */
@@ -104,281 +116,268 @@
 
 </head>
 <body>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400&display=swap" rel="stylesheet">
-<link href="https://stupid-fast.com/css.css" rel="stylesheet">
+    <div style="background: green;"><br><br></div>
 
 <center>
-
-  <a href="https://www.stupid-fast.com" class="banner">
-    <img src="https://www.stupid-fast.com/banner/banner.png" width="100%" height="48">
-  </a>
   
-  <hr><br>
+  <center>
+  
 
-  <div id="links">
+  
+  <br>
     
-  </div>
+<img src="https://drive.google.com/thumbnail?id=1CqC5twjBs-kYlS4oyW-RSpwENFQ6MXOk" alt="">
+&nbsp;&nbsp;
+<img src="https://drive.google.com/thumbnail?id=1wbhFxZlhOpb60Uc46Kq2vj0-CaPm12KP&sz=w500" alt="">
+
+<br>
+
+<h1>Your premier online source for all lawn mower blades.</h1>
+
+<br>
+
+<!-- sample M136185 -->
+
+<label>
+  <input type="text" id="inpq" value="" placeholder="Enter part number">
+  <button onclick="submitQ()">Search blade</button>
+
+</label>
+
+
+<br><br>
+<hr>
+<br><br>
+
+<section id="secresults">
+<p id="qtyresults"></p>
+
+<table id="main" cellpadding="3">
+
   
-  <br><hr><br>
-  
-  <iframe src="https://stupid-fast.com/pickstable.html" frameborder="0" height="375" width="100%"></iframe>
-
-  <table id="pickstable" style="display: none">
-    <tbody id="tbody"></tbody>
-  </table>
-
-  <br><hr><br>
-
-  <h1>Live running order</h1>
-  <br>
-  
-  <iframe src="https://stupid-fast.com/live.html" frameborder="0" width="100%" height="500"></iframe>
-
-  <table id="livetable" border style="display: none">
-    <tbody id="tbodylive">
-    </tbody>
-  </table>
-
-  <br><br>
-
-  <script src="https://stupid-fast.com/gviz.js"></script>
+</table>
+    </section>
 
 
-
-  <br>
-  <h1>Live race feed</h1>
-  <br>
-  <iframe src="https://stupid-fast.com/racefeed.html" frameborder="0" height="500" width="100%"></iframe>
-
-  <div id="flag" style="font-size: 3em; display: none;"></div>
-  <main id="laps" style="display: none;"></main>
-  <br><br><br>
-  <footer id="footer">
-  <small>https://jsfiddle.net/schweissguth/mebwpqh1/</small>
-  </footer>
-  <br><br><br><br><br>
-
-
+  </center>
 </center>
+    
+<footer>
+<br>
+    <h3><b>KeepingItGreen.com</b></h3>
+    <p>636-221-2591</p>
+    <p><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="492420222c3a2a213e2c203a3a2e3c3d21092e24282025672a2624">[email&#160;protected]</a></p>
+    <p>St. Louis, MO</p>
+    <br>
+</footer>
 
 
-    <script type="text/javascript">//<![CDATA[
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script type="text/javascript">//<![CDATA[
 
 
 
-gviz("1jwadkJYYfBmf-SbjUokDV0S_yzC7gD39-jHxVatJfLU", "HOMEPAGE", "select *", function(result) {
-  result.shift()
-  result.shift()
-  //console.log(result);
-  result.forEach(function(item, index) {
-    var el = document.createElement(item[1])
-    el.href = item[2]
-    el.innerHTML = item[0]
-    el.className = item[6]
-    el.target = item[4]
-    el.style = item[5]
-    links.appendChild(el)
-  })
-})
 
-gviz("1jwadkJYYfBmf-SbjUokDV0S_yzC7gD39-jHxVatJfLU", "PICKORDER", "select A, B, G order by G", function(result) {
-  result.shift()
-  //console.log(result);
-  result.forEach(function(item) {
-    var tr = tbody.insertRow()
-    var innertable = document.createElement("TABLE")
-    var tr1 = innertable.insertRow()
-    var trtr = innertable.insertRow()
-    trtr.style.fontStyle = "italic"
-    trtr.style.fontSize = "0.8em"
-    tr1.id = item[0]
-    var td = tr1.insertCell()
-    trtr.insertCell()
-    var tdtr = trtr.insertCell()
-    tdtr.setAttribute("colspan", "2")
-    tr1.insertCell()
-    tr1.insertCell()
-    tdtr.id = "tr" + item[0]
-    var sup = document.createElement("SUP")
-    sup.innerHTML = item[1]
-    td.append(sup)
-    tr.append(innertable)
-  })
-  getPlayerNames(result)
-})
 
-function getPlayerNames(pickorder) {
-  gviz("1jwadkJYYfBmf-SbjUokDV0S_yzC7gD39-jHxVatJfLU", "PLAYERS", "select A, B where C = true", function(result) {
-    result.shift()
-    //console.log(result);
-    result.forEach(function(item) {
-      var tr = document.getElementById(item[0])
-      var td = tr.getElementsByTagName("TD")[0]
-      var p = document.createElement("STRONG")
-      p.style.display = "inline-block"
-      p.innerHTML = item[1]
-      td.prepend(p)
+
+function submitQ() {
+secresults.style.visibility = "visible"
+qtyresults.innerHTML = null
+main.innerHTML = "LOADING..."
+
+var inpkey = "1kqkXpF31nI0ek7D3bFMCG7nffgA1__LGI7sg6ZAxQqQ"
+var inpsheet = "DB"
+var pn = inpq.value.toUpperCase()
+var q = "SELECT A, E, F, G, H, AJ, AL where (B contains '" + pn + "' OR F contains '" + pn + "' OR G contains '" + pn + "' OR H contains '" + pn + "')"
+
+var url = "https://docs.google.com/spreadsheets/u/0/d/" + inpkey + "/gviz/tq?sheet=" + inpsheet + "&tqx=out:tsv&tq=" + encodeURI(q) + ""
+
+//console.log(url)
+
+
+if (pn) {
+	fetch(url).then(res => res.text()).then(function(res) {
+  res = res.split(/"table":/)[1]
+  res = res.split("});")[0]
+  res = JSON.parse(res)
+  console.log(res)
+  main.innerHTML = null
+  qtyresults.innerHTML = res.rows.length + " result(s) found."
+
+  res.rows.forEach(function(item) {
+  	item.c.map(function(jtem, j) {
+    	item[res.cols[j].label] = jtem
     })
-    getDrivers()
-  })
-}
+  	var tr = main.insertRow()
+    tr.insertCell().innerHTML = item.KIGNUMBER.v
+    var tdesc = tr.insertCell()
+    tdesc.innerHTML = item.DESC.v
+    if (item.OEMPN) {
+    tdesc.innerHTML += "<br><i>OEM part numbers: " + item.OEMPN.v + "</i>"
+    } if (item.OPTIONPN) {
+    tdesc.innerHTML += "<br><i>Optional part numbers: " + item.OPTIONPN.v + "</i>"
+    } if (item.REFERENCEPN) {
+    tdesc.innerHTML += "<br><i>Reference part numbers: " + item.REFERENCEPN.v + "</i>"
+    }  
 
-function getDrivers() {
-  //console.log("running")
-  gviz("1jwadkJYYfBmf-SbjUokDV0S_yzC7gD39-jHxVatJfLU", "DRIVERS", "select A, B, C, D", function(result) {
-    result.shift()
-    //console.log(result);
-    result.forEach(function(item) {
-      try {
-        var tr = document.getElementById(item[2])
-        var p = document.createElement("P")
-        p.innerHTML = item[1]
-        var td = tr.getElementsByTagName("TD")[1]
-        if(td.innerHTML) {
-        	td = tr.getElementsByTagName("TD")[2]
-        }
-        //console.log(item[3])
-        if (item[3]) {
-          document.getElementById("tr" + item[2]).innerHTML += item[3]
-        }
-        td.append(p)
-      } catch (err) {}
-    })
-  })
-}
-
-//LIVE scoring RESULTS DATA
-  gviz("1jwadkJYYfBmf-SbjUokDV0S_yzC7gD39-jHxVatJfLU", "INFO", "select A", function(result) {
-  console.log(result)
-  result.shift()
-  getResults(result[0])
-  getFlagData(result[0])
-})
-
-function getResults(id) {
-	console.log(id)
-  fetch("https://cf.nascar.com/live/feeds/series_1/" + id + "/live_feed.json").then(function(x) {
-    return x.text()
-  }).then(function(y) {
-    tbodylive.innerHTML = ""
-    var result = JSON.parse(y)
-    console.log("NACAR FEED", result)
-    result.vehicles.forEach(function(item, index) {
-      var margin = Math.round(item.delta * 10) / 10
-      var tr = tbodylive.insertRow()
-      tr.insertCell().innerText = index + 1
-      tr.insertCell().innerHTML = item.driver.full_name + "<small>" + margin + "</small>"
-      tr.insertCell().id = "c" + item.vehicle_number
-    })
-    getPicks()
-  })
-}
-
-
-function getPicks() {
-  var count = 1
-  var players = []
-  var bgcolors = [
-    "red", "blue", "yellow", "green", "purple", "orange", "goldenrod", "lightgray", "black", "fuchsia", "olive"
-  ]
-  var colors = [
-    "white", "white", "black", "white", "white", "white", "black", "black", "white", "white", "white"
-  ]
-  gviz("1jwadkJYYfBmf-SbjUokDV0S_yzC7gD39-jHxVatJfLU", "DRIVERS", "select A, B, C where C is not null", function(result) {
-    result.shift()
-    result.shift()
-    console.log("PICKS LIST", result)
-    result.forEach(function(item) {
-      try {
-        var td = document.getElementById(item[0])
-        td.innerText = item[2]
-        var indexof = players.indexOf(item[2])
-        if (indexof < 0) {
-          players.push(item[2])
-          td.style.backgroundColor = bgcolors[players.length - 1]
-          td.style.color = colors[players.length - 1]
-        } else {
-          td.style.backgroundColor = bgcolors[indexof]
-          td.style.color = colors[indexof]
-        }
-      } catch (err) {}
-    })
-    //console.log(players)
-    assignPts()
-  })
-}
-
-function assignPts() {
-  var score = 22
-  var tr = tbodylive.getElementsByTagName("TR")
-  for (var i of tr) {
-    var td = i.insertCell()
-    if (i.getElementsByTagName("TD")[2].innerText) {
-      td.innerText = score--
+    var td3 = tr.insertCell()
+    td3.append(makeForm(item))
+    var ppimg = document.createElement("IMG")
+    td3.append(ppimg)
+    ppimg.src = 'https://www.paypal.com/en_US/i/btn/x-click-but22.gif'
+    ppimg.onclick = function() {
+    	document.getElementById("dia" + item.KIGNUMBER.v).showModal()
     }
+  })
+  })
+
+} else {
+
+  main.innerHTML = "<i>Please enter part number</i>"
+}
+}
+
+
+
+
+
+
+
+
+
+
+//Make PayPal form:
+
+  function makeForm(item) {
+    var dia = document.createElement("DIALOG")
+    dia.id = "dia" + item.KIGNUMBER.v
+  
+    var form = document.createElement("FORM")
+    form.action = "https://www.paypal.com/cgi-bin/webscr";
+    form.method = "post";
+    form.target = "paypal";
+    dia.append(form)
+
+    var alt = document.createElement("INPUT");
+    alt.type = "image";
+    alt.src = "https://www.paypal.com/en_US/i/btn/x-click-but22.gif";
+    alt.alt = "Make payments with PayPal - it is fast, free and secure!";
+    alt.name = "I8";
+    alt.onclick = function() {
+    	document.getElementById("dia" + item.KIGNUMBER.v).close()
+    }
+
+    var add = document.createElement("INPUT");
+    add.name = "add";
+    add.type = "hidden";
+    add.value = "1";
+    form.appendChild(add);
+
+    var cmd = document.createElement("INPUT");
+    cmd.name = "cmd";
+    cmd.type = "hidden";
+    cmd.value = "_cart";
+    form.appendChild(cmd);
+
+    var business = document.createElement("INPUT");
+    business.name = "business";
+    business.type = "hidden";
+    business.value = "mikeschweissguth@gmail.com";
+    form.appendChild(business);
+
+
+    var itemname = document.createElement("INPUT");
+    itemname.name = "item_name";
+    itemname.type = "hidden";
+    itemname.value = item.DESC.v;
+    form.appendChild(itemname);
+
+    var itemnumber = document.createElement("INPUT");
+    itemnumber.name = "item_number";
+    itemnumber.type = "hidden";
+    itemnumber.value = item.KIGNUMBER.v;
+    form.appendChild(itemnumber);
+
+    var amount = document.createElement("INPUT");
+    amount.name = "amount";
+    amount.type = "hidden";
+    amount.value = item.PRICE.v;
+    form.appendChild(amount);
+
+    var price = document.createElement("OUTPUT");
+    price.value = "  $" + item.PRICE.v + " per blade";
+    form.appendChild(price);
+
+    var qty = document.createElement("INPUT");
+    var lbl = document.createElement("LABEL");
+    lbl.innerHTML = "<span>Qty: </span>"
+    qty.classList.add("qty")
+    qty.name = "quantity";
+    qty.type = "number";
+    qty.value = "1";
+    qty.style.fontSize = "1.2em"
+    lbl.append(qty)
+    form.prepend(lbl);
+
+
+    var nonote = document.createElement("INPUT");
+    nonote.name = "no_note";
+    nonote.type = "hidden";
+    nonote.value = "1";
+    form.appendChild(nonote);
+
+    var currencycode = document.createElement("INPUT");
+    currencycode.name = "currency_code";
+    currencycode.type = "hidden";
+    currencycode.value = "USD";
+    form.appendChild(currencycode);
+
+    var lc = document.createElement("INPUT");
+    lc.name = "lc";
+    lc.type = "hidden";
+    lc.value = "US";
+    form.appendChild(lc);
+
+    var weight = document.createElement("INPUT");
+    weight.name = "weight";
+    weight.type = "hidden";
+    weight.value = item.WEIGHT.v;
+    form.appendChild(weight);
+
+    var weightunit = document.createElement("INPUT");
+    weightunit.name = "weight_unit";
+    weightunit.type = "hidden";
+    weightunit.value = "lbs";
+    form.appendChild(weightunit);
+
+    var shipping = document.createElement("INPUT");
+    shipping.name = "shipping";
+    shipping.type = "hidden";
+    shipping.value = "12.95";
+    form.appendChild(shipping);
+
+    var shipping2 = document.createElement("INPUT");
+    shipping2.name = "shipping2";
+    shipping2.type = "hidden";
+    shipping2.value = "0.00";
+    form.appendChild(shipping2);
+    form.appendChild(alt);
+    
+    var a = document.createElement("A")
+    a.href = "javascript:"
+    a.innerHTML = "<br>Close"
+    a.onclick = function() {
+    	document.getElementById("dia" + item.KIGNUMBER.v).close()
+    }
+      form.append(a)
+    
+    return dia
+
   }
-}
-
-
-
-//FLAG DATA
-function getFlagData(raceid) {
-  fetch("https://cf.nascar.com/cacher/2023/1/" + raceid + "/lap-notes.json").then(function(x) {
-    return x.text();
-  }).then(function(y) {
-    var arr = JSON.parse(y)
-    //console.log(arr)
-    var keys = Object.keys(arr.laps)
-    keys.forEach(function(item) {
-      var p = document.createElement("P")
-      p.innerHTML = "<b>Lap " + item + ": </b><br>" + arr.laps[item][0].Note + "<br><br>"
-      laps.prepend(p)
-    })
-  })
-
-  fetch("https://cf.nascar.com/live/feeds/live-flag-data.json").then(x => x.text()).then(function(result) {
-    var parse = JSON.parse(result)
-    //console.log(parse)
-    var pop = parse.pop()
-    //console.log(pop)
-
-    switch (pop.flag_state) {
-      case 8:
-        flag.innerText = "🏴"
-        break;
-
-      case 1:
-        flag.innerText = "🟢"
-        break;
-
-      case 2:
-        flag.innerText = "🟡"
-        break;
-
-      case 4:
-        flag.innerText = "🏁"
-    }
-  })
-}
-
 
 
   //]]></script>
 
-  <script>
-    // tell the embed parent frame the height of the content
-    if (window.parent && window.parent.parent){
-      window.parent.parent.postMessage(["resultsFrame", {
-        height: document.body.getBoundingClientRect().height,
-        slug: "mebwpqh1"
-      }], "*")
-    }
 
-    // always overwrite window.name, in case users try to set it manually
-    window.name = "result"
-  </script>
 
 
 </body>
